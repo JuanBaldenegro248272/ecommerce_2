@@ -7,3 +7,19 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Author     : Dana Chavez
 */
 
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
+
+:root{
+  /* Paleta principal */
+  --color-primary: #1D2A2C;
+  --color-pink: #EFA4A8;
+  --color-dark-pink: BA5E61;
+  --color-blue: #69AFAD;
+  --color-light-gray: #EFEFEF;
+  --color-white: #FFFFFF;
+
+  /* Tipografia */
+  --font-primary:  'Outfit', sans-serif;             
+  --font-heading: 'Staatliches', sans-serif;    
+}
