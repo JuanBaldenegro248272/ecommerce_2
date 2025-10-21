@@ -1,0 +1,423 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
+
+:root{
+  --color-primary: #1D2A2C;
+  --color-pink: #f3d2d7; 
+  --color-dark-pink: #e9abae;   
+  --color-blue: #69AFAD;
+  --color-light-gray: #EFEFEF;
+  --color-white: #FFFFFF;
+
+  --font-primary: 'Outfit', sans-serif;
+  --font-heading: 'Staatliches', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
+}
+
+body {
+    font-family: var(--font-primary);
+    background-color: var(--color-white);
+    color: var(--color-primary);
+}
+
+a {
+    text-decoration: none;
+    color: inherit; 
+}
+
+h1, h2, h3 {
+    font-family: var(--font-heading);
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.logo-image {
+    width: 170px;
+    height: auto;
+    vertical-align: middle;
+}
+
+.social-icons img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+}
+
+.user-icons img {
+    width: 24px;
+    height: 24px;
+}
+
+.contact-icon-large {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+
+.icon-location {
+    width: 40px;  
+    height: 40px;
+    flex-shrink: 0;
+    object-fit: contain;
+}
+
+.icon-mail {
+    width: 24px;  
+    height: 24px;
+    flex-shrink: 0;
+    object-fit: contain;
+}
+
+.sub-nav-item img {
+    width: 30px;
+    height: 30px;
+}
+.hero-image {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    background-color: var(--color-light-gray);
+}
+.feature-icon {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 15px;
+}
+.review-user-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 10px;
+}
+
+.top-bar {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    padding: 8px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.7em;
+    text-transform: uppercase;
+}
+
+.social-icons, .account-links, .user-icons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.main-nav {
+    background-color: var(--color-white);
+    padding: 20px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--color-light-gray);
+}
+
+.main-nav .logo a {
+    font-family: var(--font-heading);
+    font-size: 2.5em;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--color-primary);
+}
+
+.main-nav .nav-links {
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    gap: 30px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.sub-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 80px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--color-light-gray);
+}
+
+.sub-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+}
+
+.sub-nav-item a {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9em;
+}
+
+.contact-page {
+    padding: 50px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contact-container {
+    background-color: var(--color-pink);
+    border: 1px solid var(--color-primary);
+    padding: 40px;
+    width: 100%;
+    max-width: 900px;
+}
+
+.contact-container h1 {
+    font-size: 2.5em;
+    margin-bottom: 30px;
+}
+
+.form-wrapper {
+    display: flex;
+    gap: 30px;
+}
+
+.contact-form {
+    flex: 3;
+}
+
+.icon-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.phone-icon {
+    align-self: center;
+    margin-top: 50px;
+    width: 80px;
+    height: 80px;
+}
+
+.cursor-icon {
+    align-self: flex-end;
+    width: 40px;
+    height: 40px;
+}
+
+.contact-form label {
+    display: block;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+}
+
+.contact-form input, .contact-form textarea {
+    width: 100%;
+    border: none;
+    background-color: var(--color-dark-pink);
+    padding: 15px;
+    font-family: var(--font-primary);
+    color: var(--color-primary);
+}
+
+.contact-form textarea {
+    height: 150px;
+    resize: none;
+}
+
+.other-contact {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 2px solid var(--color-dark-pink);
+}
+
+.other-contact h3 {
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 1em;
+}
+
+.contact-details {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.contact-item p {
+    font-weight: normal;
+    font-size: 0.9em;
+}
+
+.about-page {
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.hero {
+    padding: 20px 0;
+}
+
+.about-page section {
+    padding: 40px 0;
+    border-bottom: 1px solid var(--color-light-gray);
+}
+.about-page section:last-child {
+    border-bottom: none;
+}
+
+.history {
+    text-align: center;
+}
+.history h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    text-transform: none;
+}
+.history p {
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+    color: var(--color-primary);
+    font-size: 0.95em;
+}
+
+.why-us {
+    text-align: center;
+}
+.why-us h2 {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+}
+.features-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 30px;
+}
+.feature-item p {
+    font-weight: bold;
+    line-height: 1.4;
+    font-size: 0.9em;
+    text-transform: uppercase;
+}
+.text-pink {
+    color: var(--color-dark-pink);
+}
+.text-black {
+    color: var(--color-primary);
+}
+
+.reviews {
+    text-align: center;
+}
+.reviews h2 {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+}
+.reviews-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 30px;
+    text-align: center;
+}
+.review-item .stars {
+    font-size: 1.5em;
+    color: var(--color-primary);
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+.review-item p {
+    font-size: 0.9em;
+    color: var(--color-primary);
+    line-height: 1.5;
+    max-width: 250px;
+    margin: 0 auto;
+}
+
+.community {
+    text-align: center;
+    padding: 40px 0;
+    background-color: var(--color-light-gray);
+    margin-left: -20px;
+    margin-right: -20px;
+}
+.community h3 {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: var(--color-dark-pink);
+    letter-spacing: 1px;
+}
+
+@media (max-width: 768px) {
+    .main-nav {
+        flex-direction: column;
+        gap: 20px;
+        padding: 15px;
+    }
+    .main-nav .nav-links {
+        gap: 20px;
+        font-size: 0.9em;
+    }
+    .contact-container {
+        padding: 20px;
+    }
+    .form-wrapper {
+        flex-direction: column;
+    }
+    .icon-column {
+        flex-direction: row;
+        justify-content: space-around;
+        padding-top: 20px;
+    }
+    .phone-icon, .cursor-icon {
+        margin-top: 0;
+        align-self: auto;
+    }
+    .contact-details {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .sub-nav {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+    .hero-image {
+        height: 250px;
+    }
+    .history p {
+        padding: 0 10px;
+    }
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    .reviews-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    .community {
+        margin-left: 0;
+        margin-right: 0;
+        padding: 30px 10px;
+    }
+    .community h3 {
+        font-size: 1.1em;
+    }
+}
