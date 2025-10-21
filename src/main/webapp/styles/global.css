@@ -14,12 +14,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   /* Paleta principal */
   --color-primary: #1D2A2C;
   --color-pink: #EFA4A8;
-  --color-dark-pink: BA5E61;
+  --color-dark-pink: #BA5E61;
   --color-blue: #69AFAD;
   --color-light-gray: #EFEFEF;
   --color-white: #FFFFFF;
 
   /* Tipografia */
-  --font-primary:  'Outfit', sans-serif;             
-  --font-heading: 'Staatliches', sans-serif;    
+  --outfit:  'Outfit', sans-serif;             
+  --staatliches: 'Staatliches', sans-serif;    
 }

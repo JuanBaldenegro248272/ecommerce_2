@@ -3,21 +3,214 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="styles/styles.css">
         <title>ECOstore - pagina principal</title>
     </head>
     <body>
         <header>
-            <a href="index.html" class="logo">
-                <<img src="icons/logoeco.png" alt="logo ECOstore"/>
-                <span>ECOstore</span>
-            </a>
-            <<nav>
-                <a href="store.html">STORE</a>
-                <a href="formato.html">FORMATO</a>
-                <a href="estilos.html">ESTILOS</a>
+            <div class="header-top">
+                <a href="index.html" class="logo">
+                    <img src="icons/logoeco.png" alt="logo ECOstore"/>
+                    <span class="titulo">
+                        <span class="resaltado">ECO</span>store
+                    </span>
+                </a>
+
+                <nav>
+                    <a href="store.html">STORE</a>
+                    <a href="formato.html">FORMATO</a>
+                    <a href="estilos.html">ESTILOS</a>
+                </nav>
+
+                <div class="iconos-derecha">
+                    <a href='#'>
+                        <img src="icons/searchicon.png" alt="search"/>
+                    </a>
+                    <a href='#'>
+                        <img src="icons/carticon.png" alt="shopping bag"/>
+                    </a>
+                    <a href='#'>
+                        <img src="icons/accounticon.png" alt="my account"/>
+                    </a>
+                </div>
+            </div>
         </header>
         <main>
+            <section class="highlight">
+                <img src="icons/highlight.png" alt="Banner Tercer Sol">
+                <div class="highlight-text">
+                    <h2>TERCER SOL</h2>
+                    <h4>"La ciudad reflejada" LP</h4>
+                    <p>Edición limitada</p>
+                </div>
+            </section>
             
+            <section class="seccion-generica">
+                <div class="header-seccion">
+                    <h2 class='titulo-seccion'>Recomendados</h2>
+                    <div class="linea-divisora"></div>
+                </div>
+                <div class="album-grid">
+                    <article class="album">
+                        <a href="rumours-detalle.html" class="album-link">
+                            <img src="albumcovers/rumours.png" alt="Rumours - Fleetwood Mac">
+                            <h3>Rumours</h3>
+                            <p>Fleetwood</p>
+                        </a>
+                        <button>ADD TO CART</button>
+                    </article>
+                    <article class="album">
+                        <a href="nevermind-detalle.html" class="album-link">
+                            <img src="albumcovers/nevermind.png" alt="Nevermind - Nirvana">
+                            <h3>Nevermind</h3>
+                            <p>Nirvana</p>
+                        </a>
+                        <button>ADD TO CART</button>
+                    </article>
+                    <article class="album">
+                        <a href="b2b-detalle.html" class="album-link">
+                            <img src="albumcovers/back2black.png" alt="Back To Black - Amy Winehouse">
+                            <h3>Back To Black</h3>
+                            <p>Amy Winehouse</p>
+                        </a>
+                        <button>ADD TO CART</button>
+                    </article>
+                    <article class="album">
+                        <a href="shortnsweet-detalle.html" class="album-link">
+                            <img src="albumcovers/shortnsweet.png" alt="Short n' Sweet - Sabrina Carpenter">
+                            <h3>Short n' Sweet</h3>
+                            <p>Sabrina Carpenter</p>
+                        </a>
+                        <button>ADD TO CART</button>
+                    </article>
+                    <article class="album">
+                        <a href="folklore-detalle.html" class="album-link">
+                            <img src="albumcovers/folklore.png" alt="folklore - Taylor Swift">
+                            <h3>folklore</h3>
+                            <p>Taylor Swift</p>
+                        </a>
+                        <button>ADD TO CART</button>
+                    </article>
+                </div>
+            </section>
+            
+            <section class="seccion-generica">
+                <div class="header-seccion">
+                    <h2 class="titulo-seccion">Rock / Alternativo</h2>
+                    <a href="#" class="enlace-ver-todo">| see all</a>
+                </div>
+                <div class="album-grid">
+                    <article class="album">
+                        <a href="am-detalle.html" class="album-link">
+                            <img src="albumcovers/am.png" alt="AM - Arctic Monkeys">
+                            <h3>AM</h3>
+                            <p>Arctic Monkeys</p>
+                        </a>
+                        <button>ADD TO CART</button>
+                    </article>
+                    <article class="album">
+                        <a href="turnbright-detalle.html" class="album-link">
+                            <img src="albumcovers/turnbright.png" alt="Turn on the Bright Lights - Interpol">
+                            <h3>Turn on the Bright Lights</h3>
+                            <p>Interpol</p>
+                        </a>
+                        <button>ADD TO CART</button>
+                    </article>
+                    <article class="album">
+                        <a href="wipedout-detalle.html" class="album-link">
+                            <img src="albumcovers/wipedout.png" alt="Wiped Out! - The Neighbourhood">
+                            <h3>Wiped Out!</h3>
+                            <p>The Neighbourhood</p>
+                        </a>
+                        <button>ADD TO CART</button>
+                    </article>
+                    <article class="album">
+                        <a href="thebends-detalle.html" class="album-link">
+                            <img src="albumcovers/thebends.png" alt="the bends - Radiohead">
+                            <h3>the bends</h3>
+                            <p>Radiohead</p>
+                        </a>
+                        <button>ADD TO CART</button>
+                    </article>
+                    <article class="album">
+                        <a href="souvlaki-detalle.html" class="album-link">
+                            <img src="albumcovers/souvlaki.png" alt="Souvlaki - Slowdive">
+                            <h3>Souvlaki</h3>
+                            <p>Slowdive</p>
+                        </a>
+                        <button>ADD TO CART</button>
+                    </article>                    
+                </div>
+            </section>
+
+            <section class="seccion-generica">
+                <div class="header-seccion">
+                    <h2 class="titulo-seccion">Pop</h2>
+                    <a href="#" class="enlace-ver-todo">| see all</a>
+                </div>
+                <div class="album-grid">
+                    <article class="album">
+                        <a href="guts-detalle.html" class="album-link">
+                            <img src="albumcovers/guts.png" alt="Guts - Olivia Rodrigo">
+                            <h3>Guts</h3>
+                            <p>Olivia Rodrigo</p>
+                        </a>
+                        <button>ADD TO CART</button>
+                    </article>
+                    <article class="album">
+                        <a href="soclosetowhat-detalle.html" class="album-link">
+                            <img src="albumcovers/soclose.png" alt="So Close to What - Tate McRae">
+                            <h3>So Close to What</h3>
+                            <p>Tate McRae</p>
+                        </a>
+                        <button>ADD TO CART</button>
+                    </article>
+                    <article class="album">
+                        <a href="mansbf-detalle.html" class="album-link">
+                            <img src="albumcovers/mansbf.png" alt="Man’s Best Friend - Sabrina Carpenter">
+                            <h3>Man’s Best Friend</h3>
+                            <p>Sabrina Carpenter</p>
+                        </a>
+                        <button>ADD TO CART</button>
+                    </article>
+                    <article class="album">
+                        <a href="brat-detalle.html" class="album-link">
+                            <img src="albumcovers/brat.png" alt="brat - Charli xcx">
+                            <h3>brat</h3>
+                            <p>Charli xcx</p>
+                        </a>
+                        <button>ADD TO CART</button>
+                    </article>
+                    <article class="album">
+                        <a href="thefame-detalle.html" class="album-link">
+                            <img src="albumcovers/thefame.png" alt="The Fame - Lady Gaga">
+                            <h3>The Fame</h3>
+                            <p>Lady Gaga</p>
+                        </a>
+                        <button>ADD TO CART</button>
+                    </article>    
+                </div>
+            </section>
+
+            <section class='categorias'>
+                <div class='cat-grid'>
+                    <a href="#" class='cat'>
+                        <img src="albumcovers/fondokpop.png" alt='Fondo kpop'>
+                        <span class="genero">K-Pop</span>
+                        <span class="cta">SHOP THIS</span>
+                    </a>
+                    <a href='#' class="cat">
+                        <img src="albumcovers/fondorb.png" alt='Fondo R&B'>
+                        <span class="genero">R&B</span>
+                        <span class="cta">SHOP THIS</span>
+                    </a>
+                    <a href="#" class='cat'>
+                        <img src="albumcovers/fondoreg.png" alt='Fondo Reggaeton'>
+                        <span class="genero">Reggaeton</span>
+                        <span class="cta">SHOP THIS</span>                       
+                    </a>
+                </div>
+            </section>
         </main>
         <footer>
             
