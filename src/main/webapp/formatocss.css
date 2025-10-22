@@ -432,7 +432,7 @@ body {
     padding: 40px 60px;
     font-size: 1rem;
     letter-spacing: normal;
-    font-style: none;
+    font-family: 'Outfit', sans-serif;
 }
 
 .footer-container {
@@ -448,14 +448,18 @@ body {
 }
 
 .footer-column.about img {
-    width: 140px;
-    margin-bottom: 16px;
+   width: 80%;
+   height: auto;
+   display: block;
+   margin:0;
 }
 
 .footer-column.about p {
     font-size: 1rem;
     color: #e0e0e0;
     font-size: 1.2rem;
+    margin-top: 0%;
+    text-align: justify;
 }
 
 .footer-column h4 {
@@ -473,6 +477,10 @@ body {
     color: #e0e0e0;
     text-decoration: none;
     font-size: 1.2rem;
+}
+
+.footer-column ul li {
+    margin-top: 30px;
 }
 
 .footer-column ul li a:hover {
