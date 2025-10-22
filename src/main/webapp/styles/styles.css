@@ -56,6 +56,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 /* Header */
 header {
+
     padding: 10px 0;
     width: 95%;
 }
@@ -65,6 +66,7 @@ header {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
+    margin-top: 15px;
     position: relative; 
     height: 70px;
 }
@@ -812,3 +814,137 @@ nav a:hover {
         font-size: 2rem;
     }
 }
+
+/* HOJA DE GENEROS */
+.albumes {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 18px;
+    padding: 40px 15%;
+    justify-items: center;
+    margin-top: 20px;
+}
+
+.info{
+    font-family: var(--outfit);
+    font-size: 24px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.genero {
+    width: 100%;
+    max-width: 230px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    outline: none;
+}
+
+.cover {
+    width: 100%;
+    height: 230px;            
+    position: relative;
+    overflow: hidden;         
+}
+
+.cover img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;         
+    height: auto;       
+    object-fit: cover;
+    overflow: hidden;
+    transition: transform 0.5s ease; 
+    transform: translateY(55%); 
+}
+
+.cover:hover img {
+    transform: translateY(0%);
+}
+
+.genero:active .cover {
+    transform: translateY(-8px) rotateX(4deg) scale(1.005);
+    transition-duration: 180ms;
+}
+
+/* responsivo */
+@media (max-width: 1200px) {
+    .albumes {
+        grid-template-columns: repeat(3, 1fr); 
+        gap: 16px;
+        padding: 36px 10%;
+    }
+
+    .info {
+        font-size: 22px;
+    }
+
+    .cover {
+        height: 220px;
+    }
+
+    .cover img {
+        transform: translateY(50%); 
+    }
+}
+
+@media (max-width: 900px) {
+    .albumes {
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 14px;
+        padding: 30px 6%;
+    }
+
+    .info {
+         font-size: 20px;
+    }
+
+    .genero {
+        max-width: 280px; 
+    }
+
+    .cover {
+        height: 200px;
+    }
+
+    .cover img {
+        transform: translateY(48%); 
+    }
+}
+
+@media (max-width: 600px) {
+    .albumes {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 28px 5%;
+    }
+
+    .info {
+        font-size: 18px;
+    }
+
+    .genero {
+        max-width: 100%;
+    }
+
+    .cover {
+        height: 190px;
+        border-radius: 10px;
+    }
+
+    .cover img {
+        transform: translateY(42%);
+        transition: transform 0.55s ease;
+    }
+
+    .cover:hover img {
+         transform: translateY(8%);
+    }
+}
+
+
+
