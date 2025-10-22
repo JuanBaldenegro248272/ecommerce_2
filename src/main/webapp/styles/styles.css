@@ -9,6 +9,51 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 @import "global.css";
 
+/* top bar */ 
+.top-bar {
+    background-color: #1d2a2c;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 48px;
+    font-size: 1.125rem;
+    letter-spacing: 0.5px;
+    width: 100%;
+}
+
+.top-bar a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+.top-links {
+    font-family: var(--outfit);
+    font-size: 16px;
+    font-weight: 200;
+}
+
+.top-links a{
+    margin-left: 60px;
+}
+
+.social-icons a img {
+    width: 28px;
+    height: 28px;
+    margin-right: 18px;
+    vertical-align: middle;
+    transition: opacity 0.2s;
+}
+
+.social-icons a img:hover {
+    opacity: 0.7;
+}
+
+.top-bar a:hover {
+    opacity: 0.7;
+}
+
 /* Header */
 header {
     padding: 10px 0;
