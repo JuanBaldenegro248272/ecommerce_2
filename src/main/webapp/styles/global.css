@@ -18,6 +18,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   --color-blue: #69AFAD;
   --color-light-gray: #EFEFEF;
   --color-white: #FFFFFF;
+  
+  /* Colores para Contacto */
+  --color-contact-bg: #fdefee;
+  --color-contact-input: #f8c8cd; 
+  --color-contact-icon: #f5b0b5; 
 
   /* Tipografia */
   --outfit:  'Outfit', sans-serif;             
