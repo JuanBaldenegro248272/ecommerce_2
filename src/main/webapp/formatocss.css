@@ -762,6 +762,99 @@ body {
     padding-top: 10px;
     font-size: 1.3rem;
 }
+/*Mi cuenta 
+Falta checar porqué no esta aplicando los estilos al Form y no se porqué.
+*/
+.mi-cuenta {
+    background-color: #bfbfbf;
+    padding: 60px 0;
+    font-family: var(--outfit);
+}
+
+.cuenta-container {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    background-color: #f6d7dc;
+    padding: 40px 50px;
+    border-radius: 8px;
+}
+
+.cuenta-titulo {
+    font-family: var(--staatliches);
+    font-size: 48px;
+    margin: 0;
+    color: var(--color-primary);
+}
+
+.cuenta-bienvenida {
+    font-family: var(--staatliches);
+    font-size: 48px;
+    margin: 0;
+    color: var(--color-primary);
+}
+
+.btn-editar {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    background-color: #1d2a2c;
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    cursor: pointer;
+    font-family: var(--outfit);
+}
+
+.form-cuenta {
+    margin-top: 40px;
+    background-color:pink;
+}
+
+.form-cuenta h2 {
+    font-family: var(--staatliches);
+    font-size: 20px;
+    margin-bottom: 12px;
+}
+
+.form-cuenta input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 14px;
+    border: 1px solid #aaa;
+    border-radius: 6px;
+    font-family: var(--outfit);
+    font-size: 16px;
+}
+
+.form-row {
+    display: flex;
+    gap: 14px;
+}
+
+.botones-form {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.btn-cancelar {
+    background-color: #1d2a2c;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: var(--staatliches);
+}
+
+.btn-guardar {
+    background-color: #3b7f57;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: var(--staatliches);
+}
 
 .summary-actions {
     display: flex;
