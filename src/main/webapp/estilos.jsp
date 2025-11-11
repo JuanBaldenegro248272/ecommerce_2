@@ -1,8 +1,11 @@
+<%-- 
+    Document   : estilos
+    Created on : Nov 6, 2025, 11:58:41 PM
+    Author     : Dana Chavez
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
--->
 <html>
     <head>
         <meta charset="UTF-8">
@@ -11,41 +14,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <title>ECOstore - pagina generos</title>
     </head>
     <body>
-        <header>
-            <div class="top-bar">
-                <div class="social-icons">
-                    <a href="#"><img src="icons/instalogo.png"></a>
-                    <a href="#"><img src="icons/twlogo.png"></a>
-                    <a href="#"><img src="icons/fblogo.png"></a>
-                </div>
-                <div class="top-links">
-                    <a href="contact.html">contact</a>
-                    <a href="about.html">about</a>
-                    <a href="login.html" id="myAccountLink">log in</a>
-                    </div>
-            </div>
-            <div class="header-top">
-                <a href="index.html" class="logo">
-                    <img src="icons/logoeco.png" alt="logo ECOstore"/>
-                    <span class="titulo">
-                        <span class="resaltado">ECO</span>store
-                    </span>
-                </a>
-                <nav>
-                    <a href="store.html">STORE</a>
-                    <a href="formato.html">FORMATO</a>
-                    <a href="estilos.html">ESTILOS</a>
-                </nav>
-                <div class="iconos-derecha">
-                    <a href='#'>
-                        <img src="icons/searchicon.png" alt="search"/>
-                    </a>
-                    <a href='#'>
-                        <img src="icons/carticon.png" alt="shopping bag"/>
-                    </a>
-                    </div>
-            </div>
-        </header>
+
+        <%@ include file = "/WEB-INF/fragments/navbar.jspf" %>
         
         <section class="albumes">
             <div class="genero">
@@ -146,50 +116,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             </div>
         </section>
         
+        <%@ include file = "/WEB-INF/fragments/footer.jspf" %>
         
-        <footer class="footer">
-            <div class="footer-container">
-                <div class="footer-column about">
-                    <div class="footer-title">
-                        <img src="icons/iconlogoblanco.png" alt="ECOstore logo">
-                        <div class="footer-text">
-                            <span class="eco">ECO</span>
-                            <span class="store">store</span>
-                        </div>
-                    </div>
-                    <p>
-                        ECOstore es una tienda independiente dedicada
-                        al formato físico y al sonido auténtico. Desde México,
-                        promovemos la cultura del vinilo y la conexión entre artistas
-                        y oyentes que valoran la experiencia de escuchar música sin prisas.
-                    </p>
-                </div>
-
-                <div class="footer-column links">
-                    <h4>ECOstore</h4>
-                    <ul>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">My account</a></li>
-                        <li><a href="#">Terms & conditions</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-column selection">
-                    <h4>Selección ECOstore</h4>
-                    <ul>
-                        <li><a href="#">Rock/Alternativo</a></li>
-                        <li><a href="#">Pop</a></li>
-                        <li><a href="#">K-Pop</a></li>
-                        <li><a href="#">R&B</a></li>
-                        <li><a href="#">Reggaeton</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2025 ECOstore. Todos los derechos reservados.</p>
-            </div>
-
-        </footer>       
     </body>
 </html>
+

@@ -28,3 +28,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   --outfit:  'Outfit', sans-serif;             
   --staatliches: 'Staatliches', sans-serif;    
 }
+
+a {
+    text-decoration: none;
+    color: inherit;
+}

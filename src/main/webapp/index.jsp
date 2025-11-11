@@ -1,3 +1,10 @@
+<%-- 
+    Document   : index
+    Created on : Nov 6, 2025, 10:32:20 PM
+    Author     : Dana Chavez
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -7,41 +14,8 @@
         <title>ECOstore - pagina principal</title>
     </head>
     <body>
-        <header>
-            <div class="top-bar">
-                <div class="social-icons">
-                    <a href="#"><img src="icons/instalogo.png"></a>
-                    <a href="#"><img src="icons/twlogo.png"></a>
-                    <a href="#"><img src="icons/fblogo.png"></a>
-                </div>
-                <div class="top-links">
-                    <a href="contact.html">contact</a>
-                    <a href="about.html">about</a>
-                    <a href="login.html" id="myAccountLink">log in</a>
-                    </div>
-            </div>
-            <div class="header-top">
-                <a href="index.html" class="logo">
-                    <img src="icons/logoeco.png" alt="logo ECOstore"/>
-                    <span class="titulo">
-                        <span class="resaltado">ECO</span>store
-                    </span>
-                </a>
-                <nav>
-                    <a href="store.html">STORE</a>
-                    <a href="formato.html">FORMATO</a>
-                    <a href="estilos.html">ESTILOS</a>
-                </nav>
-                <div class="iconos-derecha">
-                    <a href='#'>
-                        <img src="icons/searchicon.png" alt="search"/>
-                    </a>
-                    <a href='#'>
-                        <img src="icons/carticon.png" alt="shopping bag"/>
-                    </a>
-                    </div>
-            </div>
-        </header>
+        
+        <%@ include file="/WEB-INF/fragments/navbar.jspf" %>
         
         <main>
             <section class="highlight">
@@ -60,7 +34,7 @@
                 </div>
                 <div class="album-grid">
                     <article class="album">
-                        <a href="rumours-detalle.html" class="album-link">
+                        <a href="rumours-detalle.jsp" class="album-link">
                             <img src="albumcovers/rumours.png" alt="Rumours - Fleetwood Mac">
                             <h3>Rumours</h3>
                             <p>Fleetwood</p>
@@ -68,7 +42,7 @@
                         <button>ADD TO CART</button>
                     </article>
                     <article class="album">
-                        <a href="nevermind-detalle.html" class="album-link">
+                        <a href="nevermind-detalle.jsp" class="album-link">
                             <img src="albumcovers/nevermind.png" alt="Nevermind - Nirvana">
                             <h3>Nevermind</h3>
                             <p>Nirvana</p>
@@ -76,7 +50,7 @@
                         <button>ADD TO CART</button>
                     </article>
                     <article class="album">
-                        <a href="b2b-detalle.html" class="album-link">
+                        <a href="b2b-detalle.jsp" class="album-link">
                             <img src="albumcovers/back2black.png" alt="Back To Black - Amy Winehouse">
                             <h3>Back To Black</h3>
                             <p>Amy Winehouse</p>
@@ -84,7 +58,7 @@
                         <button>ADD TO CART</button>
                     </article>
                     <article class="album">
-                        <a href="shortnsweet-detalle.html" class="album-link">
+                        <a href="shortnsweet-detalle.jsp" class="album-link">
                             <img src="albumcovers/shortnsweet.png" alt="Short n' Sweet - Sabrina Carpenter">
                             <h3>Short n' Sweet</h3>
                             <p>Sabrina Carpenter</p>
@@ -239,11 +213,11 @@
             
             <section class="additional-info">
                 <div class="add-grid">
-                    <a href="about.html" class='add'>
+                    <a href="about.jsp" class='add'>
                         <img src="icons/iconaboutus.png" alt='Fondo about us'>
                         <span>ABOUT US</span>
                     </a>
-                    <a href='contact.html' class="add">
+                    <a href='contact.jsp' class="add">
                         <img src="icons/iconcontact.png" alt='Fondo contact us'>
                         <span>CONTACT US</span>
                     </a>
@@ -252,48 +226,6 @@
             
         </main>
 
-        <footer class="footer">
-            <div class="footer-container">
-                <div class="footer-column about">
-                    <div class="footer-title">
-                        <img src="icons/iconlogoblanco.png" alt="ECOstore logo">
-                        <div class="footer-text">
-                            <span class="eco">ECO</span>
-                            <span class="store">store</span>
-                        </div>
-                    </div>
-                    <p>
-                        ECOstore es una tienda independiente dedicada
-                        al formato físico y al sonido auténtico. Desde México,
-                        promovemos la cultura del vinilo y la conexión entre artistas
-                        y oyentes que valoran la experiencia de escuchar música sin prisas.
-                    </p>
-                </div>
-
-                <div class="footer-column links">
-                    <h4>ECOstore</h4>
-                    <ul>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">My account</a></li>
-                        <li><a href="#">Terms & conditions</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-column selection">
-                    <h4>Selección ECOstore</h4>
-                    <ul>
-                        <li><a href="#">Rock/Alternativo</a></li>
-                        <li><a href="#">Pop</a></li>
-                        <li><a href="#">K-Pop</a></li>
-                        <li><a href="#">R&B</a></li>
-                        <li><a href="#">Reggaeton</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2025 ECOstore. Todos los derechos reservados.</p>
-            </div>
-
-        </footer>
+        <%@ include file = "/WEB-INF/fragments/footer.jspf" %>
+        
 </html>

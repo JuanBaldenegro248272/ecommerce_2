@@ -1,0 +1,38 @@
+<header>
+    <div class="top-bar">
+        <div class="social-icons">
+            <a href="#"><img src="icons/instalogo.png"></a>
+            <a href="#"><img src="icons/twlogo.png"></a>
+            <a href="#"><img src="icons/fblogo.png"></a>
+        </div>
+        <div class="top-links">
+            <a href="contact.jsp">contact</a>
+            <a href="about.jsp">about</a>
+            <a href="login.jsp" id="myAccountLink">log in</a>
+        </div>
+    </div>
+    <div class="header-top">
+        <a href="index.jsp" class="logo">
+            <img src="icons/logoeco.png" alt="logo ECOstore"/>
+            <span class="titulo">
+                <span class="resaltado">ECO</span>store
+            </span>
+        </a>
+        <nav>
+            <a href="store.jsp">STORE</a>
+            <a href="formato.jsp">FORMATO</a>
+            <a href="estilos.jsp">ESTILOS</a>
+        </nav>
+        <div class="iconos-derecha">
+            <a href='#'>
+                <img src="icons/searchicon.png" alt="search"/>
+            </a>
+            <a href='carrito.jsp'>
+                <img src="icons/carticon.png" alt="shopping bag"/>
+            </a>
+            <a href='micuenta.jsp'>
+                <img src="icons/accounticon.png" alt="my account"/>
+            </a>
+        </div>
+    </div>
+</header>
