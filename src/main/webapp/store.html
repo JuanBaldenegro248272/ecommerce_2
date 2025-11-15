@@ -5,11 +5,260 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>ECOstore – Store</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="stylesheet" href="styles/styles.css">
+        <link rel="stylesheet" href="formatocss.css">
     </head>
+
     <body>
-        <div>TODO write content</div>
+
+        <!-- ============ HEADER ============ -->
+        <header>
+            <div class="top-bar">
+                <div class="social-icons">
+                    <a href="#"><img src="icons/instalogo.png"></a>
+                    <a href="#"><img src="icons/twlogo.png"></a>
+                    <a href="#"><img src="icons/fblogo.png"></a>
+                </div>
+
+                <div class="top-links">
+                    <a href="contact.html">contact</a>
+                    <a href="about.html">about</a>
+                    <a href="login.html">my account</a>
+                </div>
+            </div>
+
+            <div class="header-top">
+                <a href="index.html" class="logo">
+                    <img src="icons/logoeco.png" alt="logo ECOstore"/>
+                    <span class="titulo">
+                        <span class="resaltado">ECO</span>store
+                    </span>
+                </a>
+
+                <nav>
+                    <a href="store.html">STORE</a>
+                    <a href="formato.html">FORMATO</a>
+                    <a href="estilos.html">ESTILOS</a>
+                </nav>
+
+                <div class="iconos-derecha">
+                    <a href="#"><img src="icons/searchicon.png" alt="search"></a>
+                    <a href="#"><img src="icons/carticon.png" alt="shopping bag"></a>
+                </div>
+            </div>
+        </header>
+
+
+
+        <!-- ============ MAIN STORE LAYOUT ============ -->
+        <main>
+            <div class="store-layout">
+
+                <!-- ================= SIDE FILTERS ================= -->
+                <aside class="sidebar">
+
+                    <h3>Organizar por:</h3>
+                    <hr>
+
+                    <h3>Formato</h3>
+                    <ul class="formats">
+                        <li>All</li>
+
+                        <li>
+                            <div class="format">
+                                <img src="icons/vinylicon.png"> Vinyl
+                            </div>
+                            <ul class="subformats">
+                                <li>LP</li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <div class="format">
+                                <img src="icons/cdicon.png"> CD
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="format">
+                                <img src="icons/casseteicon.png"> Cassette
+                            </div>
+                        </li>
+                    </ul>
+
+                    <h3>Estilos</h3>
+                    <ul class="formats">
+                        <li>All</li>
+                        <li>Rock / Alternativo</li>
+                        <li>Pop</li>
+                        <li>Urbano, R&B</li>
+                        <li>R&B</li>
+                        <li>Electronica, Chill</li>
+                        <li>Classic, Jazz</li>
+                    </ul>
+
+                </aside>
+
+
+
+                <!-- ================= STORE CONTENT ================= -->
+                <section class="store-content">
+
+                    <!-- ======== TOP SORT + SEARCH BAR ======== -->
+                    <div class="store-top-bar">
+                        
+                        <select class="sort-select">
+                            <option>Sort by latest</option>
+                            <option>Price: Low to High</option>
+                            <option>Price: High to Low</option>
+                            <option>A–Z</option>
+                            <option>Z–A</option>
+                        </select>
+
+                        <div class="search-input-box">
+                            <input type="text" placeholder="Nombre del álbum">
+                            <button><img src="icons/searchicon.png"></button>
+                        </div>
+                    </div>
+
+
+
+                    <!-- ============ ALBUM GRID ============ -->
+                    <div class="grid-albums">
+
+                        <!-- ===== ALBUM CARD ===== -->
+                        <article class="album-card">
+                            <a class="album-media">
+                                <img src="albumcovers/rumours.png">
+                            </a>
+
+                            <div class="album-meta">
+                                <h4 class="album-title">Rumours</h4>
+                                <p class="artist">Fleetwood Mac</p>
+
+                                <div class="price-box">
+                                    <img src="icons/vinylicon.png" class="price-icon">
+                                    <span>$23.90</span>
+                                </div>
+                            </div>
+
+                            <div class="album-actions">
+                                <button class="btn btn-outline">ADD TO CART</button>
+                            </div>
+                        </article>
+
+
+                        <article class="album-card">
+                            <a class="album-media">
+                                <img src="albumcovers/nevermind.png">
+                            </a>
+
+                            <div class="album-meta">
+                                <h4 class="album-title">Nevermind</h4>
+                                <p class="artist">Nirvana</p>
+
+                                <div class="price-box">
+                                    <img src="icons/vinylicon.png" class="price-icon">
+                                    <span>$14.90</span>
+                                </div>
+                            </div>
+
+                            <div class="album-actions">
+                                <button class="btn btn-outline">ADD TO CART</button>
+                            </div>
+                        </article>
+
+
+                        <article class="album-card">
+                            <a class="album-media">
+                                <img src="albumcovers/back2black.png">
+                            </a>
+
+                            <div class="album-meta">
+                                <h4 class="album-title">Back to Black</h4>
+                                <p class="artist">Amy Winehouse</p>
+
+                                <div class="price-box">
+                                    <img src="icons/vinylicon.png" class="price-icon">
+                                    <span>$14.90</span>
+                                </div>
+                            </div>
+
+                            <div class="album-actions">
+                                <button class="btn btn-outline">ADD TO CART</button>
+                            </div>
+                        </article>
+
+
+                        <article class="album-card">
+                            <a href="product-short-n-sweet.html" class="album-media">
+                                <img src="albumcovers/shortnsweet.png">
+                            </a>
+
+                            <div class="album-meta">
+                                <h4 class="album-title">Short n’ Sweet</h4>
+                                <p class="artist">Sabrina Carpenter</p>
+
+                                <div class="price-box">
+                                    <img src="icons/vinylicon.png" class="price-icon">
+                                    <span>$23.90</span>
+                                </div>
+                            </div>
+
+                            <div class="album-actions">
+                                <button class="btn btn-outline">ADD TO CART</button>
+                            </div>
+                        </article>
+
+                    </div>
+
+                </section>
+
+            </div>
+        </main>
+
+
+
+        <!-- ============ FOOTER ============ -->
+        <footer class="footer">
+            <div class="footer-container">
+                <div class="footer-column about">
+                    <img src="icons/blackPiano.png">
+
+                    <p>
+                        ECOstore es una tienda independiente dedicada
+                        al formato físico y al sonido auténtico. Desde México,
+                        promovemos la cultura del vinilo y la conexión entre artistas
+                        y oyentes que valoran la experiencia de escuchar música sin prisas.
+                    </p>
+                </div>
+
+                <div class="footer-column links">
+                    <h4>ECOstore</h4>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">My account</a></li>
+                        <li><a href="#">Terms & conditions</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column selection">
+                    <h4>Selección ECOstore</h4>
+                    <ul>
+                        <li><a href="#">Rock/Alternativo</a></li>
+                        <li><a href="#">Pop</a></li>
+                        <li><a href="#">K-Pop</a></li>
+                        <li><a href="#">R&B</a></li>
+                        <li><a href="#">Reggaeton</a></li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+
     </body>
 </html>

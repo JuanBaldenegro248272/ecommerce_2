@@ -328,6 +328,7 @@ h1, h2, h3 {
     font-size: 0.95em;
 }
 
+
 .why-us {
     text-align: center;
 }
@@ -617,5 +618,12 @@ h1, h2, h3 {
         margin-top: 30px;
         padding-top: 20px;
         border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .store-content{
+    font-family: var(--font-primary); 
+    color: var(--color-white);
+    line-height: 1; 
+    font-weight: 400;
+        
     }
 }
