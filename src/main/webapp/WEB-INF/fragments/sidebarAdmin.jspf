@@ -1,0 +1,25 @@
+<aside class="admin-sidebar">
+
+    <div class="logo-box">
+        <h2>ECOstore</h2>
+        <span>Admin Panel</span>
+    </div>
+
+    <nav class="menu">
+        <a href="dashboard.jsp"   class="menu-item">Dashboard</a>
+        <a href="usuarios.jsp"    class="menu-item">Usuarios</a>
+        <a href="productos.jsp"   class="menu-item">Productos</a>
+        <a href="categorias.jsp"  class="menu-item">Categorías</a>
+        <a href="pedidos.jsp"     class="menu-item">Pedidos</a>
+        <a href="resenas.jsp"     class="menu-item">Reseñas</a>
+    </nav>
+
+    <div class="user-box">
+        <div class="avatar"></div>
+        <div>
+            <p class="user-name">Admin</p>
+            <p class="user-role">Administrador</p>
+        </div>
+    </div>
+
+</aside>
