@@ -5,6 +5,8 @@
 package itson.ecommerce.persistencia.interfaces;
 
 import itson.ecommerce.persistencia.dtos.NuevoProductoDTO;
+import itson.ecommerce.persistencia.entidades.Producto;
+import java.util.List;
 
 /**
  *
@@ -12,6 +14,10 @@ import itson.ecommerce.persistencia.dtos.NuevoProductoDTO;
  */
 public interface IProductosDAO {
 
-    public NuevoProductoDTO crear(NuevoProductoDTO dto);
+    public abstract NuevoProductoDTO crear(NuevoProductoDTO dto);
+    
+    public abstract List<Producto> obtenerTodos();
+    
+    public abstract List<Producto> buscarPorNombre(String termino);
     
 }

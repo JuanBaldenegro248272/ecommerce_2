@@ -37,6 +37,7 @@ itson\ecommerce\persistencia\entidades\DetalleCarrito.class
 itson\ecommerce\persistencia\entidades\PagoTransferencia.class
 itson\ecommerce\persistencia\utils\JasyptUtil.class
 itson\ecommerce\persistencia\entidades\Cliente_.class
+itson\ecommerce\persistencia\dtos\ProductoListaDTO.class
 itson\ecommerce\persistencia\Main.class
 itson\ecommerce\persistencia\entidades\EstadoResena.class
 itson\ecommerce\persistencia\entidades\GeneroAlbum.class

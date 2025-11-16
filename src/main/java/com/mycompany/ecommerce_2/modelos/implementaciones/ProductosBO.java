@@ -7,8 +7,10 @@ package com.mycompany.ecommerce_2.modelos.implementaciones;
 import com.mycompany.ecommerce_2.exceptions.BusinessException;
 import com.mycompany.ecommerce_2.modelos.IProductosBO;
 import itson.ecommerce.persistencia.dtos.NuevoProductoDTO;
+import itson.ecommerce.persistencia.dtos.ProductoListaDTO;
 import itson.ecommerce.persistencia.exceptions.PersistenciaException;
 import itson.ecommerce.persistencia.interfaces.IPersistencia;
+import java.util.List;
 
 /**
  *
@@ -59,5 +61,26 @@ public class ProductosBO implements IProductosBO{
         }
     }
 
-    
+    @Override
+    public List<ProductoListaDTO> obtenerTodosProductos() throws BusinessException {
+        try {
+            return persistencia.obtenerTodosProductos();
+        } catch (PersistenciaException ex) {
+            throw new BusinessException("No se pudieron obtener los productos.");
+        }
+    }
+
+    @Override
+    public List<ProductoListaDTO> buscarProductos(String termino) throws BusinessException {
+        if (termino == null || termino.trim().isEmpty()) {
+            return obtenerTodosProductos();
+        }
+        
+        try {
+            return persistencia.buscarProductos(termino.trim());
+        } catch (PersistenciaException ex) {
+            throw new BusinessException("No se pudieron buscar los productos.");
+        }
+    }
+   
 }

@@ -62,16 +62,18 @@ public class Album implements Serializable {
     public Album() {
     }
 
-    public Album(Long id, String nombre, String descripcion, Calendar fechaLanzamiento, Artista artista, List<String> canciones, List<GeneroAlbum> generos, List<Producto> productos) {
+    public Album(Long id, String nombre, String descripcion, Calendar fechaLanzamiento, String imagenUrl, Artista artista, List<String> canciones, List<GeneroAlbum> generos, List<Producto> productos) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.fechaLanzamiento = fechaLanzamiento;
+        this.imagenUrl = imagenUrl;
         this.artista = artista;
         this.canciones = canciones;
         this.generos = generos;
         this.productos = productos;
     }
+
 
     public Long getId() {
         return id;
@@ -135,6 +137,14 @@ public class Album implements Serializable {
 
     public void setProductos(List<Producto> productos) {
         this.productos = productos;
+    }
+
+    public String getImagenUrl() {
+        return imagenUrl;
+    }
+
+    public void setImagenUrl(String imagenUrl) {
+        this.imagenUrl = imagenUrl;
     }
 
     @Override

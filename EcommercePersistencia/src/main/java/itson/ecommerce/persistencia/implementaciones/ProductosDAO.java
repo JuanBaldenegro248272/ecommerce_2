@@ -12,7 +12,7 @@ import itson.ecommerce.persistencia.mapper.ProductoMapper;
 import itson.ecommerce.persistencia.utils.ManejadorConexiones;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -73,6 +73,62 @@ public class ProductosDAO implements IProductosDAO {
                 em.close();
             }
 
+        }
+    }
+
+    @Override
+    public List<Producto> obtenerTodos() {
+        EntityManager em = null;
+        try {
+            em = ManejadorConexiones.getEntityManager();
+
+            String jpql = "SELECT DISTINCT p FROM Producto p " +
+                         "LEFT JOIN FETCH p.album a " +
+                         "LEFT JOIN FETCH a.artista art " +
+                         "LEFT JOIN FETCH a.generos g " +
+                         "LEFT JOIN FETCH g.genero " +
+                         "ORDER BY p.id DESC";
+            
+            TypedQuery<Producto> query = em.createQuery(jpql, Producto.class);
+            return query.getResultList();
+            
+        } catch (Exception ex) {
+            System.out.println("Error al obtener productos: " + ex.getMessage());
+            throw new RuntimeException("Error al obtener productos", ex);
+        } finally {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
+        }
+    }
+
+    @Override
+    public List<Producto> buscarPorNombre(String termino) {
+        EntityManager em = null;
+        try {
+            em = ManejadorConexiones.getEntityManager();
+            
+            String jpql = "SELECT DISTINCT p FROM Producto p " +
+                         "LEFT JOIN FETCH p.album a " +
+                         "LEFT JOIN FETCH a.artista art " +
+                         "LEFT JOIN FETCH a.generos g " +
+                         "LEFT JOIN FETCH g.genero " +
+                         "WHERE LOWER(a.nombre) LIKE LOWER(:termino) " +
+                         "OR LOWER(art.nombreArtistico) LIKE LOWER(:termino) " +
+                         "ORDER BY p.id DESC";
+            
+            TypedQuery<Producto> query = em.createQuery(jpql, Producto.class);
+            query.setParameter("termino", "%" + termino + "%");
+            
+            return query.getResultList();
+            
+        } catch (Exception ex) {
+            System.out.println("Error al buscar productos: " + ex.getMessage());
+            throw new RuntimeException("Error al buscar productos", ex);
+        } finally {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
         }
     }
 

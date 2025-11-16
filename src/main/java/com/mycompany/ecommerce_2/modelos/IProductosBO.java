@@ -6,7 +6,8 @@ package com.mycompany.ecommerce_2.modelos;
 
 import com.mycompany.ecommerce_2.exceptions.BusinessException;
 import itson.ecommerce.persistencia.dtos.NuevoProductoDTO;
-import itson.ecommerce.persistencia.entidades.Producto;
+import itson.ecommerce.persistencia.dtos.ProductoListaDTO;
+import java.util.List;
 
 /**
  *
@@ -14,4 +15,8 @@ import itson.ecommerce.persistencia.entidades.Producto;
  */
 public interface IProductosBO {
     public abstract NuevoProductoDTO crearProducto(NuevoProductoDTO dto) throws BusinessException;
+       
+    public abstract List<ProductoListaDTO> obtenerTodosProductos() throws BusinessException;
+
+    public abstract List<ProductoListaDTO> buscarProductos(String termino) throws BusinessException;
 }

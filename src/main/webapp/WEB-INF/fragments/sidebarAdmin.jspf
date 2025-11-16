@@ -1,69 +1,69 @@
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+
 <aside class="sidebar">
     <div>
         <div class="brand">
             <div>
-                <a href="index.jsp" class="logo">
-                    <img src="icons/iconlogoblanco.png" alt="logo ECOstore"/>
+                <a href="${pageContext.request.contextPath}/index.jsp" class="logo">
+                    <img src="${pageContext.request.contextPath}/icons/iconlogoblanco.png" alt="logo ECOstore"/>
                     <span class="titulo">
                         <span class="resaltado">ECO</span>store
                     </span>
                 </a>
             </div>
         </div>
-
-
         <nav>
             <div class="nav-item">
-                <img src="icons/dashboardicon.png" alt="icon"/>
-                Dashboard
+                <a href="${pageContext.request.contextPath}/admin/dashboard">
+                    <img src="${pageContext.request.contextPath}/icons/dashboardicon.png" alt="icon"/>
+                    Dashboard
+                </a>
             </div>
             <div class="nav-item">
-                <a href="/usuarios-admin.jsp">
-                    <img src="icons/usuariosicon.png" alt="icon"/>
+                <a href="${pageContext.request.contextPath}/admin/usuarios">
+                    <img src="${pageContext.request.contextPath}/icons/usuariosicon.png" alt="icon"/>
                     Usuarios
                 </a>
             </div>
             <div class="nav-item">
-                <a href="/albums-admin.jsp">
-                    <img src="icons/albumsicon.png" alt="icon"/>
+                <a href="${pageContext.request.contextPath}/admin/albums">
+                    <img src="${pageContext.request.contextPath}/icons/albumsicon.png" alt="icon"/>
                     Albums                   
                 </a>
             </div>
-            <div class="nav-item">
-                <a href="/productos-admin.jsp">
-                    <img src="icons/productosicon.png" alt="icon"/>
+            <div class="nav-item active">
+                <a href="${pageContext.request.contextPath}/admin/productos">
+                    <img src="${pageContext.request.contextPath}/icons/productosicon.png" alt="Productos">
                     Productos
                 </a>
             </div>
             <div class="nav-item">
-                <a href="/categorias-admin.jsp">
-                    <img src="icons/categoriasicon.png" alt="icon"/>
+                <a href="${pageContext.request.contextPath}/admin/categorias">
+                    <img src="${pageContext.request.contextPath}/icons/categoriasicon.png" alt="icon"/>
                     Categorias
                 </a>
             </div>
             <div class="nav-item">
-                <a href="/pedidos-admin.jsp">
-                    <img src="icons/pedidosicon.png" alt="icon"/>
+                <a href="${pageContext.request.contextPath}/admin/pedidos">
+                    <img src="${pageContext.request.contextPath}/icons/pedidosicon.png" alt="icon"/>
                     Pedidos                    
                 </a>
             </div>
             <div class="nav-item">
-                <a href="/resenas-admin.jsp">
-                    <img src="icons/resenasicon.png" alt="icon" />
-                    Resenas                     
+                <a href="${pageContext.request.contextPath}/admin/resenas">
+                    <img src="${pageContext.request.contextPath}/icons/resenasicon.png" alt="icon" />
+                    Reseñas                     
                 </a>
             </div>
         </nav>
     </div>
-
     <div class="profile">
         <div class="avatar">
-            <img src="icons/usuariosicon.png">
+            <img src="${pageContext.request.contextPath}/icons/usuariosicon.png" alt="Avatar Admin">
         </div>
         <div>
             <span>Admin</span>
-            <span class = "small">Administrador</span>
+            <span class="small">Administrador</span>
         </div>
     </div>
-
 </aside>

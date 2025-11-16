@@ -5,9 +5,14 @@
 package itson.ecommerce.persistencia.implementaciones;
 
 import itson.ecommerce.persistencia.dtos.NuevoProductoDTO;
+import itson.ecommerce.persistencia.dtos.ProductoListaDTO;
+import itson.ecommerce.persistencia.entidades.Producto;
 import itson.ecommerce.persistencia.exceptions.PersistenciaException;
 import itson.ecommerce.persistencia.interfaces.IPersistencia;
 import itson.ecommerce.persistencia.interfaces.IProductosDAO;
+import itson.ecommerce.persistencia.mapper.ProductoMapper;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -23,5 +28,29 @@ public class Persistencia implements IPersistencia {
     @Override
     public NuevoProductoDTO crearProducto(NuevoProductoDTO dto) throws PersistenciaException {
         return productosDAO.crear(dto);
+    }
+
+    @Override
+    public List<ProductoListaDTO> obtenerTodosProductos() throws PersistenciaException {
+        try {
+            List<Producto> productos = productosDAO.obtenerTodos();
+            return productos.stream()
+                .map(ProductoMapper::toListaDTO)
+                .collect(Collectors.toList());
+        } catch (Exception ex) {
+            throw new PersistenciaException("Error al obtener productos", ex);
+        }
+    }
+
+    @Override
+    public List<ProductoListaDTO> buscarProductos(String termino) throws PersistenciaException {
+        try {
+            List<Producto> productos = productosDAO.buscarPorNombre(termino);
+            return productos.stream()
+                .map(ProductoMapper::toListaDTO)
+                .collect(Collectors.toList());
+        } catch (Exception ex) {
+            throw new PersistenciaException("Error al buscar productos", ex);
+        }
     }
 }

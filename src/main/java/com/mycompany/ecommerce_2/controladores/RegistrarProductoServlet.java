@@ -23,11 +23,11 @@ import itson.ecommerce.persistencia.interfaces.IPersistencia;
  * @author Dana Chavez
  */
 @WebServlet(name = "RegistrarProducto", urlPatterns = {"/admin/productos/nuevo"})
-public class RegistrarProducto extends HttpServlet {
+public class RegistrarProductoServlet extends HttpServlet {
     
     private IProductosBO productosBO;
 
-    public RegistrarProducto() {
+    public RegistrarProductoServlet() {
         super();
     }
 
@@ -97,7 +97,7 @@ public class RegistrarProducto extends HttpServlet {
 
         try {
             // String albumIdStr = request.getParameter("albumId");
-            String albumIdStr = "1";
+            String albumIdStr = "2";
             dto.setAlbumId(albumIdStr != null && !albumIdStr.isBlank() ? Long.valueOf(albumIdStr) : null);
         } catch (NumberFormatException nfe) {
             dto.setAlbumId(null);

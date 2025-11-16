@@ -1,72 +1,100 @@
-<%-- 
-    Document   : products_Admin
-    Created on : Nov 15, 2025, 5:30:00 PM
-    Author     : jrasc
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>ECOstore - Administrador</title>
-        <link rel="stylesheet" href="styles/admin.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/admin.css">
     </head>
     <body>
         <div class="admin-dashboard">
             <%@include file="/WEB-INF/fragments/sidebarAdmin.jspf" %>
-            <main class="admin-main">
 
+            <main class="admin-main">
                 <div class="header-row">
                     <div>
                         <h1>Productos</h1>
                         <p>Administra el catálogo de productos</p>
                     </div>
-                    <button class="btn-primary">+ Nuevo Producto</button>
+                    <a href="${pageContext.request.contextPath}/nuevo-producto.jsp" class="btn-primary">
+                        + Nuevo Producto
+                    </a>
                 </div>
-
-                <div class="search-box">
-                    <input type="text" placeholder="Buscar productos...">
-                </div>
+                <c:if test="${not empty mensaje}">
+                    <div class="alert success">${mensaje}</div>
+                </c:if>
+                <c:if test="${not empty error}">
+                    <div class="alert error">${error}</div>
+                </c:if>
+                
+                <form method="get" action="${pageContext.request.contextPath}/admin/productos" class="search-box">
+                    <input type="text" 
+                           name="buscar" 
+                           placeholder="Buscar por álbum o artista..." 
+                           value="${terminoBusqueda}">
+                    <button type="submit">Buscar</button>
+                </form>
 
                 <div class="product-grid">
+                    <c:choose>
+                        <c:when test="${empty listaProductos}">
+                            <p class="empty-message">No se encontraron productos</p>
+                        </c:when>
+                        <c:otherwise>
+                            <c:forEach var="producto" items="${listaProductos}">
+                                <div class="product-card">
+                                    <img src="${producto.albumImagenUrl}" 
+                                         alt="${producto.albumNombre}"
+                                         onerror="this.src='${pageContext.request.contextPath}/images/no-image.png'">
 
-                    <c:forEach var="product" items="${listaProductos}">
+                                    <h3>${producto.albumNombre}</h3>
+                                    <p>${producto.artistaNombre}</p>
 
-                        <div class="product-card">
+                                    <div class="badges">
+                                        <c:if test="${not empty producto.generos}">
+                                            <span class="tag">${producto.generos[0]}</span>
+                                        </c:if>
+                                        <span class="tag">${producto.formato}</span>
+                                    </div>
 
-                            <img src="${product.album.imagenUrl}" alt="${prod.album.nombre}">
+                                    <div class="product-info">
+                                        <span class="stock">Stock: ${producto.stock}</span>
+                                        <span class="status ${producto.esDisponible ? 'active' : 'inactive'}">
+                                            ${producto.esDisponible ? 'Activo' : 'Inactivo'}
+                                        </span>
+                                    </div>
 
-                            <h3>${product.album.nombre}</h3>
-
-                            <p>${product.album.artista.nombreArtistico}</p>
-
-                            <div class="badges">
-                                <c:forEach var="genre" items="${product.album.generos}" varStatus="st">
-                                    <span class="tag">${genre.nombre}</span>
-                                    <c:if test="${st.index == 0}">
-                                        <c:break/>
-                                    </c:if>
-                                </c:forEach>
-
-                                <span class="tag">${product.formato}</span>
-                            </div>
-
-                            <div class="price-row">
-                                <span class="price">$${product.precio}</span>
-
-                                <div class="actions">
-                                    <button class="edit"
-                                            onclick="location.href = 'editarProducto?id=${product.idProducto}'">️<image src="icons/editAdmin.png" class="icon"></button>
-
-                                    <button class="delete"
-                                            onclick="location.href = 'eliminarProducto?id=${product.idProducto}'">️<image src="icons/deleteAdmin.png" class="icon"></button>
+                                    <div class="price-row">
+                                        <span class="price">
+                                            $<fmt:formatNumber value="${producto.precio}" minFractionDigits="2" maxFractionDigits="2"/>
+                                        </span>
+                                        <div class="actions">
+                                            <button class="edit" 
+                                                    onclick="location.href = '${pageContext.request.contextPath}/admin/productos/editar?id=${producto.idProducto}'">
+                                                <img src="${pageContext.request.contextPath}/icons/editAdmin.png" class="icon" alt="Editar">
+                                            </button>
+                                            <button class="delete" 
+                                                    onclick="confirmarEliminar(${producto.idProducto})">
+                                                <img src="${pageContext.request.contextPath}/icons/deleteAdmin.png" class="icon" alt="Eliminar">
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </c:forEach>
+                            </c:forEach>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </main>
         </div>
+
+        <script>
+            function confirmarEliminar(id) {
+                if (confirm('¿Estás seguro de eliminar este producto?')) {
+                    location.href = '${pageContext.request.contextPath}/admin/productos/eliminar?id=' + id;
+                }
+            }
+        </script>
     </body>
 </html>

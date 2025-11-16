@@ -5,9 +5,12 @@
 package itson.ecommerce.persistencia.mapper;
 
 import itson.ecommerce.persistencia.dtos.NuevoProductoDTO;
+import itson.ecommerce.persistencia.dtos.ProductoListaDTO;
 import itson.ecommerce.persistencia.entidades.Album;
 import itson.ecommerce.persistencia.entidades.FormatoProducto;
 import itson.ecommerce.persistencia.entidades.Producto;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -57,6 +60,41 @@ public final class ProductoMapper {
         dto.setEsDisponible(p.getEsDisponible());
         dto.setDescripcion(p.getDescripcion());
 
+        return dto;
+    }
+    
+    public static ProductoListaDTO toListaDTO(Producto producto) {
+        ProductoListaDTO dto = new ProductoListaDTO();
+        
+        dto.setIdProducto(producto.getId());
+        dto.setFormato(producto.getFormato() != null ? producto.getFormato().name() : null);
+        dto.setPrecio(producto.getPrecio());
+        dto.setStock(producto.getStock());
+        dto.setEsDisponible(producto.getEsDisponible());
+        dto.setDescripcion(producto.getDescripcion());
+        
+        // Datos del álbum
+        if (producto.getAlbum() != null) {
+            Album album = producto.getAlbum();
+            dto.setAlbumId(album.getId());
+            dto.setAlbumNombre(album.getNombre());
+            dto.setAlbumImagenUrl(album.getImagenUrl());
+            
+            // Datos del artista
+            if (album.getArtista() != null) {
+                dto.setArtistaNombre(album.getArtista().getNombreArtistico());
+            }
+            
+            // Géneros (solo los nombres)
+            if (album.getGeneros() != null && !album.getGeneros().isEmpty()) {
+                List<String> generos = album.getGeneros().stream()
+                    .map(g -> g.getGenero() != null ? g.getGenero().getNombre() : null)
+                    .filter(nombre -> nombre != null)
+                    .collect(Collectors.toList());
+                dto.setGeneros(generos);
+            }
+        }
+        
         return dto;
     }
 }
