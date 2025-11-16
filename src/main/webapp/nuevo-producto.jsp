@@ -42,7 +42,8 @@
                             <div class="field">
                                 <label>Formato *</label>
                                 <select name="formato" required>
-                                    <option value="VINILO">Vinilo</option>
+                                    <option value="VINYL">Vinilo</option>
+                                    <option value="VINYL_COLOR">Vinilo</option>
                                     <option value="CD">CD</option>
                                     <option value="CASSETTE">Cassette</option>
                                 </select>

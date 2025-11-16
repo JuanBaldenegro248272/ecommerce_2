@@ -10,7 +10,9 @@ import itson.ecommerce.persistencia.entidades.Producto;
 import itson.ecommerce.persistencia.interfaces.IProductosDAO;
 import itson.ecommerce.persistencia.mapper.ProductoMapper;
 import itson.ecommerce.persistencia.utils.ManejadorConexiones;
+import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 /**
  *
@@ -37,6 +39,7 @@ public class ProductosDAO implements IProductosDAO {
             if (dto.getAlbumId() == null) {
                 throw new IllegalArgumentException("albumId no puede ser nulo.");
             }
+
             Album album = em.find(Album.class, dto.getAlbumId());
             if (album == null) {
                 throw new IllegalArgumentException("Álbum no encontrado con id: " + dto.getAlbumId());
@@ -61,7 +64,7 @@ public class ProductosDAO implements IProductosDAO {
             if (em != null && em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-
+            System.out.println(ex.getMessage());
             throw new RuntimeException("Error al crear el producto en persistencia", ex);
 
         } finally {

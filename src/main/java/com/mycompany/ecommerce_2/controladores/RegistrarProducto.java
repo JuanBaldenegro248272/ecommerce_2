@@ -7,13 +7,16 @@ package com.mycompany.ecommerce_2.controladores;
 import com.mycompany.ecommerce_2.exceptions.BusinessException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import com.mycompany.ecommerce_2.modelos.IProductosBO;
+import com.mycompany.ecommerce_2.modelos.implementaciones.ProductosBO;
 import itson.ecommerce.persistencia.dtos.NuevoProductoDTO;
+import itson.ecommerce.persistencia.implementaciones.Persistencia;
+import itson.ecommerce.persistencia.interfaces.IPersistencia;
 
 /**
  *
@@ -24,6 +27,17 @@ public class RegistrarProducto extends HttpServlet {
     
     private IProductosBO productosBO;
 
+    public RegistrarProducto() {
+        super();
+    }
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        IPersistencia fachada = new Persistencia();
+        productosBO = new ProductosBO(fachada);
+    }
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -62,7 +76,7 @@ public class RegistrarProducto extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/WEB-INF/jsp/nuevoproducto.jsp").forward(request, response);
+        request.getRequestDispatcher("/nuevo-producto.jsp").forward(request, response);
         System.out.println("GET llamado");
     }
 
@@ -118,13 +132,13 @@ public class RegistrarProducto extends HttpServlet {
         } catch (BusinessException be) {
             request.setAttribute("error", be.getMessage());
             request.setAttribute("dto", dto);
-            request.getRequestDispatcher("/WEB-INF/jsp/nuevoproducto.jsp")
+            request.getRequestDispatcher("/nuevo-producto.jsp")
                    .forward(request, response);
         } catch (Exception ex) {
             request.setAttribute("error", "Ocurrio un error interno al crear el producto.");
             request.setAttribute("dto", dto);
             ex.printStackTrace();
-            request.getRequestDispatcher("/WEB-INF/jsp/nuevoproducto.jsp")
+            request.getRequestDispatcher("/nuevo-producto.jsp")
                    .forward(request, response);
         }
     }

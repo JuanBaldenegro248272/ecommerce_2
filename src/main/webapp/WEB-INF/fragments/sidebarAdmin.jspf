@@ -18,28 +18,40 @@
                 Dashboard
             </div>
             <div class="nav-item">
-                <img src="icons/usuariosicon.png" alt="icon"/>
-                Usuarios
+                <a href="/usuarios-admin.jsp">
+                    <img src="icons/usuariosicon.png" alt="icon"/>
+                    Usuarios
+                </a>
             </div>
             <div class="nav-item">
-                <img src="icons/albumsicon.png" alt="icon"/>
-                Albums
+                <a href="/albums-admin.jsp">
+                    <img src="icons/albumsicon.png" alt="icon"/>
+                    Albums                   
+                </a>
             </div>
             <div class="nav-item">
-                <img src="icons/productosicon.png" alt="icon"/>
-                Productos
+                <a href="/productos-admin.jsp">
+                    <img src="icons/productosicon.png" alt="icon"/>
+                    Productos
+                </a>
             </div>
             <div class="nav-item">
-                <img src="icons/categoriasicon.png" alt="icon"/>
-                Categorias
+                <a href="/categorias-admin.jsp">
+                    <img src="icons/categoriasicon.png" alt="icon"/>
+                    Categorias
+                </a>
             </div>
             <div class="nav-item">
-                <img src="icons/pedidosicon.png" alt="icon"/>
-                Pedidos
+                <a href="/pedidos-admin.jsp">
+                    <img src="icons/pedidosicon.png" alt="icon"/>
+                    Pedidos                    
+                </a>
             </div>
             <div class="nav-item">
-                <img src="icons/resenasicon.png" alt="icon" />
-                Resenas
+                <a href="/resenas-admin.jsp">
+                    <img src="icons/resenasicon.png" alt="icon" />
+                    Resenas                     
+                </a>
             </div>
         </nav>
     </div>
