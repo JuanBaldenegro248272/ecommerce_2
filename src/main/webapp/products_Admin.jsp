@@ -10,7 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>ECOstore - Administrador</title>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/styles.css">
+        <link rel="stylesheet" href="styles/admin.css">
     </head>
     <body>
         <div class="admin-dashboard">

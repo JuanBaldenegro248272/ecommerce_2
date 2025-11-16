@@ -119,10 +119,10 @@ body {
 }
 
 .profile .avatar {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  overflow: hidden;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
 }
 
 .profile .avatar img {
@@ -335,6 +335,450 @@ body {
 .btn.primary:hover {
     background-color: #2c3f3f;
     border-color: #2c3f3f;
+}
+
+.admin-dashboard {
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--color-light-gray); /* o #f5f5f5 de admin.css */
+    font-family: var(--outfit);
+}
+
+.admin-main {
+    margin-left: 250px; /* Esta es la anchura de tu .admin-sidebar */
+    padding: 40px;
+    flex: 1; /* Añadido para que ocupe el espacio */
+    width: calc(100% - 250px); /* Añadido para que ocupe el espacio */
+    display: flex; /* Añadido para centrar el panel */
+    flex-direction: column; /* Añadido para centrar el panel */
+    align-items: center; /* Añadido para centrar el panel */
+}
+
+/* ========================================= */
+/* == Estilos para Lista de Productos (products_Admin.jsp) == */
+/* ========================================= */
+
+.header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; /* Asegura que ocupe todo el ancho de admin-main */
+    max-width: 1200px; /* Opcional: limita el ancho */
+}
+
+.header-row h1 {
+    font-family: var(--staatliches);
+    font-size: 42px;
+    margin: 0;
+}
+
+.header-row p {
+    margin: 5px 0 0;
+    font-size: 15px;
+    color: #555;
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    cursor: pointer;
+    font-family: var(--staatliches);
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.btn-primary img {
+    width: 18px;
+    height: 18px;
+}
+.btn-primary:hover {
+    background-color: #263f41;
+}
+
+.search-box {
+    margin: 25px 0;
+    background: var(--color-white);
+    border-radius: 10px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    width: 100%;
+    max-width: 1200px; /* Opcional: limita el ancho */
+}
+
+.search-box input {
+    width: 100%;
+    border: none;
+    font-family: var(--outfit);
+    outline: none;
+    font-size: 15px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px; /* Opcional: limita el ancho */
+}
+
+.product-card {
+    background: var(--color-white);
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.2s ease;
+}
+
+.product-card:hover {
+    box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+}
+
+.product-card img {
+    width: 100%;
+    height: 210px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.product-card h3 {
+    margin: 12px 0 4px;
+    font-family: var(--staatliches);
+    font-size: 22px;
+}
+
+.product-card p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+}
+
+.badges {
+    margin: 12px 0;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.tag {
+    background: #efefef;
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 11px;
+    text-transform: uppercase;
+    font-family: var(--staatliches);
+    letter-spacing: 0.5px;
+}
+
+.price-row {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price {
+    font-size: 20px;
+    font-family: var(--staatliches);
+    color: var(--color-primary);
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+}
+
+.actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.actions button img.icon {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+}
+
+.actions button:hover img {
+    filter: brightness(0.6);
+}
+.categorias-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.categorias-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.categorias-header h2 {
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.categorias-header p {
+    font-size: 14px;
+    color: #666;
+    margin-top: 4px;
+}
+
+.btn-nueva {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: 999px;
+    padding: 8px 18px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.grid-categorias {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.categoria-card {
+    background-color: var(--color-white);
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.categoria-icono {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background-color: #f3f3f3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.categoria-icono img {
+    width: 20px;
+    height: 20px;
+}
+
+.categoria-card h3 {
+    font-size: 18px;
+    margin-bottom: 4px;
+}
+
+.categoria-card .descripcion {
+    font-size: 14px;
+    color: #666;
+}
+
+.categoria-acciones {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.btn-editar {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    background-color: #ffffff;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.btn-editar img {
+    width: 16px;
+    height: 16px;
+}
+
+.btn-eliminar {
+    margin-left: 10px;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    border: 1px solid #c53030;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.btn-eliminar img {
+    width: 16px;
+    height: 16px;
+}
+
+.pedidos-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.pedidos-header {
+    margin-bottom: 24px;
+}
+
+.pedidos-header h2 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.pedidos-header p {
+    font-size: 14px;
+    color: #666666;
+}
+
+.filter-bar {
+    display: flex;
+    gap: 16px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    border: 1px solid #d4d4d4;
+    padding: 10px 12px;
+    margin-bottom: 24px;
+}
+
+.filter-search {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    background-color: #ececec;
+    border-radius: 8px;
+    padding: 8px 12px;
+}
+
+.filter-search .icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+}
+
+.filter-search input {
+    border: none;
+    background: transparent;
+    width: 100%;
+    outline: none;
+    font-size: 14px;
+}
+
+.filter-dropdown {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    background-color: #ececec;
+    border-radius: 8px;
+    padding: 8px 12px;
+}
+
+.filter-dropdown select {
+    border: none;
+    background: transparent;
+    width: 100%;
+    font-size: 14px;
+    outline: none;
+}
+
+.pedidos-table-container {
+    margin-top: 8px;
+    border-radius: 10px;
+    border: 1px solid #cbd5d5;
+    overflow: hidden;
+    background-color: #ffffff;
+}
+
+.pedidos-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.pedidos-table thead {
+    background-color: #cfe7e2;
+}
+
+.pedidos-table th {
+    text-align: left;
+    padding: 12px 16px;
+    font-weight: 600;
+}
+
+.pedidos-table td {
+    padding: 14px 16px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.cliente-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.cliente-info span {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.status-pendiente {
+    background-color: #f59e0b;
+    color: #ffffff;
+}
+
+.status-procesando {
+    background-color: #34d399;
+    color: #ffffff;
+}
+
+.status-enviado {
+    background-color: #f9a8d4;
+    color: #7f1d1d;
+}
+
+.status-entregado {
+    background-color: #22c55e;
+    color: #ffffff;
+}
+
+.acciones-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.acciones-btn .icon {
+    width: 16px;
+    height: 16px;
 }
 
 @media (max-width: 968px) {
