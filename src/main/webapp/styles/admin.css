@@ -605,6 +605,160 @@ body {
     height: 16px;
 }
 
+.pedidos-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.pedidos-header {
+    margin-bottom: 24px;
+}
+
+.pedidos-header h2 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.pedidos-header p {
+    font-size: 14px;
+    color: #666666;
+}
+
+.filter-bar {
+    display: flex;
+    gap: 16px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    border: 1px solid #d4d4d4;
+    padding: 10px 12px;
+    margin-bottom: 24px;
+}
+
+.filter-search {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    background-color: #ececec;
+    border-radius: 8px;
+    padding: 8px 12px;
+}
+
+.filter-search .icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+}
+
+.filter-search input {
+    border: none;
+    background: transparent;
+    width: 100%;
+    outline: none;
+    font-size: 14px;
+}
+
+.filter-dropdown {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    background-color: #ececec;
+    border-radius: 8px;
+    padding: 8px 12px;
+}
+
+.filter-dropdown select {
+    border: none;
+    background: transparent;
+    width: 100%;
+    font-size: 14px;
+    outline: none;
+}
+
+.pedidos-table-container {
+    margin-top: 8px;
+    border-radius: 10px;
+    border: 1px solid #cbd5d5;
+    overflow: hidden;
+    background-color: #ffffff;
+}
+
+.pedidos-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.pedidos-table thead {
+    background-color: #cfe7e2;
+}
+
+.pedidos-table th {
+    text-align: left;
+    padding: 12px 16px;
+    font-weight: 600;
+}
+
+.pedidos-table td {
+    padding: 14px 16px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.cliente-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.cliente-info span {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.status-pendiente {
+    background-color: #f59e0b;
+    color: #ffffff;
+}
+
+.status-procesando {
+    background-color: #34d399;
+    color: #ffffff;
+}
+
+.status-enviado {
+    background-color: #f9a8d4;
+    color: #7f1d1d;
+}
+
+.status-entregado {
+    background-color: #22c55e;
+    color: #ffffff;
+}
+
+.acciones-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.acciones-btn .icon {
+    width: 16px;
+    height: 16px;
+}
+
 @media (max-width: 968px) {
     .sidebar {
         width: 300px;
