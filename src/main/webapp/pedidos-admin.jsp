@@ -69,9 +69,18 @@
                                 </td>
                                 <td>11/13/2025</td>
                                 <td>
-                                    <button class="acciones-btn">
+                                    <button class="acciones-btn"
+                                            type="button"
+                                            onclick="document.getElementById('dialog-pedido').showModal()">
                                         <img src="icons/3dot.png" class="icon">
                                     </button>
+                                    <dialog id="dialog-pedido">
+                                        <h2>Detalles del Pedido ORD-001</h2>
+                                        <p>Información del cliente, productos, etc...</p>
+                                        <form method="dialog">
+                                            <button>Cerrar</button>
+                                        </form>
+                                    </dialog>
                                 </td>
                             </tr>
                         </tbody>
