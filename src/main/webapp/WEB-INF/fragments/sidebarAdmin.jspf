@@ -4,14 +4,13 @@
         <h2>ECOstore</h2>
         <span>Admin Panel</span>
     </div>
-
     <nav class="menu">
-        <a href="dashboard.jsp"   class="menu-item">Dashboard</a>
-        <a href="usuarios.jsp"    class="menu-item">Usuarios</a>
-        <a href="productos.jsp"   class="menu-item">Productos</a>
-        <a href="categorias.jsp"  class="menu-item">Categorías</a>
-        <a href="pedidos.jsp"     class="menu-item">Pedidos</a>
-        <a href="resenas.jsp"     class="menu-item">Reseñas</a>
+        <a href="dashboard.jsp"   class="menu-item"><img src="icons/dashBoardSide.png" class="menu-icon">Dashboard</a>
+        <a href="usuarios.jsp"    class="menu-item"><img src="icons/userSide.png" class="menu-icon">Usuarios</a>
+        <a href="productos.jsp"   class="menu-item"><img src="icons/productSide.png" class="menu-icon">Productos</a>
+        <a href="categorias.jsp"  class="menu-item"><img src="icons/cateSide.png" class="menu-icon">Categorías</a>
+        <a href="pedidos.jsp"     class="menu-item"><img src="icons/pediSide.png" class="menu-icon">Pedidos</a>
+        <a href="resenas.jsp"     class="menu-item"><img src="icons/resenaSide.png" class="menu-icon">Reseñas</a>
     </nav>
 
     <div class="user-box">
