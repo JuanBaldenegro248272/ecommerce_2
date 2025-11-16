@@ -780,6 +780,132 @@ body {
     height: 16px;
 }
 
+.pedido-dialog {
+    border: none;
+    border-radius: 18px;
+    padding: 0;
+    width: 420px;
+    max-width: 95%;
+    font-family: "Segoe UI", sans-serif;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
+    align-self: center;
+    margin-left: 45%;
+}
+
+.pedido-dialog-body {
+    padding: 20px 24px 18px;
+}
+
+.pedido-dialog-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 24px 0;
+}
+
+.pedido-dialog-header h2 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #222;
+}
+
+.pedido-dialog-close {
+    border: none;
+    background: transparent;
+    font-size: 1.2rem;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.pedido-section-title {
+    margin: 18px 0 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #222;
+}
+
+.pedido-card {
+    background: #d7ece9;
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 0.9rem;
+}
+
+.pedido-card-name {
+    margin: 0 0 2px;
+    font-weight: 600;
+}
+
+.pedido-card-email {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #555;
+}
+
+.pedido-producto {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 6px;
+}
+
+.pedido-producto-titulo {
+    margin: 0 0 2px;
+    font-weight: 500;
+}
+
+.pedido-producto-detalle {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #555;
+}
+
+.pedido-producto-precio {
+    font-weight: 600;
+}
+
+.pedido-divider {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 20px 0 12px;
+}
+
+.pedido-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95rem;
+    margin-bottom: 16px;
+}
+.pedido-label {
+    display: block;
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+}
+
+.pedido-select-wrapper {
+    background: #f2f2f2;
+    border-radius: 10px;
+    padding: 4px 10px;
+    margin-bottom: 14px;
+}
+
+.pedido-select-wrapper select {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-size: 0.9rem;
+    padding: 6px 0;
+    outline: none;
+}
+
+.pedido-fecha {
+    font-size: 0.78rem;
+    color: #666;
+    margin: 4px 0 4px;
+}
+
 @media (max-width: 968px) {
     .sidebar {
         width: 300px;

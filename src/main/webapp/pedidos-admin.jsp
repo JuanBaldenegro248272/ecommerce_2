@@ -74,12 +74,53 @@
                                             onclick="document.getElementById('dialog-pedido').showModal()">
                                         <img src="icons/3dot.png" class="icon">
                                     </button>
-                                    <dialog id="dialog-pedido">
-                                        <h2>Detalles del Pedido ORD-001</h2>
-                                        <p>Información del cliente, productos, etc...</p>
-                                        <form method="dialog">
-                                            <button>Cerrar</button>
-                                        </form>
+                                    <dialog id="dialog-pedido" class="pedido-dialog">
+                                        <div class="pedido-dialog-header">
+                                            <h2>Detalles del Pedido ORD-001</h2>
+                                            <button type="button"
+                                                    class="pedido-dialog-close"
+                                                    onclick="document.getElementById('dialog-pedido').close()">
+                                                ✕
+                                            </button>
+                                        </div>
+
+                                        <div class="pedido-dialog-body">
+                                            <h3 class="pedido-section-title">Información del Cliente</h3>
+                                            <div class="pedido-card pedido-card-cliente">
+                                                <p class="pedido-card-name">Dana Chavez</p>
+                                                <p class="pedido-card-email">@mail.com</p>
+                                            </div>
+
+                                            <h3 class="pedido-section-title">Productos</h3>
+                                            <div class="pedido-card pedido-producto">
+                                                <div>
+                                                    <p class="pedido-producto-titulo">Abbey Road - The Beattles</p>
+                                                    <p class="pedido-producto-detalle">Cantidad: 1</p>
+                                                </div>
+                                                <span class="pedido-producto-precio">$45.00</span>
+                                            </div>
+
+                                            <hr class="pedido-divider">
+
+                                            <div class="pedido-row">
+                                                <span>Total</span>
+                                                <strong>$45.00</strong>
+                                            </div>
+
+                                            <label class="pedido-label" for="estado-pedido">Actualizar Estado</label>
+                                            <div class="pedido-select-wrapper">
+                                                <select id="estado-pedido" name="estado">
+                                                    <option>Pendiente</option>
+                                                    <option>Procesando</option>
+                                                    <option>Enviado</option>
+                                                    <option>Entregado</option>
+                                                </select>
+                                            </div>
+
+                                            <p class="pedido-fecha">
+                                                Creado: 9/11/2025, 17:00:00 • Actualizado: 9/11/2025, 17:00:00
+                                            </p>
+                                        </div>
                                     </dialog>
                                 </td>
                             </tr>
