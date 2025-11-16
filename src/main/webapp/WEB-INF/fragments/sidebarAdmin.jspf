@@ -1,23 +1,52 @@
-<aside class="admin-sidebar">
+<aside class="sidebar">
+    <div>
+        <div class="brand">
+            <div>
+                <a href="index.jsp" class="logo">
+                    <img src="icons/iconlogoblanco.png" alt="logo ECOstore"/>
+                    <span class="titulo">
+                        <span class="resaltado">ECO</span>store
+                    </span>
+                </a>
+            </div>
+        </div>
 
-    <div class="logo-box">
-        <h2>ECOstore</h2>
-        <span>Admin Panel</span>
+
+        <nav>
+            <div class="nav-item">
+                <img src="icons/dashboardicon.png" alt="icon"/>
+                Dashboard
+            </div>
+            <div class="nav-item">
+                <img src="icons/usuariosicon.png" alt="icon"/>
+                Usuarios
+            </div>
+            <div class="nav-item active">
+                <img src="icons/productosicon.png" alt="icon"/>
+                Productos
+            </div>
+            <div class="nav-item">
+                <img src="icons/categoriasicon.png" alt="icon"/>
+                Categorï¿½as
+            </div>
+            <div class="nav-item">
+                <img src="icons/pedidosicon.png" alt="icon"/>
+                Pedidos
+            </div>
+            <div class="nav-item">
+                <img src="icons/resenasicon.png" alt="icon" />
+                Reseï¿½as
+            </div>
+        </nav>
     </div>
-    <nav class="menu">
-        <a href="dashboard.jsp"   class="menu-item"><img src="icons/dashBoardSide.png" class="menu-icon">Dashboard</a>
-        <a href="usuarios.jsp"    class="menu-item"><img src="icons/userSide.png" class="menu-icon">Usuarios</a>
-        <a href="productos.jsp"   class="menu-item"><img src="icons/productSide.png" class="menu-icon">Productos</a>
-        <a href="categorias.jsp"  class="menu-item"><img src="icons/cateSide.png" class="menu-icon">Categorías</a>
-        <a href="pedidos.jsp"     class="menu-item"><img src="icons/pediSide.png" class="menu-icon">Pedidos</a>
-        <a href="resenas.jsp"     class="menu-item"><img src="icons/resenaSide.png" class="menu-icon">Reseñas</a>
-    </nav>
 
-    <div class="user-box">
-        <div class="avatar"></div>
+    <div class="profile">
+        <div class="avatar">
+            <img src="icons/usuariosicon.png">
+        </div>
         <div>
-            <p class="user-name">Admin</p>
-            <p class="user-role">Administrador</p>
+            <span>Admin</span>
+            <span class = "small">Administrador</span>
         </div>
     </div>
 
