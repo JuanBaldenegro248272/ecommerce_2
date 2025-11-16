@@ -18,6 +18,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   --color-blue: #69AFAD;
   --color-light-gray: #EFEFEF;
   --color-white: #FFFFFF;
+  --side-bar-font-color: #A2E0DF;
   
   /* Colores para Contacto */
   --color-contact-bg: #fdefee;
@@ -27,6 +28,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   /* Tipografia */
   --outfit:  'Outfit', sans-serif;             
   --staatliches: 'Staatliches', sans-serif;    
+
 }
 
 a {
