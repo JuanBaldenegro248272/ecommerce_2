@@ -41,6 +41,9 @@ public class Album implements Serializable {
     @Column (name = "fecha_lanzamiento", nullable = false)
     private Calendar fechaLanzamiento;
     
+    @Column (name = "imagen_url", length = 255, nullable = false)
+    private String imagenUrl;
+    
     @ManyToOne
     @JoinColumn (name = "id_artista", nullable = false)
     private Artista artista;

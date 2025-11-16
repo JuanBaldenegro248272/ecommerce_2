@@ -21,13 +21,17 @@
                 <img src="icons/usuariosicon.png" alt="icon"/>
                 Usuarios
             </div>
-            <div class="nav-item active">
+            <div class="nav-item">
+                <img src="icons/albumsicon.png" alt="icon"/>
+                Albums
+            </div>
+            <div class="nav-item">
                 <img src="icons/productosicon.png" alt="icon"/>
                 Productos
             </div>
             <div class="nav-item">
                 <img src="icons/categoriasicon.png" alt="icon"/>
-                Categor�as
+                Categorias
             </div>
             <div class="nav-item">
                 <img src="icons/pedidosicon.png" alt="icon"/>
@@ -35,7 +39,7 @@
             </div>
             <div class="nav-item">
                 <img src="icons/resenasicon.png" alt="icon" />
-                Rese�as
+                Resenas
             </div>
         </nav>
     </div>

@@ -9,7 +9,7 @@ import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="org.eclipse.persistence.internal.jpa.modelgen.CanonicalModelProcessor", date="2025-11-15T18:15:11", comments="EclipseLink-2.7.12.v20230209-rNA")
+@Generated(value="org.eclipse.persistence.internal.jpa.modelgen.CanonicalModelProcessor", date="2025-11-16T01:31:17", comments="EclipseLink-2.7.12.v20230209-rNA")
 @StaticMetamodel(Album.class)
 public class Album_ { 
 
@@ -21,5 +21,6 @@ public class Album_ {
     public static volatile SingularAttribute<Album, Long> id;
     public static volatile SingularAttribute<Album, String> nombre;
     public static volatile ListAttribute<Album, Producto> productos;
+    public static volatile SingularAttribute<Album, String> imagenUrl;
 
 }

@@ -44,9 +44,6 @@ public class Producto implements Serializable {
     @Column (name = "formato_producto", nullable = false)
     private FormatoProducto formato;
     
-    @Column (name = "imagen_url", length = 255, nullable = false)
-    private String imagenUrl;
-    
     @Column (name = "descripcion", length = 255)
     private String descripcion;
     
@@ -66,13 +63,12 @@ public class Producto implements Serializable {
     public Producto() {
     }
 
-    public Producto(Long id, Integer stock, Boolean esDisponible, Float precio, FormatoProducto formato, String imagenUrl, String descripcion, Album album, List<DetallePedido> detallesPedido, List<DetalleCarrito> detallesCarrito, List<Resena> resenas) {
+    public Producto(Long id, Integer stock, Boolean esDisponible, Float precio, FormatoProducto formato, String descripcion, Album album, List<DetallePedido> detallesPedido, List<DetalleCarrito> detallesCarrito, List<Resena> resenas) {
         this.id = id;
         this.stock = stock;
         this.esDisponible = esDisponible;
         this.precio = precio;
         this.formato = formato;
-        this.imagenUrl = imagenUrl;
         this.descripcion = descripcion;
         this.album = album;
         this.detallesPedido = detallesPedido;
@@ -120,20 +116,20 @@ public class Producto implements Serializable {
         this.formato = formato;
     }
 
-    public String getImagenUrl() {
-        return imagenUrl;
-    }
-
-    public void setImagenUrl(String imagenUrl) {
-        this.imagenUrl = imagenUrl;
-    }
-
     public String getDescripcion() {
         return descripcion;
     }
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public Album getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(Album album) {
+        this.album = album;
     }
 
     public List<DetallePedido> getDetallesPedido() {
@@ -160,13 +156,6 @@ public class Producto implements Serializable {
         this.resenas = resenas;
     }
 
-    public Album getAlbum() {
-        return album;
-    }
-
-    public void setAlbum(Album album) {
-        this.album = album;
-    }
 
     @Override
     public int hashCode() {

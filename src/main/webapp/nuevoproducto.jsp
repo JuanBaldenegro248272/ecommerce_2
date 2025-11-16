@@ -15,7 +15,7 @@
     <body>
         <div class="app">
             <%@ include file = "/WEB-INF/fragments/sidebarAdmin.jspf" %>
-            
+
             <main class="main">
                 <div class="header-container">
                     <div class="back-btn">
@@ -28,81 +28,57 @@
                 </div>
 
                 <section class="panel">
-                    <form>
-                        <div class="grid-2">
-                            <div class="field">
-                                <label>Nombre del Album *</label>
-                                <input type="text" placeholder="Ej: Abbey Road" />
-                            </div>
-                            <div class="field">
-                                <label>Artista *</label>
-                                <input type="text" placeholder="Ej: The Beatles" />
-                            </div>
+                    <form action="${pageContext.request.contextPath}/admin/productos/nuevo" method="post">
+                        <div class="field">
+                            <label>Album *</label>
+                            <button type="button" class="select-album-btn">
+                                <img src="icons/search.png" alt="buscar" style="width:16px;height:16px;" />
+                                Seleccionar Album
+                            </button>
+                            <input type="hidden" name="albumId" required />
                         </div>
 
                         <div class="grid-2">
                             <div class="field">
-                                <label>Categoria *</label>
-                                <select>
-                                    <option>Seleccione categoría</option>
-                                    <option>R&B</option>
-                                    <option>Pop</option
-                                    <option>Hip Hop</option>
-                                    <option>Reggaeton</option>
-                                    <option>Jazz</option>
+                                <label>Formato *</label>
+                                <select name="formato" required>
+                                    <option value="VINILO">Vinilo</option>
+                                    <option value="CD">CD</option>
+                                    <option value="CASSETTE">Cassette</option>
                                 </select>
                             </div>
                             <div class="field">
-                                <label>Formato *</label>
-                                <select>
-                                    <option>Vinilo</option>
-                                    <option>CD</option>
-                                    <option>Cassette</option>
-                                </select>
+                                <label>Stock *</label>
+                                <input type="number" name="stock" value="0" min="0" required />
                             </div>
                         </div>
 
                         <div class="grid-2">
                             <div class="field">
                                 <label>Precio ($) *</label>
-                                <input type="number" value="0" />
-                            </div>
-                            <div class="field">
-                                <label>Stock *</label>
-                                <input type="number" value="0" />
-                            </div>
-                        </div>
-
-                        <div class="grid-2">
-                            <div class="field">
-                                <label>Año de Lanzamiento *</label>
-                                <input type="number" value="2025" />
+                                <input type="number" name="precio" value="0" step="0.01" min="0" required />
                             </div>
                             <div class="field">
                                 <label>Estado *</label>
-                                <select>
-                                    <option>Activo</option>
-                                    <option>Inactivo</option>
+                                <select name="esDisponible" required>
+                                    <option value="true">Activo</option>
+                                    <option value="false">Inactivo</option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="field">
-                            <label>URL de la Imagen *</label>
-                            <input type="text" placeholder="https://example.com/image.jpg" />
-                        </div>
-
-                        <div class="field">
                             <label>Descripción *</label>
-                            <textarea placeholder="Describe el producto..."></textarea>
+                            <textarea name="descripcion" placeholder="Describe el producto..." required></textarea>
                         </div>
 
                         <div class="actions">
-                            <button type="button" class="btn primary">Crear Producto</button>
-                            <button type="button" class="btn">Cancelar</button>
+                            <button type="submit" class="btn primary">Crear Producto</button>
+                            <a href="${pageContext.request.contextPath}/admin/productos" class="btn">Cancelar</a>
                         </div>
                     </form>
                 </section>
+
             </main>
         </div>
     </body>

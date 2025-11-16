@@ -1,4 +1,3 @@
-
 @import "global.css";
 
 * {
@@ -149,8 +148,9 @@ body {
     font-weight: 500;
     color: var(--color-white);
 }
+
 .main {
-    margin-left: 100px;
+    margin-left: 370px;
     flex: 1;
     padding: 40px;
     width: calc(100% - 370px);
@@ -165,13 +165,11 @@ body {
     display: flex;
     align-items: center;
     gap: 20px;
-    margin-top: 1rem;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
 }
 
 .back-btn {
     display: inline-flex;
-    margin-left: 2rem;
     align-items: center;
     justify-content: center;
     gap: 8px;
@@ -209,17 +207,17 @@ body {
     background-color: var(--color-white);
     border-radius: 12px;
     padding: 35px 40px;
-    width: 75%;
-    height: 765px;
-    margin-right: 5rem;
-    align-self: end;
+    width: 100%;
+    max-width: 80%;
+    align-items: end;
+    margin-right: 3rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .panel form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    height: 100%;
+    gap: 24px;
 }
 
 .grid-2 {
@@ -236,7 +234,7 @@ body {
 
 .field label {
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 500;
     color: var(--color-primary);
 }
 
@@ -250,7 +248,7 @@ body {
     font-family: var(--outfit);
     font-size: 14px;
     color: var(--color-primary);
-    background-color: #f9f9f9;
+    background-color: #E8E8E8;
     transition: all 0.2s ease;
 }
 
@@ -258,7 +256,7 @@ body {
 .field select:focus,
 .field textarea:focus {
     outline: none;
-    background-color: rgba(162, 224, 223, 0.50);
+    background-color: #d8d8d8;
 }
 
 .field input::placeholder,
@@ -267,7 +265,7 @@ body {
 }
 
 .field textarea {
-    min-height: 150px;
+    min-height: 120px;
     resize: vertical;
 }
 
@@ -280,6 +278,28 @@ body {
     padding-right: 40px;
 }
 
+/* Botón de selección de album */
+.select-album-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 14px;
+    background-color: #fff;
+    border: 0.5px solid #000;
+    border-radius: 8px;
+    font-family: var(--outfit);
+    font-size: 16px;
+    color: var(--color-primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.select-album-btn:hover {
+    background-color: #EFA4A8;
+}
+
 .actions {
     display: flex;
     gap: 12px;
@@ -287,16 +307,18 @@ body {
 }
 
 .btn {
-    padding: 10px 4.3rem;
+    padding: 10px 24px;
     border-radius: 8px;
     font-family: var(--outfit);
     font-size: 16px;
-    font-weight: 400;
+    font-weight: 500;
     cursor: pointer;
     transition: all 0.2s ease;
     border: 2px solid var(--color-primary);
     background-color: transparent;
     color: var(--color-primary);
+    text-decoration: none;
+    text-align: center;
 }
 
 .btn:hover {
@@ -304,7 +326,7 @@ body {
 }
 
 .btn.primary {
-    padding: 10px 36%;
+    flex: 1;
     background-color: var(--color-primary);
     color: var(--color-white);
     border-color: var(--color-primary);
@@ -332,7 +354,6 @@ body {
 
     .panel {
         max-width: 100%;
-        min-height: auto;
     }
 }
 
@@ -367,7 +388,6 @@ body {
 
     .btn {
         width: 100%;
-        text-align: center;
     }
 }
 
