@@ -487,6 +487,123 @@ body {
 .actions button:hover img {
     filter: brightness(0.6);
 }
+.categorias-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.categorias-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.categorias-header h2 {
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.categorias-header p {
+    font-size: 14px;
+    color: #666;
+    margin-top: 4px;
+}
+
+.btn-nueva {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: 999px;
+    padding: 8px 18px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.grid-categorias {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.categoria-card {
+    background-color: var(--color-white);
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.categoria-icono {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background-color: #f3f3f3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.categoria-icono img {
+    width: 20px;
+    height: 20px;
+}
+
+.categoria-card h3 {
+    font-size: 18px;
+    margin-bottom: 4px;
+}
+
+.categoria-card .descripcion {
+    font-size: 14px;
+    color: #666;
+}
+
+.categoria-acciones {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.btn-editar {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    background-color: #ffffff;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.btn-editar img {
+    width: 16px;
+    height: 16px;
+}
+
+.btn-eliminar {
+    margin-left: 10px;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    border: 1px solid #c53030;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.btn-eliminar img {
+    width: 16px;
+    height: 16px;
+}
 
 @media (max-width: 968px) {
     .sidebar {

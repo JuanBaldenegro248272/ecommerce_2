@@ -10,45 +10,47 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>ECOstore - Administrador</title>
-        <link rel="stylesheet" href="styles/styles.css">
+        <link rel="stylesheet" href="styles/admin.css">
     </head>
     <body>
-        <div class="admin-main">
+        <div class="admin-dashboard">
+            <%@include file="/WEB-INF/fragments/sidebarAdmin.jspf" %>
+            <div class="admin-main">
 
-            <div class="categorias-container">
+                <div class="categorias-container">
 
-                <div class="categorias-header">
-                    <div>
-                        <h2>Gestión de Categorías</h2>
-                        <p>Organiza los productos por categorías</p>
-                    </div>
-
-                    <button class="btn-nueva">+ Nueva Categoría</button>
-                </div>
-
-                <div class="grid-categorias">
-
-                    <div class="categoria-card">
-                        <div class="categoria-icono">
-                            <img src="icons/tagAdmin.png">
+                    <div class="categorias-header">
+                        <div>
+                            <h2>Gestión de Categorías</h2>
+                            <p>Organiza los productos por categorías</p>
                         </div>
 
-                        <h3>Rock</h3>
-                        <span class="descripcion">Rock clásico y moderno</span>
+                        <button class="btn-nueva">+ Nueva Categoría</button>
+                    </div>
 
-                        <div class="categoria-acciones">
-                            <button class="btn-editar">
-                                <img src="icons/editAdmin.png">
-                                Editar
-                            </button>
-                            <button class="btn-eliminar">
-                                <img src="icons/deleteAdmin.png">
-                            </button>
+                    <div class="grid-categorias">
+
+                        <div class="categoria-card">
+                            <div class="categoria-icono">
+                                <img src="icons/tagAdmin.png">
+                            </div>
+
+                            <h3>Rock</h3>
+                            <span class="descripcion">Rock clásico y moderno</span>
+
+                            <div class="categoria-acciones">
+                                <button class="btn-editar">
+                                    <img src="icons/editAdmin.png">
+                                    Editar
+                                </button>
+                                <button class="btn-eliminar">
+                                    <img src="icons/deleteAdmin.png">
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </body>
 </html>
