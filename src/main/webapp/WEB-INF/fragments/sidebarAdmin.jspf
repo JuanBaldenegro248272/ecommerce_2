@@ -27,7 +27,7 @@
             </div>
             <div class="nav-item">
                 <img src="icons/categoriasicon.png" alt="icon"/>
-                Categorías
+                Categorï¿½as
             </div>
             <div class="nav-item">
                 <img src="icons/pedidosicon.png" alt="icon"/>
@@ -35,11 +35,10 @@
             </div>
             <div class="nav-item">
                 <img src="icons/resenasicon.png" alt="icon" />
-                Reseñas
+                Reseï¿½as
             </div>
         </nav>
     </div>
-
 
     <div class="profile">
         <div class="avatar">
