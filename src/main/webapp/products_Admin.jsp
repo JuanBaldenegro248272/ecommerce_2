@@ -12,7 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <%@include file="/WEB-INF/fragments/sidebar.jspf" %>
+        <%@include file="/WEB-INF/fragments/sidebarAdmin.jspf" %>
 
         <div class="header-row">
             <div>
