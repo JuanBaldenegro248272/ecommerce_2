@@ -9,6 +9,7 @@ import itson.ecommerce.persistencia.dtos.NuevoProductoDTO;
 import itson.ecommerce.persistencia.dtos.ProductoListaDTO;
 import itson.ecommerce.persistencia.entidades.EstadoResena;
 import itson.ecommerce.persistencia.entidades.Resena;
+import itson.ecommerce.persistencia.entidades.Usuario;
 import itson.ecommerce.persistencia.exceptions.PersistenciaException;
 import java.util.List;
 
@@ -35,4 +36,10 @@ public interface IPersistencia {
     public boolean eliminarResena(Long idResena) throws PersistenciaException;
     
     public Resena crearResena(NuevaResenaDTO dto) throws PersistenciaException;
+
+    public Usuario buscarPorCorreo(String correo) throws PersistenciaException;
+    
+    public Usuario guardar(Usuario usuario) throws PersistenciaException;
+
+
 }

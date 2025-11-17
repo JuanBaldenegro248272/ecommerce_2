@@ -10,6 +10,7 @@ import itson.ecommerce.persistencia.dtos.ProductoListaDTO;
 import itson.ecommerce.persistencia.entidades.EstadoResena;
 import itson.ecommerce.persistencia.entidades.Producto;
 import itson.ecommerce.persistencia.entidades.Resena;
+import itson.ecommerce.persistencia.entidades.Usuario;
 import itson.ecommerce.persistencia.exceptions.PersistenciaException;
 import itson.ecommerce.persistencia.interfaces.IPersistencia;
 import itson.ecommerce.persistencia.interfaces.IProductosDAO;
@@ -114,4 +115,23 @@ public class Persistencia implements IPersistencia {
             throw new PersistenciaException("Error al crear la reseña: " + e.getMessage());
         }
     }
+    @Override
+    public Usuario buscarPorCorreo(String correo) throws PersistenciaException {
+        try {
+            return this.buscarPorCorreo(correo);
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al buscar por correo: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public Usuario guardar(Usuario usuario) throws PersistenciaException {
+        try {
+            return this.guardar(usuario);
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al guardar usuario: " + e.getMessage());
+
+        }
+    }
+   
 }
