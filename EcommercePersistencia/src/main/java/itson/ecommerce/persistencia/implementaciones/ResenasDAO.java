@@ -4,7 +4,10 @@
  */
 package itson.ecommerce.persistencia.implementaciones;
 
+import itson.ecommerce.persistencia.dtos.NuevaResenaDTO;
+import itson.ecommerce.persistencia.entidades.Cliente;
 import itson.ecommerce.persistencia.entidades.EstadoResena;
+import itson.ecommerce.persistencia.entidades.Producto;
 import itson.ecommerce.persistencia.entidades.Resena;
 import itson.ecommerce.persistencia.interfaces.IResenasDAO;
 import itson.ecommerce.persistencia.utils.ManejadorConexiones; // ¡Importamos tu clase!
@@ -73,7 +76,6 @@ public class ResenasDAO implements IResenasDAO {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-            e.printStackTrace();
             return null;
         } finally {
             if (em != null) {
@@ -100,8 +102,44 @@ public class ResenasDAO implements IResenasDAO {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-            e.printStackTrace();
             return false; 
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+    
+    @Override
+    public Resena crear(NuevaResenaDTO dto) {
+        EntityManager em = ManejadorConexiones.getEntityManager();
+        try {
+            em.getTransaction().begin();
+
+            Cliente cliente = em.find(Cliente.class, dto.getIdCliente());
+            Producto producto = em.find(Producto.class, dto.getIdProducto());
+
+            if (cliente == null || producto == null) {
+                throw new IllegalArgumentException("Cliente o Producto no encontrado");
+            }
+
+            Resena nuevaResena = new Resena();
+            nuevaResena.setCliente(cliente);
+            nuevaResena.setProducto(producto);
+            nuevaResena.setComentario(dto.getComentario());
+            nuevaResena.setCalificacion(dto.getCalificacion());
+            
+            nuevaResena.setEstado(EstadoResena.PENDIENTE);
+
+            em.persist(nuevaResena);
+
+            em.getTransaction().commit();
+            return nuevaResena;
+        } catch (IllegalArgumentException e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            return null; 
         } finally {
             if (em != null) {
                 em.close();
