@@ -132,19 +132,20 @@ public class Persistencia implements IPersistencia {
         }
     }
 
-   @Override
+    @Override
     public EditarProductoDTO obtenerProductoPorId(Long id) throws PersistenciaException {
         try {
-            
+
             Producto producto = productosDAO.obtenerPorId(id);
             EditarProductoDTO dto = ProductoMapper.toEditarDTO(producto);
-            
+
             return dto;
         } catch (Exception ex) {
             System.out.println("ERROR en Persistencia.obtenerProductoPorId: " + ex.getMessage());
             throw new PersistenciaException("Error al obtener producto", ex);
         }
     }
+
     @Override
     public Usuario buscarPorCorreo(String correo) throws PersistenciaException {
         try {
@@ -162,13 +163,14 @@ public class Persistencia implements IPersistencia {
             ProductoMapper.updateEntity(producto, dto);
 
             productosDAO.actualizar(producto);
-            
+
             System.out.println("Producto actualizado en persistencia");
         } catch (Exception ex) {
             System.out.println("ERROR en Persistencia.actualizarProducto: " + ex.getMessage());
             throw new PersistenciaException("Error al actualizar producto", ex);
         }
     }
+
     public Usuario guardar(Usuario usuario) throws PersistenciaException {
         try {
             return this.guardar(usuario);
@@ -178,6 +180,7 @@ public class Persistencia implements IPersistencia {
         }
     }
 
+    @Override
     public List<PedidoDTO> obtenerTodosPedidos() throws PersistenciaException {
 
         try {
@@ -188,47 +191,69 @@ public class Persistencia implements IPersistencia {
         }
 
     }
-    
+
+    @Override
+    public PedidoDTO actualizarEstadoPedido(Long idPedido, String nuevoEstado) throws PersistenciaException {
+        try {
+            Pedido pedidoActualizado = pedidosDAO.actualizarEstado(idPedido, nuevoEstado);
+            return PedidoMapper.toDTO(pedidoActualizado);
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al actualizar el pedido", e);
+        }
+    }
+
     @Override
     public List<Artista> consultarArtistasTodos() throws PersistenciaException {
         try {
             return this.artistaDAO.consultarTodos();
-        } catch (Exception e) { throw new PersistenciaException("Error al consultar artistas", e); }
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al consultar artistas", e);
+        }
     }
 
     @Override
     public List<Album> buscarAlbumes(String termino) throws PersistenciaException {
         try {
             return this.albumDAO.buscar(termino);
-        } catch (Exception e) { throw new PersistenciaException("Error al buscar álbumes", e); }
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al buscar álbumes", e);
+        }
     }
 
     @Override
     public Album consultarAlbum(Long id) throws PersistenciaException {
         try {
             return this.albumDAO.consultar(id);
-        } catch (Exception e) { throw new PersistenciaException("Error al consultar álbum", e); }
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al consultar álbum", e);
+        }
     }
 
     @Override
     public Album crearAlbum(Album album) throws PersistenciaException {
         try {
             return this.albumDAO.crear(album);
-        } catch (Exception e) { throw new PersistenciaException("Error al crear álbum", e); }
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al crear álbum", e);
+        }
     }
 
     @Override
     public Album actualizarAlbum(Album album) throws PersistenciaException {
         try {
             return this.albumDAO.actualizar(album);
-        } catch (Exception e) { throw new PersistenciaException("Error al actualizar álbum", e); }
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al actualizar álbum", e);
+        }
     }
 
     @Override
     public boolean eliminarAlbum(Long id) throws PersistenciaException {
         try {
             return this.albumDAO.eliminar(id);
-        } catch (Exception e) { throw new PersistenciaException("Error al eliminar álbum", e); }
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al eliminar álbum", e);
+        }
     }
-    
+
 }

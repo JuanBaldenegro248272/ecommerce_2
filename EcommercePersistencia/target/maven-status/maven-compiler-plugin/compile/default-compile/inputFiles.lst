@@ -1,37 +1,49 @@
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\ContraEntrega.java
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\Administrador.java
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\DetalleCarrito.java
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\Main.java
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\FormatoProducto.java
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\interfaces\IProductosDAO.java
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\PagoTransferencia.java
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\implementaciones\ProductosDAO.java
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\EstadoPedido.java
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\Artista.java
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\implementaciones\Persistencia.java
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\Cliente.java
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\exceptions\PersistenciaException.java
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\utils\SeguridadUtil.java
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\Direccion.java
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\EstadoResena.java
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\dtos\ProductoListaDTO.java
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\dtos\NuevaResenaDTO.java
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\Genero.java
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\Album.java
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\Usuario.java
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\PagoTarjeta.java
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\DetallePedido.java
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\dtos\EditarProductoDTO.java
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\interfaces\IResenasDAO.java
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\dtos\NuevoProductoDTO.java
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\GeneroAlbum.java
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\Resena.java
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\Producto.java
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\Pago.java
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\Carrito.java
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\utils\JasyptUtil.java
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\utils\ManejadorConexiones.java
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\implementaciones\ResenasDAO.java
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\interfaces\IPersistencia.java
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\Pedido.java
-C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\mapper\ProductoMapper.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\dtos\EditarProductoDTO.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\dtos\NuevaResenaDTO.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\dtos\NuevoProductoDTO.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\dtos\PedidoDTO.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\dtos\ProductoListaDTO.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\dtos\UsuarioDTO.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\Administrador.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\Album.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\Artista.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\Carrito.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\Cliente.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\ContraEntrega.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\DetalleCarrito.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\DetallePedido.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\Direccion.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\EstadoPedido.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\EstadoResena.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\FormatoProducto.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\Genero.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\GeneroAlbum.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\Pago.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\PagoTarjeta.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\PagoTransferencia.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\Pedido.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\Producto.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\Resena.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\Usuario.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\exceptions\PersistenciaException.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\implementaciones\AlbumDAO.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\implementaciones\ArtistaDAO.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\implementaciones\PedidoDAO.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\implementaciones\Persistencia.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\implementaciones\ProductosDAO.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\implementaciones\ResenasDAO.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\implementaciones\UsuarioDAO.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\interfaces\IAlbumDAO.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\interfaces\IArtistaDAO.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\interfaces\IPedidoDAO.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\interfaces\IPersistencia.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\interfaces\IProductosDAO.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\interfaces\IResenasDAO.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\interfaces\IUsuarioDAO.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\Main.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\mapper\PedidoMapper.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\mapper\ProductoMapper.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\mapper\UsuarioMapper.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\utils\JasyptUtil.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\utils\ManejadorConexiones.java
+C:\Users\jrasc\OneDrive\Documentos\NetBeansProjects\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\utils\SeguridadUtil.java

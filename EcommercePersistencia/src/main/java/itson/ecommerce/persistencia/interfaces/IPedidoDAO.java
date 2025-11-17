@@ -14,4 +14,5 @@ import java.util.List;
  */
 public interface IPedidoDAO {
     public List<Pedido> obtenerTodos() throws PersistenciaException;
+    public Pedido actualizarEstado(Long idPedido, String nuevoEstado) throws PersistenciaException;
 }

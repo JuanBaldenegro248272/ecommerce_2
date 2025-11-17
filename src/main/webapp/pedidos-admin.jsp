@@ -4,8 +4,9 @@
     Author     : jrasc
 --%>
 
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -77,15 +78,15 @@
                                     <td>
                                         <button class="acciones-btn"
                                                 type="button"
-                                                onclick="document.getElementById('dialog-pedido').showModal()">
+                                                onclick="document.getElementById('dialog-pedido-${p.id}').showModal()">
                                             <img src="icons/3dot.png" class="icon">
                                         </button>
-                                        <dialog id="dialog-pedido" class="pedido-dialog">
+                                        <dialog id="dialog-pedido-${p.id}" class="pedido-dialog">
                                             <div class="pedido-dialog-header">
                                                 <h2>Detalles del Pedido ORD-${p.id}</h2>
                                                 <button type="button"
                                                         class="pedido-dialog-close"
-                                                        onclick="document.getElementById('dialog-pedido').close()">
+                                                        onclick="document.getElementById('dialog-pedido-${p.id}').close()">
                                                     ✕
                                                 </button>
                                             </div>
@@ -110,26 +111,42 @@
 
                                                 <div class="pedido-row">
                                                     <span>Total</span>
-                                                    <strong>$45.00</strong>
+                                                    <strong>${p.total}</strong>
                                                 </div>
 
-                                                <label class="pedido-label" for="estado-pedido">Actualizar Estado</label>
-                                                <div class="pedido-select-wrapper">
-                                                    <select id="estado-pedido" name="estado">
-                                                        <option>Pendiente</option>
-                                                        <option>Procesando</option>
-                                                        <option>Enviado</option>
-                                                        <option>Entregado</option>
-                                                    </select>
-                                                </div>
+                                                <form method="post" action="${pageContext.request.contextPath}/PedidoServlet" class="pedido-form-estado">
+                                                    <input type="hidden" name="accion" value="actualizarEstado">
+                                                    <input type="hidden" name="idPedido" value="${p.id}">
 
-                                                <p class="pedido-fecha">
-                                                    Creado: 9/11/2025, 17:00:00 • Actualizado: 9/11/2025, 17:00:00
-                                                </p>
-                                            </div>
-                                        </dialog>
-                                    </td>
-                                </tr>
+                                                    <label class="pedido-label" for="estado-pedido-${p.id}">Actualizar Estado</label>
+                                                    <div class="pedido-select-wrapper">
+                                                        <select id="estado-pedido-${p.id}" name="estado" onchange="this.form.submit()">
+                                                            <option value="PENDIENTE"
+                                                                    <c:if test="${p.estado == 'PENDIENTE'}">selected</c:if>>
+                                                                        Pendiente
+                                                                    </option>
+                                                                    <option value="PROCESANDO"
+                                                                    <c:if test="${p.estado == 'PROCESANDO'}">selected</c:if>>
+                                                                        Procesando
+                                                                    </option>
+                                                                    <option value="ENVIADO"
+                                                                    <c:if test="${p.estado == 'ENVIADO'}">selected</c:if>>
+                                                                        Enviado
+                                                                    </option>
+                                                                    <option value="ENTREGADO"
+                                                                    <c:if test="${p.estado == 'ENTREGADO'}">selected</c:if>>
+                                                                        Entregado
+                                                                    </option>
+                                                            </select>
+                                                        </div>
+                                                    </form>
+                                                    <p class="pedido-fecha">
+                                                        Creado: 9/11/2025, 17:00:00 • Actualizado: 9/11/2025, 17:00:00
+                                                    </p>
+                                                </div>
+                                            </dialog>
+                                        </td>
+                                    </tr>
                             </c:forEach>
                         </tbody>
                     </table>

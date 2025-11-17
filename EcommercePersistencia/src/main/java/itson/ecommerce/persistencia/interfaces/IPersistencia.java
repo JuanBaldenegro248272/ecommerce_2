@@ -22,15 +22,15 @@ import java.util.List;
  * @author Dana Chavez
  */
 public interface IPersistencia {
-    
+
     public abstract NuevoProductoDTO crearProducto(NuevoProductoDTO dto) throws PersistenciaException;
-    
+
     public abstract List<ProductoListaDTO> obtenerTodosProductos() throws PersistenciaException;
 
     public abstract List<ProductoListaDTO> buscarProductos(String termino) throws PersistenciaException;
-    
+
     public abstract void eliminarProducto(Long id) throws PersistenciaException;
-    
+
     public List<Resena> buscarResenas(String termino, EstadoResena estado) throws PersistenciaException;
 
     public Resena consultarResena(Long id) throws PersistenciaException;
@@ -38,7 +38,7 @@ public interface IPersistencia {
     public Resena actualizarResena(Resena resena) throws PersistenciaException;
 
     public boolean eliminarResena(Long idResena) throws PersistenciaException;
-    
+
     public Resena crearResena(NuevaResenaDTO dto) throws PersistenciaException;
     
     public abstract EditarProductoDTO obtenerProductoPorId(Long id) throws PersistenciaException;
@@ -46,7 +46,7 @@ public interface IPersistencia {
     public abstract void actualizarProducto(EditarProductoDTO dto) throws PersistenciaException;
 
     public Usuario buscarPorCorreo(String correo) throws PersistenciaException;
-    
+
     public Usuario guardar(Usuario usuario) throws PersistenciaException;
 
     public abstract List<PedidoDTO> obtenerTodosPedidos() throws PersistenciaException; 
@@ -62,5 +62,7 @@ public interface IPersistencia {
     Album actualizarAlbum(Album album) throws PersistenciaException;
     
     boolean eliminarAlbum(Long id) throws PersistenciaException;
+    
+    public PedidoDTO actualizarEstadoPedido(Long idPedido, String nuevoEstado) throws PersistenciaException;
 
 }

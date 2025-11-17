@@ -4,6 +4,7 @@
  */
 package itson.ecommerce.persistencia.implementaciones;
 
+import itson.ecommerce.persistencia.entidades.EstadoPedido;
 import itson.ecommerce.persistencia.entidades.Pedido;
 import itson.ecommerce.persistencia.exceptions.PersistenciaException;
 import itson.ecommerce.persistencia.interfaces.IPedidoDAO;
@@ -24,16 +25,42 @@ public class PedidoDAO implements IPedidoDAO {
     public List<Pedido> obtenerTodos() throws PersistenciaException {
         EntityManager em = ManejadorConexiones.getEntityManager();
         try {
+            em.getTransaction().begin();
             String jpql = "SELECT p FROM Pedido p "
-                    + "JOIN FETCH p.cliente "
-                    + "JOIN FETCH p.direccion "
-                    + "JOIN FETCH p.pago";
+                    + "LEFT JOIN FETCH p.cliente "
+                    + "LEFT JOIN FETCH p.direccion "
+                    + "LEFT JOIN FETCH p.pago";
             List<Pedido> pedidos = em.createQuery(jpql, Pedido.class).getResultList();
             return pedidos;
         } catch (Exception e) {
             throw new PersistenciaException("Error al obtener los pedidos " + e.getMessage());
         } finally {
             if (em != null && em.isOpen()) {
+                em.close();
+            }
+        }
+    }
+
+    @Override
+    public Pedido actualizarEstado(Long idPedido, String nuevoEstado) throws PersistenciaException {
+        EntityManager em = ManejadorConexiones.getEntityManager();
+        try {
+            em.getTransaction().begin();
+
+            Pedido pedido = em.find(Pedido.class, idPedido);
+            if (pedido == null) {
+                throw new PersistenciaException("No se encontro el pedido " + idPedido);
+            }
+            pedido.setEstado(EstadoPedido.valueOf(nuevoEstado));
+            em.getTransaction().commit();
+            return pedido;
+        } catch (Exception e) {
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new PersistenciaException("Error al actualizar el pedido", e);
+        } finally {
+            if (em != null) {
                 em.close();
             }
         }

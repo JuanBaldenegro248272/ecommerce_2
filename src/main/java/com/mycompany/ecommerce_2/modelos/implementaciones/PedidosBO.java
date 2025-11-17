@@ -32,4 +32,13 @@ public class PedidosBO implements IPedidoBO {
         }
     }
 
+    @Override
+    public PedidoDTO actualizarEstadoPedido(Long id, String nuevoEstado) throws BusinessException {
+        try {
+            return persistencia.actualizarEstadoPedido(id, nuevoEstado);
+        } catch (PersistenciaException ex) {
+            throw new BusinessException("No se pudo actualizar el estado del producto");
+        }
+    }
+
 }

@@ -84,7 +84,7 @@ public class PedidoServlet extends HttpServlet {
             request.setAttribute("error", "Ocurrio un error al cargar los pedidos");
             ex.printStackTrace();
         }
-        request.getRequestDispatcher("/pedidos-admin.jsp");
+        request.getRequestDispatcher("/pedidos-admin.jsp").forward(request, response);
     }
 
     /**
@@ -98,7 +98,24 @@ public class PedidoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.setCharacterEncoding("UTF-8");
+        String accion = request.getParameter("accion");
+        if ("actualizarEstado".equals(accion)) {
+            String id = request.getParameter("idPedido");
+            String nuevoEstado = request.getParameter("estado");
+            if (id != null && nuevoEstado != null) {
+                try {
+                    Long idPedido = Long.valueOf(id);
+                    PedidoDTO pedidoActualizado = pedidosBO.actualizarEstadoPedido(idPedido, nuevoEstado);
+                } catch (BusinessException ex) {
+                    ex.printStackTrace();
+                    request.setAttribute("error", "No se pudo actualizar el estado del pedido");
+                }
+            }
+            response.sendRedirect(request.getContextPath() + "/PedidoServlet");
+            return;
+        }
+        doGet(request, response);
     }
 
     /**
