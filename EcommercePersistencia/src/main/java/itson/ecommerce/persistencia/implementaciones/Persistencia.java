@@ -4,6 +4,7 @@
  */
 package itson.ecommerce.persistencia.implementaciones;
 
+import itson.ecommerce.persistencia.dtos.NuevaResenaDTO;
 import itson.ecommerce.persistencia.dtos.NuevoProductoDTO;
 import itson.ecommerce.persistencia.dtos.ProductoListaDTO;
 import itson.ecommerce.persistencia.entidades.EstadoResena;
@@ -92,6 +93,15 @@ public class Persistencia implements IPersistencia {
             return this.resenasDAO.eliminar(idResena);
         } catch (Exception e) {
             throw new PersistenciaException("Error al eliminar reseña: " + e.getMessage());
+        }
+    }
+    
+    @Override
+    public Resena crearResena(NuevaResenaDTO dto) throws PersistenciaException {
+        try {            
+            return this.resenasDAO.crear(dto);
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al crear la reseña: " + e.getMessage());
         }
     }
 }
