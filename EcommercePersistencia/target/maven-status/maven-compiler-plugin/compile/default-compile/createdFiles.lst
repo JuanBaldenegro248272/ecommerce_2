@@ -8,6 +8,7 @@ itson\ecommerce\persistencia\entidades\Cliente.class
 itson\ecommerce\persistencia\entidades\ContraEntrega.class
 itson\ecommerce\persistencia\entidades\Album.class
 itson\ecommerce\persistencia\entidades\PagoTransferencia_.class
+itson\ecommerce\persistencia\dtos\NuevaResenaDTO.class
 itson\ecommerce\persistencia\entidades\DetallePedido.class
 itson\ecommerce\persistencia\interfaces\IProductosDAO.class
 itson\ecommerce\persistencia\entidades\Artista.class
@@ -15,12 +16,14 @@ itson\ecommerce\persistencia\entidades\Usuario.class
 itson\ecommerce\persistencia\entidades\Pago.class
 itson\ecommerce\persistencia\implementaciones\Persistencia.class
 itson\ecommerce\persistencia\entidades\Genero_.class
+itson\ecommerce\persistencia\interfaces\IResenasDAO.class
 itson\ecommerce\persistencia\interfaces\IPersistencia.class
 itson\ecommerce\persistencia\dtos\NuevoProductoDTO.class
 itson\ecommerce\persistencia\entidades\DetallePedido_.class
 itson\ecommerce\persistencia\entidades\Pago_.class
 itson\ecommerce\persistencia\entidades\Pedido.class
 itson\ecommerce\persistencia\entidades\Resena.class
+itson\ecommerce\persistencia\implementaciones\ResenasDAO.class
 itson\ecommerce\persistencia\mapper\ProductoMapper.class
 itson\ecommerce\persistencia\entidades\FormatoProducto.class
 itson\ecommerce\persistencia\entidades\Carrito_.class

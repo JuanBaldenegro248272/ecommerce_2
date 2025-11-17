@@ -67,6 +67,8 @@ public class Persistencia implements IPersistencia {
         } catch (Exception ex) {
             System.out.println("ERROR en Persistencia.eliminarProducto: " + ex.getMessage());
             throw new PersistenciaException("Error al eliminar producto", ex);
+        }
+    }
     
     @Override
     public List<Resena> buscarResenas(String termino, EstadoResena estado) throws PersistenciaException {
