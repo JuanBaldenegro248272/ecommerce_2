@@ -82,5 +82,25 @@ public class ProductosBO implements IProductosBO{
             throw new BusinessException("No se pudieron buscar los productos.");
         }
     }
+
+    @Override
+    public void eliminarProducto(Long id) throws BusinessException {
+        if (id == null || id <= 0) {
+            throw new BusinessException("El ID del producto no es válido.");
+        }
+        
+        try {
+            persistencia.eliminarProducto(id);
+        } catch (PersistenciaException ex) {
+            // Verificar si es un error de integridad referencial
+            if (ex.getMessage() != null && 
+                (ex.getMessage().contains("foreign key") || 
+                 ex.getMessage().contains("constraint") ||
+                 ex.getMessage().contains("integrity"))) {
+                throw new BusinessException("No se puede eliminar el producto porque tiene pedidos o está en carritos. Desactívalo en su lugar.");
+            }
+            throw new BusinessException("No se pudo eliminar el producto.");
+        }
+    }
    
 }

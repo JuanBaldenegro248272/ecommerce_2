@@ -132,4 +132,44 @@ public class ProductosDAO implements IProductosDAO {
         }
     }
 
+    @Override
+    public void eliminar(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("El ID no puede ser nulo.");
+        }
+        
+        EntityManager em = null;
+        try {
+            em = ManejadorConexiones.getEntityManager();
+            em.getTransaction().begin();
+
+            Producto producto = em.find(Producto.class, id);
+            
+            if (producto == null) {
+                throw new IllegalArgumentException("Producto no encontrado con ID: " + id);
+            }
+            
+            System.out.println("Producto encontrado: " + producto.getAlbum().getNombre() + 
+                             " - Formato: " + producto.getFormato());
+
+            em.remove(producto);
+            em.flush();
+            em.getTransaction().commit();
+            
+            System.out.println("Producto eliminado exitosamente");
+            
+        } catch (Exception ex) {
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            System.out.println("ERROR al eliminar producto: " + ex.getMessage());
+            ex.printStackTrace();
+            throw new RuntimeException("Error al eliminar el producto", ex);
+        } finally {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
+        }
+    }
+
 }

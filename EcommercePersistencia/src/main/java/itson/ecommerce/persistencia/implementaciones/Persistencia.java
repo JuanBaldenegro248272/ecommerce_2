@@ -53,4 +53,14 @@ public class Persistencia implements IPersistencia {
             throw new PersistenciaException("Error al buscar productos", ex);
         }
     }
+
+    @Override
+    public void eliminarProducto(Long id) throws PersistenciaException {
+        try {
+            productosDAO.eliminar(id);
+        } catch (Exception ex) {
+            System.out.println("ERROR en Persistencia.eliminarProducto: " + ex.getMessage());
+            throw new PersistenciaException("Error al eliminar producto", ex);
+        }
+    }
 }

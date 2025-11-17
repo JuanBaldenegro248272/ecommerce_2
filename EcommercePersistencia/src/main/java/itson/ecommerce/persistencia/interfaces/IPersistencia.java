@@ -20,5 +20,7 @@ public interface IPersistencia {
     public abstract List<ProductoListaDTO> obtenerTodosProductos() throws PersistenciaException;
 
     public abstract List<ProductoListaDTO> buscarProductos(String termino) throws PersistenciaException;
+    
+    public abstract void eliminarProducto(Long id) throws PersistenciaException;
 
 }

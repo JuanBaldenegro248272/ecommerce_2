@@ -20,4 +20,5 @@ public interface IProductosDAO {
     
     public abstract List<Producto> buscarPorNombre(String termino);
     
+    public abstract void eliminar(Long id);
 }

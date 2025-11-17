@@ -19,4 +19,6 @@ public interface IProductosBO {
     public abstract List<ProductoListaDTO> obtenerTodosProductos() throws BusinessException;
 
     public abstract List<ProductoListaDTO> buscarProductos(String termino) throws BusinessException;
+    
+    public abstract void eliminarProducto(Long id) throws BusinessException;
 }

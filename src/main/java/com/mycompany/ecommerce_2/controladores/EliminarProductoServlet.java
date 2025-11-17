@@ -7,13 +7,10 @@ package com.mycompany.ecommerce_2.controladores;
 import com.mycompany.ecommerce_2.exceptions.BusinessException;
 import com.mycompany.ecommerce_2.modelos.IProductosBO;
 import com.mycompany.ecommerce_2.modelos.implementaciones.ProductosBO;
-import itson.ecommerce.persistencia.dtos.ProductoListaDTO;
 import itson.ecommerce.persistencia.implementaciones.Persistencia;
 import itson.ecommerce.persistencia.interfaces.IPersistencia;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -24,15 +21,17 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author Dana Chavez
  */
-@WebServlet(name = "ListarProductosServlet", urlPatterns = {"/admin/productos"})
-public class ListarProductosServlet extends HttpServlet {
-         
+@WebServlet(name = "EliminarProductoServlet", urlPatterns = {"/admin/productos/eliminar"})
+public class EliminarProductoServlet extends HttpServlet {
+    
     private IProductosBO productosBO;
     
     @Override
     public void init() throws ServletException {
+        System.out.println("🚀 INICIALIZANDO EliminarProductoServlet");
         IPersistencia persistencia = new Persistencia();
         this.productosBO = new ProductosBO(persistencia);
+        System.out.println("✅ EliminarProductoServlet inicializado correctamente");
     }
 
     /**
@@ -52,10 +51,10 @@ public class ListarProductosServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ListarProductosServlet</title>");            
+            out.println("<title>Servlet EliminarProductoServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ListarProductosServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet EliminarProductoServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -73,57 +72,37 @@ public class ListarProductosServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        request.setCharacterEncoding("UTF-8");
-
-        String termino = request.getParameter("buscar");
-        List<ProductoListaDTO> productos = new ArrayList<>();
-
+        
+        String idStr = request.getParameter("id");
+        
+        if (idStr == null || idStr.trim().isEmpty()) {
+            response.sendRedirect(request.getContextPath() + "/admin/productos?error=id_invalido");
+            return;
+        }
+        
         try {
-            if (termino != null && !termino.trim().isEmpty()) {
-                productos = productosBO.buscarProductos(termino);
-            } else {
-                productos = productosBO.obtenerTodosProductos();
-            }
-
-            request.setAttribute("listaProductos", productos);
-            request.setAttribute("terminoBusqueda", termino);
-
-            String success = request.getParameter("success");
-            if ("1".equals(success)) {
-                request.setAttribute("mensaje", "Producto creado exitosamente");
-            } else if ("2".equals(success)) {
-                request.setAttribute("mensaje", "Producto actualizado exitosamente");
-            } else if ("3".equals(success)) {
-                request.setAttribute("mensaje", "Producto eliminado exitosamente");
-            }
-
-            String error = request.getParameter("error");
-            if ("id_invalido".equals(error)) {
-                request.setAttribute("error", "ID de producto inválido");
-            } else if ("error_eliminar".equals(error)) {
-                request.setAttribute("error", "Ocurrió un error al eliminar el producto");
-            } else if (error != null && !error.isEmpty()) {
-                try {
-                    String mensajeDecodificado = java.net.URLDecoder.decode(error, "UTF-8");
-                    request.setAttribute("error", mensajeDecodificado);
-                } catch (Exception e) {
-                    request.setAttribute("error", "Error desconocido");
-                }
-            }
-
+            Long id = Long.valueOf(idStr);
+            System.out.println("Intentando eliminar producto con ID: " + id);
+            
+            productosBO.eliminarProducto(id);
+            
+            System.out.println("Producto eliminado correctamente");
+            response.sendRedirect(request.getContextPath() + "/admin/productos?success=3");
+            
+        } catch (NumberFormatException ex) {
+            System.out.println("ID inválido: " + idStr);
+            response.sendRedirect(request.getContextPath() + "/admin/productos?error=id_invalido");
+            
         } catch (BusinessException ex) {
             System.out.println("BusinessException: " + ex.getMessage());
-            request.setAttribute("error", ex.getMessage());
-            request.setAttribute("listaProductos", productos);
+            String mensaje = java.net.URLEncoder.encode(ex.getMessage(), "UTF-8");
+            response.sendRedirect(request.getContextPath() + "/admin/productos?error=" + mensaje);
+            
         } catch (Exception ex) {
             System.out.println("Exception general: " + ex.getMessage());
-            request.setAttribute("error", "Ocurrió un error al cargar los productos");
-            request.setAttribute("listaProductos", productos);
             ex.printStackTrace();
+            response.sendRedirect(request.getContextPath() + "/admin/productos?error=error_eliminar");
         }
-
-        request.getRequestDispatcher("/productos-admin.jsp").forward(request, response);
     }
 
     /**
@@ -137,7 +116,7 @@ public class ListarProductosServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        doGet(request, response);
     }
 
     /**

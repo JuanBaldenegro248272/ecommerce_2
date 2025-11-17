@@ -971,3 +971,108 @@ body {
         font-size: 14px;
     }
 }
+
+.alerta {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    z-index: 9999;
+    padding: 15px 20px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    min-width: 300px;
+    max-width: 500px;
+
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.alerta.success {
+    background: #4CAF50;
+}
+.alerta.error {
+    background: #f44336;
+}
+
+.alerta.fade-out {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-18px);
+}
+
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9998;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    max-width: 450px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content h3 {
+    margin-top: 0;
+    color: #d32f2f;
+    font-size: 20px;
+}
+
+.modal-content p {
+    margin: 20px 0;
+    color: #666;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 24px;
+}
+
+.modal-buttons button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s;
+    min-width: 100px;
+}
+
+.btn-confirmar {
+    background: #d32f2f;
+    color: white;
+}
+
+.btn-confirmar:hover {
+    background: #b71c1c;
+}
+
+.btn-cancelar {
+    background: #e0e0e0;
+    color: #333;
+}
+
+.btn-cancelar:hover {
+    background: #bdbdbd;
+}
