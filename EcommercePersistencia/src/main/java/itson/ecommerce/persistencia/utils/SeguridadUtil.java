@@ -24,5 +24,9 @@ public class SeguridadUtil {
             throw new RuntimeException("Error generando hash", e);
         }
     }
+    
+    public static boolean verificarHash(String contraseñaIngresada, String hashAlmacenado){
+        return generarHash(contraseñaIngresada).equals(hashAlmacenado);
+    }
    
 }

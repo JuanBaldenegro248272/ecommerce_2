@@ -7,9 +7,11 @@ package itson.ecommerce.persistencia.interfaces;
 import itson.ecommerce.persistencia.dtos.EditarProductoDTO;
 import itson.ecommerce.persistencia.dtos.NuevaResenaDTO;
 import itson.ecommerce.persistencia.dtos.NuevoProductoDTO;
+import itson.ecommerce.persistencia.dtos.PedidoDTO;
 import itson.ecommerce.persistencia.dtos.ProductoListaDTO;
 import itson.ecommerce.persistencia.entidades.EstadoResena;
 import itson.ecommerce.persistencia.entidades.Resena;
+import itson.ecommerce.persistencia.entidades.Usuario;
 import itson.ecommerce.persistencia.exceptions.PersistenciaException;
 import java.util.List;
 
@@ -40,4 +42,11 @@ public interface IPersistencia {
     public abstract EditarProductoDTO obtenerProductoPorId(Long id) throws PersistenciaException;
     
     public abstract void actualizarProducto(EditarProductoDTO dto) throws PersistenciaException;
+
+    public Usuario buscarPorCorreo(String correo) throws PersistenciaException;
+    
+    public Usuario guardar(Usuario usuario) throws PersistenciaException;
+
+    public abstract List<PedidoDTO> obtenerTodosPedidos() throws PersistenciaException; 
+
 }
