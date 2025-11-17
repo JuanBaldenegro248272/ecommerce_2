@@ -21,6 +21,7 @@ C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia
 C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\Usuario.java
 C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\PagoTarjeta.java
 C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\DetallePedido.java
+C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\dtos\EditarProductoDTO.java
 C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\interfaces\IResenasDAO.java
 C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\dtos\NuevoProductoDTO.java
 C:\Users\Dana Chavez\OneDrive\Documents\GitHub\ecommerce_2\EcommercePersistencia\src\main\java\itson\ecommerce\persistencia\entidades\GeneroAlbum.java

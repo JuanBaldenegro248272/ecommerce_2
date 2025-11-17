@@ -6,6 +6,7 @@ package com.mycompany.ecommerce_2.modelos.implementaciones;
 
 import com.mycompany.ecommerce_2.exceptions.BusinessException;
 import com.mycompany.ecommerce_2.modelos.IProductosBO;
+import itson.ecommerce.persistencia.dtos.EditarProductoDTO;
 import itson.ecommerce.persistencia.dtos.NuevoProductoDTO;
 import itson.ecommerce.persistencia.dtos.ProductoListaDTO;
 import itson.ecommerce.persistencia.exceptions.PersistenciaException;
@@ -92,7 +93,6 @@ public class ProductosBO implements IProductosBO{
         try {
             persistencia.eliminarProducto(id);
         } catch (PersistenciaException ex) {
-            // Verificar si es un error de integridad referencial
             if (ex.getMessage() != null && 
                 (ex.getMessage().contains("foreign key") || 
                  ex.getMessage().contains("constraint") ||
@@ -102,5 +102,50 @@ public class ProductosBO implements IProductosBO{
             throw new BusinessException("No se pudo eliminar el producto.");
         }
     }
-   
+
+   @Override
+    public EditarProductoDTO obtenerProductoPorId(Long id) throws BusinessException {
+        if (id == null || id <= 0) {
+            throw new BusinessException("El ID del producto no es válido.");
+        }
+        
+        try {
+            return persistencia.obtenerProductoPorId(id);
+        } catch (PersistenciaException ex) {
+            throw new BusinessException("No se pudo obtener el producto.");
+        }
+    }
+
+    @Override
+    public void actualizarProducto(EditarProductoDTO dto) throws BusinessException {
+        if (dto.getId() == null || dto.getId() <= 0) {
+            throw new BusinessException("El ID del producto no es válido.");
+        }
+        
+        if (dto.getFormato() == null || dto.getFormato().isEmpty()) {
+            throw new BusinessException("Debes seleccionar un formato.");
+        }
+        
+        if (dto.getPrecio() == null || dto.getPrecio() < 0) {
+            throw new BusinessException("El precio no puede ser negativo.");
+        }
+        
+        if (dto.getStock() == null || dto.getStock() < 0) {
+            throw new BusinessException("El stock no puede ser negativo.");
+        }
+        
+        if (dto.getDescripcion() == null || dto.getDescripcion().trim().isEmpty()) {
+            throw new BusinessException("Debes escribir una descripción.");
+        }
+        
+        if (dto.getDescripcion().length() > LIMITE_DESCRIPCION) {
+            throw new BusinessException("La descripción excede los " + LIMITE_DESCRIPCION + " caracteres.");
+        }
+        
+        try {
+            persistencia.actualizarProducto(dto);
+        } catch (PersistenciaException ex) {
+            throw new BusinessException("No se pudo actualizar el producto.");
+        }
+    }
 }

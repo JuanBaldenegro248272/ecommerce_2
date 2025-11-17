@@ -4,6 +4,7 @@
  */
 package itson.ecommerce.persistencia.interfaces;
 
+import itson.ecommerce.persistencia.dtos.EditarProductoDTO;
 import itson.ecommerce.persistencia.dtos.NuevaResenaDTO;
 import itson.ecommerce.persistencia.dtos.NuevoProductoDTO;
 import itson.ecommerce.persistencia.dtos.ProductoListaDTO;
@@ -35,4 +36,8 @@ public interface IPersistencia {
     public boolean eliminarResena(Long idResena) throws PersistenciaException;
     
     public Resena crearResena(NuevaResenaDTO dto) throws PersistenciaException;
+    
+    public abstract EditarProductoDTO obtenerProductoPorId(Long id) throws PersistenciaException;
+    
+    public abstract void actualizarProducto(EditarProductoDTO dto) throws PersistenciaException;
 }

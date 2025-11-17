@@ -4,6 +4,7 @@
  */
 package itson.ecommerce.persistencia.implementaciones;
 
+import itson.ecommerce.persistencia.dtos.EditarProductoDTO;
 import itson.ecommerce.persistencia.dtos.NuevaResenaDTO;
 import itson.ecommerce.persistencia.dtos.NuevoProductoDTO;
 import itson.ecommerce.persistencia.dtos.ProductoListaDTO;
@@ -112,6 +113,38 @@ public class Persistencia implements IPersistencia {
             return this.resenasDAO.crear(dto);
         } catch (Exception e) {
             throw new PersistenciaException("Error al crear la reseña: " + e.getMessage());
+        }
+    }
+
+   @Override
+    public EditarProductoDTO obtenerProductoPorId(Long id) throws PersistenciaException {
+        try {
+            System.out.println("=== PERSISTENCIA: obtenerProductoPorId(" + id + ") ===");
+            
+            Producto producto = productosDAO.obtenerPorId(id);
+            EditarProductoDTO dto = ProductoMapper.toEditarDTO(producto);
+            
+            System.out.println("✅ DTO generado correctamente");
+            return dto;
+        } catch (Exception ex) {
+            System.out.println("❌ ERROR en Persistencia.obtenerProductoPorId: " + ex.getMessage());
+            throw new PersistenciaException("Error al obtener producto", ex);
+        }
+    }
+
+    @Override
+    public void actualizarProducto(EditarProductoDTO dto) throws PersistenciaException {
+        try {
+            Producto producto = productosDAO.obtenerPorId(dto.getId());
+
+            ProductoMapper.updateEntity(producto, dto);
+
+            productosDAO.actualizar(producto);
+            
+            System.out.println("Producto actualizado en persistencia");
+        } catch (Exception ex) {
+            System.out.println("ERROR en Persistencia.actualizarProducto: " + ex.getMessage());
+            throw new PersistenciaException("Error al actualizar producto", ex);
         }
     }
 }

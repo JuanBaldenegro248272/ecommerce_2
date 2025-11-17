@@ -4,6 +4,7 @@
  */
 package itson.ecommerce.persistencia.mapper;
 
+import itson.ecommerce.persistencia.dtos.EditarProductoDTO;
 import itson.ecommerce.persistencia.dtos.NuevoProductoDTO;
 import itson.ecommerce.persistencia.dtos.ProductoListaDTO;
 import itson.ecommerce.persistencia.entidades.Album;
@@ -96,5 +97,51 @@ public final class ProductoMapper {
         }
         
         return dto;
+    }
+    
+    public static EditarProductoDTO toEditarDTO(Producto producto) {
+        EditarProductoDTO dto = new EditarProductoDTO();
+        
+        dto.setId(producto.getId());
+        dto.setFormato(producto.getFormato() != null ? producto.getFormato().name() : null);
+        dto.setPrecio(producto.getPrecio());
+        dto.setStock(producto.getStock());
+        dto.setEsDisponible(producto.getEsDisponible());
+        dto.setDescripcion(producto.getDescripcion());
+
+        if (producto.getAlbum() != null) {
+            Album album = producto.getAlbum();
+            dto.setAlbumId(album.getId());
+            dto.setAlbumNombre(album.getNombre());
+            dto.setAlbumImagenUrl(album.getImagenUrl());
+
+            if (album.getArtista() != null) {
+                dto.setArtistaNombre(album.getArtista().getNombreArtistico());
+            }
+        }
+        
+        return dto;
+    }
+
+    public static void updateEntity(Producto producto, EditarProductoDTO dto) {
+        if (dto.getPrecio() != null) {
+            producto.setPrecio(dto.getPrecio());
+        }
+        if (dto.getStock() != null) {
+            producto.setStock(dto.getStock());
+        }
+        if (dto.getEsDisponible() != null) {
+            producto.setEsDisponible(dto.getEsDisponible());
+        }
+        if (dto.getDescripcion() != null) {
+            producto.setDescripcion(dto.getDescripcion());
+        }
+        if (dto.getFormato() != null) {
+            try {
+                producto.setFormato(FormatoProducto.valueOf(dto.getFormato()));
+            } catch (IllegalArgumentException e) {
+
+            }
+        }
     }
 }

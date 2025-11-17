@@ -13,6 +13,7 @@ itson\ecommerce\persistencia\entidades\DetallePedido.class
 itson\ecommerce\persistencia\interfaces\IProductosDAO.class
 itson\ecommerce\persistencia\entidades\Artista.class
 itson\ecommerce\persistencia\entidades\Usuario.class
+itson\ecommerce\persistencia\dtos\EditarProductoDTO.class
 itson\ecommerce\persistencia\entidades\Pago.class
 itson\ecommerce\persistencia\implementaciones\Persistencia.class
 itson\ecommerce\persistencia\entidades\Genero_.class

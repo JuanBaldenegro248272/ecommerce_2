@@ -172,4 +172,70 @@ public class ProductosDAO implements IProductosDAO {
         }
     }
 
+    @Override
+    public Producto obtenerPorId(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("El ID no puede ser nulo.");
+        }
+        
+        EntityManager em = null;
+        try {
+            em = ManejadorConexiones.getEntityManager();
+            
+            String jpql = "SELECT p FROM Producto p " +
+                         "LEFT JOIN FETCH p.album a " +
+                         "LEFT JOIN FETCH a.artista art " +
+                         "WHERE p.id = :id";
+            
+            TypedQuery<Producto> query = em.createQuery(jpql, Producto.class);
+            query.setParameter("id", id);
+            
+            Producto producto = query.getSingleResult();
+
+            return producto;
+            
+        } catch (javax.persistence.NoResultException ex) {
+            System.out.println("Producto no encontrado con ID: " + id);
+            throw new IllegalArgumentException("Producto no encontrado con ID: " + id);
+        } catch (Exception ex) {
+            System.out.println("ERROR al obtener producto: " + ex.getMessage());
+            ex.printStackTrace();
+            throw new RuntimeException("Error al obtener el producto", ex);
+        } finally {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
+        }
+    }
+
+    @Override
+    public void actualizar(Producto producto) {
+        if (producto == null) {
+            throw new IllegalArgumentException("El producto no puede ser nulo.");
+        }
+        
+        EntityManager em = null;
+        try {
+            em = ManejadorConexiones.getEntityManager();
+            em.getTransaction().begin();
+            
+            Producto productoActualizado = em.merge(producto);
+            em.flush();
+            em.getTransaction().commit();
+            
+            
+        } catch (Exception ex) {
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            System.out.println("ERROR al actualizar producto: " + ex.getMessage());
+            ex.printStackTrace();
+            throw new RuntimeException("Error al actualizar el producto", ex);
+        } finally {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
+        }
+    }
+
 }

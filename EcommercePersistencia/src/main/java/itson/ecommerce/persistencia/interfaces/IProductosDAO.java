@@ -21,4 +21,8 @@ public interface IProductosDAO {
     public abstract List<Producto> buscarPorNombre(String termino);
     
     public abstract void eliminar(Long id);
+    
+    public abstract Producto obtenerPorId(Long id);
+    
+    public abstract void actualizar(Producto producto);
 }

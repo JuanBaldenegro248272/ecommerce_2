@@ -1076,3 +1076,36 @@ body {
 .btn-cancelar:hover {
     background: #bdbdbd;
 }
+
+.album-info img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.album-details {
+    flex: 1;
+}
+
+.album-details h4 {
+    margin: 0 0 4px 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.album-details p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+}
+
+.album-badge {
+    background: #2196F3;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+}
