@@ -6,15 +6,19 @@ package itson.ecommerce.persistencia.implementaciones;
 
 import itson.ecommerce.persistencia.dtos.NuevaResenaDTO;
 import itson.ecommerce.persistencia.dtos.NuevoProductoDTO;
+import itson.ecommerce.persistencia.dtos.PedidoDTO;
 import itson.ecommerce.persistencia.dtos.ProductoListaDTO;
 import itson.ecommerce.persistencia.entidades.EstadoResena;
+import itson.ecommerce.persistencia.entidades.Pedido;
 import itson.ecommerce.persistencia.entidades.Producto;
 import itson.ecommerce.persistencia.entidades.Resena;
 import itson.ecommerce.persistencia.entidades.Usuario;
 import itson.ecommerce.persistencia.exceptions.PersistenciaException;
+import itson.ecommerce.persistencia.interfaces.IPedidoDAO;
 import itson.ecommerce.persistencia.interfaces.IPersistencia;
 import itson.ecommerce.persistencia.interfaces.IProductosDAO;
 import itson.ecommerce.persistencia.interfaces.IResenasDAO;
+import itson.ecommerce.persistencia.mapper.PedidoMapper;
 import itson.ecommerce.persistencia.mapper.ProductoMapper;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,11 +28,14 @@ import java.util.stream.Collectors;
  * @author Dana Chavez
  */
 public class Persistencia implements IPersistencia {
+
     private IProductosDAO productosDAO;
     private IResenasDAO resenasDAO;
+    private IPedidoDAO pedidosDAO;
 
     public Persistencia() {
         this.productosDAO = new ProductosDAO();
+        this.pedidosDAO = new PedidoDAO();
         this.resenasDAO = new ResenasDAO();
     }
 
@@ -42,8 +49,8 @@ public class Persistencia implements IPersistencia {
         try {
             List<Producto> productos = productosDAO.obtenerTodos();
             return productos.stream()
-                .map(ProductoMapper::toListaDTO)
-                .collect(Collectors.toList());
+                    .map(ProductoMapper::toListaDTO)
+                    .collect(Collectors.toList());
         } catch (Exception ex) {
             throw new PersistenciaException("Error al obtener productos", ex);
         }
@@ -54,8 +61,8 @@ public class Persistencia implements IPersistencia {
         try {
             List<Producto> productos = productosDAO.buscarPorNombre(termino);
             return productos.stream()
-                .map(ProductoMapper::toListaDTO)
-                .collect(Collectors.toList());
+                    .map(ProductoMapper::toListaDTO)
+                    .collect(Collectors.toList());
         } catch (Exception ex) {
             throw new PersistenciaException("Error al buscar productos", ex);
         }
@@ -70,7 +77,7 @@ public class Persistencia implements IPersistencia {
             throw new PersistenciaException("Error al eliminar producto", ex);
         }
     }
-    
+
     @Override
     public List<Resena> buscarResenas(String termino, EstadoResena estado) throws PersistenciaException {
         try {
@@ -106,15 +113,16 @@ public class Persistencia implements IPersistencia {
             throw new PersistenciaException("Error al eliminar reseña: " + e.getMessage());
         }
     }
-    
+
     @Override
     public Resena crearResena(NuevaResenaDTO dto) throws PersistenciaException {
-        try {            
+        try {
             return this.resenasDAO.crear(dto);
         } catch (Exception e) {
             throw new PersistenciaException("Error al crear la reseña: " + e.getMessage());
         }
     }
+
     @Override
     public Usuario buscarPorCorreo(String correo) throws PersistenciaException {
         try {
@@ -133,5 +141,15 @@ public class Persistencia implements IPersistencia {
 
         }
     }
-   
+
+    public List<PedidoDTO> obtenerTodosPedidos() throws PersistenciaException {
+
+        try {
+            List<Pedido> pedidos = pedidosDAO.obtenerTodos();
+            return pedidos.stream().map(PedidoMapper::toDTO).collect(Collectors.toList());
+        } catch (Exception ex) {
+            throw new PersistenciaException("Error al obtener pedidos ", ex);
+        }
+
+    }
 }

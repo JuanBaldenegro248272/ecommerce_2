@@ -6,6 +6,7 @@ package itson.ecommerce.persistencia.interfaces;
 
 import itson.ecommerce.persistencia.dtos.NuevaResenaDTO;
 import itson.ecommerce.persistencia.dtos.NuevoProductoDTO;
+import itson.ecommerce.persistencia.dtos.PedidoDTO;
 import itson.ecommerce.persistencia.dtos.ProductoListaDTO;
 import itson.ecommerce.persistencia.entidades.EstadoResena;
 import itson.ecommerce.persistencia.entidades.Resena;
@@ -41,5 +42,6 @@ public interface IPersistencia {
     
     public Usuario guardar(Usuario usuario) throws PersistenciaException;
 
+    public abstract List<PedidoDTO> obtenerTodosPedidos() throws PersistenciaException; 
 
 }
