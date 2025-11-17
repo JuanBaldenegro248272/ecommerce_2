@@ -4,6 +4,7 @@
  */
 package itson.ecommerce.persistencia.interfaces;
 
+import itson.ecommerce.persistencia.dtos.NuevaResenaDTO;
 import itson.ecommerce.persistencia.entidades.EstadoResena;
 import itson.ecommerce.persistencia.entidades.Resena;
 import java.util.List;
@@ -17,4 +18,5 @@ public interface IResenasDAO {
     Resena consultar(Long id);
     Resena actualizar(Resena resena);
     boolean eliminar(Long idResena);
+    Resena crear(NuevaResenaDTO dto);
 }
