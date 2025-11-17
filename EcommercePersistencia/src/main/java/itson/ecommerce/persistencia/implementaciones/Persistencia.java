@@ -9,12 +9,16 @@ import itson.ecommerce.persistencia.dtos.NuevaResenaDTO;
 import itson.ecommerce.persistencia.dtos.NuevoProductoDTO;
 import itson.ecommerce.persistencia.dtos.PedidoDTO;
 import itson.ecommerce.persistencia.dtos.ProductoListaDTO;
+import itson.ecommerce.persistencia.entidades.Album;
+import itson.ecommerce.persistencia.entidades.Artista;
 import itson.ecommerce.persistencia.entidades.EstadoResena;
 import itson.ecommerce.persistencia.entidades.Pedido;
 import itson.ecommerce.persistencia.entidades.Producto;
 import itson.ecommerce.persistencia.entidades.Resena;
 import itson.ecommerce.persistencia.entidades.Usuario;
 import itson.ecommerce.persistencia.exceptions.PersistenciaException;
+import itson.ecommerce.persistencia.interfaces.IAlbumDAO;
+import itson.ecommerce.persistencia.interfaces.IArtistaDAO;
 import itson.ecommerce.persistencia.interfaces.IPedidoDAO;
 import itson.ecommerce.persistencia.interfaces.IPersistencia;
 import itson.ecommerce.persistencia.interfaces.IProductosDAO;
@@ -33,11 +37,15 @@ public class Persistencia implements IPersistencia {
     private IProductosDAO productosDAO;
     private IResenasDAO resenasDAO;
     private IPedidoDAO pedidosDAO;
+    private IAlbumDAO albumDAO;
+    private IArtistaDAO artistaDAO;
 
     public Persistencia() {
         this.productosDAO = new ProductosDAO();
         this.pedidosDAO = new PedidoDAO();
         this.resenasDAO = new ResenasDAO();
+        this.albumDAO = new AlbumDAO();
+        this.artistaDAO = new ArtistaDAO();
     }
 
     @Override
@@ -180,4 +188,47 @@ public class Persistencia implements IPersistencia {
         }
 
     }
+    
+    @Override
+    public List<Artista> consultarArtistasTodos() throws PersistenciaException {
+        try {
+            return this.artistaDAO.consultarTodos();
+        } catch (Exception e) { throw new PersistenciaException("Error al consultar artistas", e); }
+    }
+
+    @Override
+    public List<Album> buscarAlbumes(String termino) throws PersistenciaException {
+        try {
+            return this.albumDAO.buscar(termino);
+        } catch (Exception e) { throw new PersistenciaException("Error al buscar álbumes", e); }
+    }
+
+    @Override
+    public Album consultarAlbum(Long id) throws PersistenciaException {
+        try {
+            return this.albumDAO.consultar(id);
+        } catch (Exception e) { throw new PersistenciaException("Error al consultar álbum", e); }
+    }
+
+    @Override
+    public Album crearAlbum(Album album) throws PersistenciaException {
+        try {
+            return this.albumDAO.crear(album);
+        } catch (Exception e) { throw new PersistenciaException("Error al crear álbum", e); }
+    }
+
+    @Override
+    public Album actualizarAlbum(Album album) throws PersistenciaException {
+        try {
+            return this.albumDAO.actualizar(album);
+        } catch (Exception e) { throw new PersistenciaException("Error al actualizar álbum", e); }
+    }
+
+    @Override
+    public boolean eliminarAlbum(Long id) throws PersistenciaException {
+        try {
+            return this.albumDAO.eliminar(id);
+        } catch (Exception e) { throw new PersistenciaException("Error al eliminar álbum", e); }
+    }
+    
 }
