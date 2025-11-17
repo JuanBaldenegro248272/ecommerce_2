@@ -14,7 +14,12 @@ public class UsuarioDTO {
     private String nombre;
     private String correoElectronico;
     private Boolean esActiva;
+    private String rol;
 
+    public UsuarioDTO() {
+    }
+
+    
     public UsuarioDTO(Long id, String nombre, String correoElectronico, Boolean esActiva) {
         this.id = id;
         this.nombre = nombre;
@@ -24,6 +29,14 @@ public class UsuarioDTO {
 
     public Long getId() {
         return id;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 
     public void setId(Long id) {
