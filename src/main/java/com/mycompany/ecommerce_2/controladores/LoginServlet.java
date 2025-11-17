@@ -5,7 +5,7 @@
 package com.mycompany.ecommerce_2.controladores;
 
 import com.mycompany.ecommerce_2.modelos.implementaciones.UsuarioBO;
-import itson.ecommerce.persistencia.entidades.Usuario;
+import itson.ecommerce.persistencia.dtos.UsuarioDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -80,9 +80,9 @@ public class LoginServlet extends HttpServlet {
         String contrasena = request.getParameter("password-login");
         
         try {
-            Usuario usuario = usuarioBO.login(correo, contrasena);
+            UsuarioDTO usuarioDTO = usuarioBO.login(correo, contrasena);
             HttpSession sesion = request.getSession();
-            sesion.setAttribute("usuarioLogueado", usuario);
+            sesion.setAttribute("usuarioLogueado", usuarioDTO);
             response.sendRedirect("index.jsp");
             
             
