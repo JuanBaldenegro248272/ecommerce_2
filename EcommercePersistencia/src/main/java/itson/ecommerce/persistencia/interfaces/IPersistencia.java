@@ -9,6 +9,8 @@ import itson.ecommerce.persistencia.dtos.NuevaResenaDTO;
 import itson.ecommerce.persistencia.dtos.NuevoProductoDTO;
 import itson.ecommerce.persistencia.dtos.PedidoDTO;
 import itson.ecommerce.persistencia.dtos.ProductoListaDTO;
+import itson.ecommerce.persistencia.entidades.Album;
+import itson.ecommerce.persistencia.entidades.Artista;
 import itson.ecommerce.persistencia.entidades.EstadoResena;
 import itson.ecommerce.persistencia.entidades.Resena;
 import itson.ecommerce.persistencia.entidades.Usuario;
@@ -48,5 +50,17 @@ public interface IPersistencia {
     public Usuario guardar(Usuario usuario) throws PersistenciaException;
 
     public abstract List<PedidoDTO> obtenerTodosPedidos() throws PersistenciaException; 
+    
+    List<Artista> consultarArtistasTodos() throws PersistenciaException;
+
+    List<Album> buscarAlbumes(String termino) throws PersistenciaException;
+    
+    Album consultarAlbum(Long id) throws PersistenciaException;
+    
+    Album crearAlbum(Album album) throws PersistenciaException;
+    
+    Album actualizarAlbum(Album album) throws PersistenciaException;
+    
+    boolean eliminarAlbum(Long id) throws PersistenciaException;
 
 }
