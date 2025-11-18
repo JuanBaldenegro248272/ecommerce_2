@@ -5,7 +5,7 @@
 package com.mycompany.ecommerce_2.modelos.implementaciones;
 
 import com.mycompany.ecommerce_2.modelos.IAlbumBO;
-import itson.ecommerce.persistencia.entidades.Album;
+import itson.ecommerce.persistencia.dtos.AlbumDTO;
 import itson.ecommerce.persistencia.exceptions.PersistenciaException;
 import itson.ecommerce.persistencia.implementaciones.Persistencia;
 import itson.ecommerce.persistencia.interfaces.IPersistencia;
@@ -26,7 +26,7 @@ public class AlbumBO implements IAlbumBO {
     }
 
     @Override
-    public List<Album> buscar(String termino) {
+    public List<AlbumDTO> buscar(String termino) {
         try {
             return this.persistencia.buscarAlbumes(termino);
         } catch (PersistenciaException ex) {
@@ -36,7 +36,7 @@ public class AlbumBO implements IAlbumBO {
     }
 
     @Override
-    public Album consultar(Long id) {
+    public AlbumDTO consultar(Long id) {
         try {
             return this.persistencia.consultarAlbum(id);
         } catch (PersistenciaException ex) {
@@ -46,7 +46,7 @@ public class AlbumBO implements IAlbumBO {
     }
 
     @Override
-    public Album crear(Album album) {
+    public AlbumDTO crear(AlbumDTO album) {
         try {
             return this.persistencia.crearAlbum(album);
         } catch (PersistenciaException ex) {
@@ -56,7 +56,7 @@ public class AlbumBO implements IAlbumBO {
     }
 
     @Override
-    public Album actualizar(Album album) {
+    public AlbumDTO actualizar(AlbumDTO album) {
         try {
             return this.persistencia.actualizarAlbum(album);
         } catch (PersistenciaException ex) {

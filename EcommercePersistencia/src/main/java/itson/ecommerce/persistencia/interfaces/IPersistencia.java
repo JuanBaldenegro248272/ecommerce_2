@@ -4,6 +4,7 @@
  */
 package itson.ecommerce.persistencia.interfaces;
 
+import itson.ecommerce.persistencia.dtos.AlbumDTO;
 import itson.ecommerce.persistencia.dtos.EditarProductoDTO;
 import itson.ecommerce.persistencia.dtos.NuevaResenaDTO;
 import itson.ecommerce.persistencia.dtos.NuevoProductoDTO;
@@ -53,13 +54,13 @@ public interface IPersistencia {
     
     List<Artista> consultarArtistasTodos() throws PersistenciaException;
 
-    List<Album> buscarAlbumes(String termino) throws PersistenciaException;
+    List<AlbumDTO> buscarAlbumes(String termino) throws PersistenciaException;
     
-    Album consultarAlbum(Long id) throws PersistenciaException;
+    AlbumDTO consultarAlbum(Long id) throws PersistenciaException;
     
-    Album crearAlbum(Album album) throws PersistenciaException;
+    AlbumDTO crearAlbum(AlbumDTO dto) throws PersistenciaException;
     
-    Album actualizarAlbum(Album album) throws PersistenciaException;
+    AlbumDTO actualizarAlbum(AlbumDTO dto) throws PersistenciaException;
     
     boolean eliminarAlbum(Long id) throws PersistenciaException;
     

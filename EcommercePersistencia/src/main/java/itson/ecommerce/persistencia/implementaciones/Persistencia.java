@@ -4,6 +4,7 @@
  */
 package itson.ecommerce.persistencia.implementaciones;
 
+import itson.ecommerce.persistencia.dtos.AlbumDTO;
 import itson.ecommerce.persistencia.dtos.EditarProductoDTO;
 import itson.ecommerce.persistencia.dtos.NuevaResenaDTO;
 import itson.ecommerce.persistencia.dtos.NuevoProductoDTO;
@@ -23,8 +24,10 @@ import itson.ecommerce.persistencia.interfaces.IPedidoDAO;
 import itson.ecommerce.persistencia.interfaces.IPersistencia;
 import itson.ecommerce.persistencia.interfaces.IProductosDAO;
 import itson.ecommerce.persistencia.interfaces.IResenasDAO;
+import itson.ecommerce.persistencia.mapper.AlbumMapper;
 import itson.ecommerce.persistencia.mapper.PedidoMapper;
 import itson.ecommerce.persistencia.mapper.ProductoMapper;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -212,36 +215,51 @@ public class Persistencia implements IPersistencia {
     }
 
     @Override
-    public List<Album> buscarAlbumes(String termino) throws PersistenciaException {
+    public List<AlbumDTO> buscarAlbumes(String termino) throws PersistenciaException {
         try {
-            return this.albumDAO.buscar(termino);
+
+            List<Album> albumEntidad = albumDAO.buscar(termino);
+            List<AlbumDTO> albumDTO = new ArrayList<>();
+            for (Album album : albumEntidad) {
+                AlbumDTO dto = AlbumMapper.toDTO(album);
+                albumDTO.add(dto);
+            }
+            return albumDTO;
         } catch (Exception e) {
             throw new PersistenciaException("Error al buscar álbumes", e);
         }
     }
 
     @Override
-    public Album consultarAlbum(Long id) throws PersistenciaException {
+    public AlbumDTO consultarAlbum(Long id) throws PersistenciaException {
         try {
-            return this.albumDAO.consultar(id);
+            Album album = albumDAO.consultar(id);
+            return AlbumMapper.toDTO(album);
         } catch (Exception e) {
             throw new PersistenciaException("Error al consultar álbum", e);
         }
     }
 
     @Override
-    public Album crearAlbum(Album album) throws PersistenciaException {
+    public AlbumDTO crearAlbum(AlbumDTO dto) throws PersistenciaException {
         try {
-            return this.albumDAO.crear(album);
+            Album album = AlbumMapper.toEntity(dto);
+
+            Album creado = albumDAO.crear(album);
+
+            return AlbumMapper.toDTO(album);
         } catch (Exception e) {
             throw new PersistenciaException("Error al crear álbum", e);
         }
     }
 
     @Override
-    public Album actualizarAlbum(Album album) throws PersistenciaException {
+    public AlbumDTO actualizarAlbum(AlbumDTO dto) throws PersistenciaException {
         try {
-            return this.albumDAO.actualizar(album);
+            Album album = AlbumMapper.toEntity(dto);
+
+            Album actualizado = albumDAO.actualizar(album);
+            return AlbumMapper.toDTO(actualizado);
         } catch (Exception e) {
             throw new PersistenciaException("Error al actualizar álbum", e);
         }

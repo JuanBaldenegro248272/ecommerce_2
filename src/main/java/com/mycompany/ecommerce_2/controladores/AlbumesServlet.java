@@ -4,6 +4,7 @@ import com.mycompany.ecommerce_2.modelos.IAlbumBO;
 import com.mycompany.ecommerce_2.modelos.IArtistaBO;
 import com.mycompany.ecommerce_2.modelos.implementaciones.AlbumBO;
 import com.mycompany.ecommerce_2.modelos.implementaciones.ArtistaBO;
+import itson.ecommerce.persistencia.dtos.AlbumDTO;
 import itson.ecommerce.persistencia.entidades.Album;
 import itson.ecommerce.persistencia.entidades.Artista;
 
@@ -34,7 +35,7 @@ public class AlbumesServlet extends HttpServlet {
         
         if (pathInfo == null || pathInfo.equals("/")) {
             String termino = request.getParameter("buscar");
-            List<Album> albumes = albumBO.buscar(termino);
+            List<AlbumDTO> albumes = albumBO.buscar(termino);
             request.setAttribute("listaAlbumes", albumes);
             request.setAttribute("terminoBusqueda", termino);
             jspPage = "/albumes-admin.jsp"; 

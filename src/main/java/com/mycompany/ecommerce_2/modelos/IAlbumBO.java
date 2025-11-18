@@ -4,7 +4,7 @@
  */
 package com.mycompany.ecommerce_2.modelos;
 
-import itson.ecommerce.persistencia.entidades.Album;
+import itson.ecommerce.persistencia.dtos.AlbumDTO;
 import java.util.List;
 
 /**
@@ -12,9 +12,9 @@ import java.util.List;
  * @author victoria
  */
 public interface IAlbumBO {
-    List<Album> buscar(String termino);
-    Album consultar(Long id);
-    Album crear(Album album);
-    Album actualizar(Album album);
+    List<AlbumDTO > buscar(String termino);
+    AlbumDTO consultar(Long id);
+    AlbumDTO crear(AlbumDTO dto);
+    AlbumDTO actualizar(AlbumDTO dto);
     boolean eliminar(Long id);
 }
