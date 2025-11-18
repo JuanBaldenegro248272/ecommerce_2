@@ -5,6 +5,7 @@
 package com.mycompany.ecommerce_2.modelos.implementaciones;
 
 import com.mycompany.ecommerce_2.exceptions.BusinessException;
+import com.mycompany.ecommerce_2.modelos.IUsuarioBO;
 import itson.ecommerce.persistencia.dtos.UsuarioDTO;
 import itson.ecommerce.persistencia.entidades.Usuario;
 import itson.ecommerce.persistencia.exceptions.PersistenciaException;
@@ -16,7 +17,7 @@ import itson.ecommerce.persistencia.utils.SeguridadUtil;
  *
  * @author Gael
  */
-public class UsuarioBO {
+public class UsuarioBO implements IUsuarioBO {
 
     private IPersistencia persistencia;
 
@@ -32,6 +33,7 @@ public class UsuarioBO {
         if (contrasena == null || contrasena.isBlank()) {
             throw new BusinessException("Debe ingresar una contraseña.");
         }
+
       
         Usuario usuario = persistencia.buscarPorCorreo(correo);
 

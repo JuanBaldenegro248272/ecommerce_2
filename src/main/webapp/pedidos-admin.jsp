@@ -15,6 +15,9 @@
         <link rel="stylesheet" href="styles/admin.css">
     </head>
     <div class="admin-dashboard">
+        <c:if test="${usuarioLogueado == null || usuarioLogueado.rol != 'ADMIN'}">
+        <c:redirect url="/login.jsp" />
+        </c:if>
         <%@include file="/WEB-INF/fragments/sidebarAdmin.jspf" %>
         <main class="admin-main">
             <div class="pedidos-container">
