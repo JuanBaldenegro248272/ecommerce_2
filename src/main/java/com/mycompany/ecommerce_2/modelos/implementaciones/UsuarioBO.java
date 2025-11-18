@@ -40,8 +40,9 @@ public class UsuarioBO implements IUsuarioBO {
         if (usuario == null) {
             throw new BusinessException("Correo o contraseña incorrectos.");
         }
+        String hashAlmacenado = usuario.getHashContrasena().trim();
 
-        boolean match = SeguridadUtil.verificarHash(contrasena, usuario.getHashContrasena());
+        boolean match = SeguridadUtil.verificarHash(contrasena, hashAlmacenado);
 
         if (!match) {
             throw new BusinessException("Correo o contraseña incorrectos.");
@@ -51,7 +52,7 @@ public class UsuarioBO implements IUsuarioBO {
         if (!Boolean.TRUE.equals(usuario.isEsActiva())) {
             throw new BusinessException("La cuenta no está activa.");
         }
-
+        
         return UsuarioMapper.toDTO(usuario);
     }
 }

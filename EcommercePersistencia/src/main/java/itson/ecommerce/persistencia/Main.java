@@ -8,6 +8,7 @@ import itson.ecommerce.persistencia.entidades.Administrador;
 import itson.ecommerce.persistencia.entidades.Album;
 import itson.ecommerce.persistencia.entidades.Usuario;
 import itson.ecommerce.persistencia.implementaciones.UsuarioDAO;
+import itson.ecommerce.persistencia.utils.SeguridadUtil;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -30,6 +31,7 @@ public class Main {
                 } else {
                     System.out.println("album encontrado: " + admin.getNombre() + admin.getId());
                 }
+                
 
                 
 

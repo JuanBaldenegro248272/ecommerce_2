@@ -23,6 +23,7 @@ import itson.ecommerce.persistencia.interfaces.IPedidoDAO;
 import itson.ecommerce.persistencia.interfaces.IPersistencia;
 import itson.ecommerce.persistencia.interfaces.IProductosDAO;
 import itson.ecommerce.persistencia.interfaces.IResenasDAO;
+import itson.ecommerce.persistencia.interfaces.IUsuarioDAO;
 import itson.ecommerce.persistencia.mapper.PedidoMapper;
 import itson.ecommerce.persistencia.mapper.ProductoMapper;
 import java.util.List;
@@ -35,6 +36,7 @@ import java.util.stream.Collectors;
 public class Persistencia implements IPersistencia {
 
     private IProductosDAO productosDAO;
+    private IUsuarioDAO usuarioDAO;
     private IResenasDAO resenasDAO;
     private IPedidoDAO pedidosDAO;
     private IAlbumDAO albumDAO;
@@ -46,6 +48,7 @@ public class Persistencia implements IPersistencia {
         this.resenasDAO = new ResenasDAO();
         this.albumDAO = new AlbumDAO();
         this.artistaDAO = new ArtistaDAO();
+        this.usuarioDAO = new UsuarioDAO();
     }
 
     @Override
@@ -145,15 +148,29 @@ public class Persistencia implements IPersistencia {
             throw new PersistenciaException("Error al obtener producto", ex);
         }
     }
-
+    
     @Override
     public Usuario buscarPorCorreo(String correo) throws PersistenciaException {
         try {
-            return this.buscarPorCorreo(correo);
-        } catch (Exception e) {
-            throw new PersistenciaException("Error al buscar por correo: " + e.getMessage());
-        }
+        
+            return this.usuarioDAO.buscarPorCorreo(correo); 
+        
+         } catch (Exception e) {
+        throw new PersistenciaException("Error al buscar por correo: " + e.getMessage());
     }
+}
+
+    public Usuario guardar(Usuario usuario) throws PersistenciaException {
+        try {
+        
+            return this.usuarioDAO.guardar(usuario); 
+        
+        } catch (Exception e) {
+        throw new PersistenciaException("Error al guardar usuario: " + e.getMessage());
+
+    }
+}
+   
 
     @Override
     public void actualizarProducto(EditarProductoDTO dto) throws PersistenciaException {
@@ -171,14 +188,7 @@ public class Persistencia implements IPersistencia {
         }
     }
 
-    public Usuario guardar(Usuario usuario) throws PersistenciaException {
-        try {
-            return this.guardar(usuario);
-        } catch (Exception e) {
-            throw new PersistenciaException("Error al guardar usuario: " + e.getMessage());
-
-        }
-    }
+    
 
     @Override
     public List<PedidoDTO> obtenerTodosPedidos() throws PersistenciaException {

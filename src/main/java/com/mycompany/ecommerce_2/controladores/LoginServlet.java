@@ -6,6 +6,8 @@ package com.mycompany.ecommerce_2.controladores;
 
 import com.mycompany.ecommerce_2.modelos.IUsuarioBO;
 import com.mycompany.ecommerce_2.modelos.implementaciones.UsuarioBO;
+import itson.ecommerce.persistencia.implementaciones.Persistencia;
+import itson.ecommerce.persistencia.interfaces.IPersistencia;
 import itson.ecommerce.persistencia.dtos.UsuarioDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -24,6 +26,11 @@ import jakarta.servlet.http.HttpSession;
 public class LoginServlet extends HttpServlet {
     
     private IUsuarioBO usuarioBO;
+    
+    public void init() throws ServletException{
+        IPersistencia persistencia = new Persistencia();
+        this.usuarioBO = new UsuarioBO(persistencia);
+    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -74,6 +81,7 @@ public class LoginServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
