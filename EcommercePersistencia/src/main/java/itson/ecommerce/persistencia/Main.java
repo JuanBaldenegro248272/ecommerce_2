@@ -4,39 +4,42 @@
  */
 package itson.ecommerce.persistencia;
 
+import itson.ecommerce.persistencia.entidades.Administrador;
 import itson.ecommerce.persistencia.entidades.Album;
+import itson.ecommerce.persistencia.entidades.Usuario;
+import itson.ecommerce.persistencia.implementaciones.UsuarioDAO;
+import itson.ecommerce.persistencia.utils.SeguridadUtil;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 public class Main {
     public static void main(String[] args) {
-        EntityManagerFactory emf = null;
-        EntityManager em = null;
+        
+        UsuarioDAO usuario = new UsuarioDAO();
         
         try {
-                emf = Persistence.createEntityManagerFactory("com.mycompany_EcommercePersistencia_jar_1.0-SNAPSHOTPU");
-                em = emf.createEntityManager();
+                
+               
+                
 
-                em.getTransaction().begin();
+                String correo = "admin@correo.com";
+                Usuario admin = usuario.buscarPorCorreo(correo);
 
-                Long id = 1L;
-                Album album = em.find(Album.class, id);
-
-                if (album == null) {
-                    System.out.println("album con id " + id + " NO encontrado");
+                if (admin == null) {
+                    System.out.println("admin con correo " + correo + " NO encontrado");
                 } else {
-                    System.out.println("album encontrado: " + album.getNombre());
+                    System.out.println("album encontrado: " + admin.getNombre() + admin.getId());
                 }
+                
 
-                em.getTransaction().commit();
+                
 
             } catch (Exception e) {
                 System.err.println("Error:");
                 e.printStackTrace();
             } finally {
-                if (em != null) em.close();
-                if (emf != null) emf.close();
+                
             }
         }
 }

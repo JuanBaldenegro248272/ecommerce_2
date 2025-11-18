@@ -25,6 +25,7 @@ import itson.ecommerce.persistencia.interfaces.IPersistencia;
 import itson.ecommerce.persistencia.interfaces.IProductosDAO;
 import itson.ecommerce.persistencia.interfaces.IResenasDAO;
 import itson.ecommerce.persistencia.mapper.AlbumMapper;
+import itson.ecommerce.persistencia.interfaces.IUsuarioDAO;
 import itson.ecommerce.persistencia.mapper.PedidoMapper;
 import itson.ecommerce.persistencia.mapper.ProductoMapper;
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ import java.util.stream.Collectors;
 public class Persistencia implements IPersistencia {
 
     private IProductosDAO productosDAO;
+    private IUsuarioDAO usuarioDAO;
     private IResenasDAO resenasDAO;
     private IPedidoDAO pedidosDAO;
     private IAlbumDAO albumDAO;
@@ -49,6 +51,7 @@ public class Persistencia implements IPersistencia {
         this.resenasDAO = new ResenasDAO();
         this.albumDAO = new AlbumDAO();
         this.artistaDAO = new ArtistaDAO();
+        this.usuarioDAO = new UsuarioDAO();
     }
 
     @Override
@@ -152,9 +155,22 @@ public class Persistencia implements IPersistencia {
     @Override
     public Usuario buscarPorCorreo(String correo) throws PersistenciaException {
         try {
-            return this.buscarPorCorreo(correo);
+
+            return this.usuarioDAO.buscarPorCorreo(correo);
+
         } catch (Exception e) {
             throw new PersistenciaException("Error al buscar por correo: " + e.getMessage());
+        }
+    }
+
+    public Usuario guardar(Usuario usuario) throws PersistenciaException {
+        try {
+
+            return this.usuarioDAO.guardar(usuario);
+
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al guardar usuario: " + e.getMessage());
+
         }
     }
 
@@ -171,15 +187,6 @@ public class Persistencia implements IPersistencia {
         } catch (Exception ex) {
             System.out.println("ERROR en Persistencia.actualizarProducto: " + ex.getMessage());
             throw new PersistenciaException("Error al actualizar producto", ex);
-        }
-    }
-
-    public Usuario guardar(Usuario usuario) throws PersistenciaException {
-        try {
-            return this.guardar(usuario);
-        } catch (Exception e) {
-            throw new PersistenciaException("Error al guardar usuario: " + e.getMessage());
-
         }
     }
 

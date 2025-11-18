@@ -28,7 +28,7 @@
                     <input 
                         type="email" 
                         id="email-login" 
-                        name="email"
+                        name="email-login"
                         class="login-input" 
                         required
                     >
@@ -37,7 +37,7 @@
                     <input 
                         type="password" 
                         id="password-login" 
-                        name="password"
+                        name="password-login"
                         class="login-input" 
                         required
                     >

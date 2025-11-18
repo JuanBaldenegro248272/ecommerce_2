@@ -5,6 +5,7 @@
 package com.mycompany.ecommerce_2.modelos.implementaciones;
 
 import com.mycompany.ecommerce_2.exceptions.BusinessException;
+import com.mycompany.ecommerce_2.modelos.IUsuarioBO;
 import itson.ecommerce.persistencia.dtos.UsuarioDTO;
 import itson.ecommerce.persistencia.entidades.Usuario;
 import itson.ecommerce.persistencia.exceptions.PersistenciaException;
@@ -16,7 +17,7 @@ import itson.ecommerce.persistencia.utils.SeguridadUtil;
  *
  * @author Gael
  */
-public class UsuarioBO {
+public class UsuarioBO implements IUsuarioBO {
 
     private IPersistencia persistencia;
 
@@ -32,14 +33,16 @@ public class UsuarioBO {
         if (contrasena == null || contrasena.isBlank()) {
             throw new BusinessException("Debe ingresar una contraseña.");
         }
+
       
         Usuario usuario = persistencia.buscarPorCorreo(correo);
 
         if (usuario == null) {
             throw new BusinessException("Correo o contraseña incorrectos.");
         }
+        String hashAlmacenado = usuario.getHashContrasena().trim();
 
-        boolean match = SeguridadUtil.verificarHash(contrasena, usuario.getHashContrasena());
+        boolean match = SeguridadUtil.verificarHash(contrasena, hashAlmacenado);
 
         if (!match) {
             throw new BusinessException("Correo o contraseña incorrectos.");
@@ -49,7 +52,7 @@ public class UsuarioBO {
         if (!Boolean.TRUE.equals(usuario.isEsActiva())) {
             throw new BusinessException("La cuenta no está activa.");
         }
-
+        
         return UsuarioMapper.toDTO(usuario);
     }
 }

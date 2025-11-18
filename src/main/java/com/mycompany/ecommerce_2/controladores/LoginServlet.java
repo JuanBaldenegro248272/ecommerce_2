@@ -4,7 +4,10 @@
  */
 package com.mycompany.ecommerce_2.controladores;
 
+import com.mycompany.ecommerce_2.modelos.IUsuarioBO;
 import com.mycompany.ecommerce_2.modelos.implementaciones.UsuarioBO;
+import itson.ecommerce.persistencia.implementaciones.Persistencia;
+import itson.ecommerce.persistencia.interfaces.IPersistencia;
 import itson.ecommerce.persistencia.dtos.UsuarioDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,7 +25,12 @@ import jakarta.servlet.http.HttpSession;
 @WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
 public class LoginServlet extends HttpServlet {
     
-    private UsuarioBO usuarioBO;
+    private IUsuarioBO usuarioBO;
+    
+    public void init() throws ServletException{
+        IPersistencia persistencia = new Persistencia();
+        this.usuarioBO = new UsuarioBO(persistencia);
+    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -73,6 +81,7 @@ public class LoginServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -83,8 +92,12 @@ public class LoginServlet extends HttpServlet {
             UsuarioDTO usuarioDTO = usuarioBO.login(correo, contrasena);
             HttpSession sesion = request.getSession();
             sesion.setAttribute("usuarioLogueado", usuarioDTO);
-            response.sendRedirect("index.jsp");
             
+            if ("ADMIN".equals(usuarioDTO.getRol())) {
+                response.sendRedirect(request.getContextPath() + "/pedidos-admin.jsp");
+            }else{
+                response.sendRedirect(request.getContextPath() + "/index.jsp");
+            }     
             
         } catch (Exception e) {
             request.setAttribute("error", e.getMessage());
