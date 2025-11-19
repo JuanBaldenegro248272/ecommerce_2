@@ -49,7 +49,7 @@ public class AlbumesServlet extends HttpServlet {
         } else if (pathInfo.startsWith("/editar")) {
             try {
                 Long id = Long.parseLong(request.getParameter("id"));
-                Album album = albumBO.consultar(id);
+                AlbumDTO album = albumBO.consultar(id);
                 List<Artista> artistas = artistaBO.consultarTodos();
                 
                 request.setAttribute("album", album);
