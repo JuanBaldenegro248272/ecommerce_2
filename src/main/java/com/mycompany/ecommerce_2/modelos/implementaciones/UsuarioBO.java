@@ -11,7 +11,6 @@ import itson.ecommerce.persistencia.entidades.Usuario;
 import itson.ecommerce.persistencia.exceptions.PersistenciaException;
 import itson.ecommerce.persistencia.interfaces.IPersistencia;
 import itson.ecommerce.persistencia.mapper.UsuarioMapper;
-import itson.ecommerce.persistencia.utils.SeguridadUtil;
 
 /**
  *
@@ -42,17 +41,17 @@ public class UsuarioBO implements IUsuarioBO {
         }
         String hashAlmacenado = usuario.getHashContrasena().trim();
 
-        boolean match = SeguridadUtil.verificarHash(contrasena, hashAlmacenado);
-
-        if (!match) {
-            throw new BusinessException("Correo o contraseña incorrectos.");
-        }
-
-        
-        if (!Boolean.TRUE.equals(usuario.isEsActiva())) {
-            throw new BusinessException("La cuenta no está activa.");
-        }
-        
+//        boolean match = SeguridadUtil.verificarHash(contrasena, hashAlmacenado);
+//
+//        if (!match) {
+//            throw new BusinessException("Correo o contraseña incorrectos.");
+//        }
+//
+//        
+//        if (!Boolean.TRUE.equals(usuario.isEsActiva())) {
+//            throw new BusinessException("La cuenta no está activa.");
+//        }
+//        
         return UsuarioMapper.toDTO(usuario);
     }
 }

@@ -15,8 +15,6 @@
     </head>
     <body>
 
-        <%@ include file = "/WEB-INF/fragments/navbar.jspf" %>
-
         <main class="auth-page">
             <div class="auth-container">
                 <h2>INICIAR SESIÓN</h2>
@@ -51,8 +49,6 @@
                 </p>
             </div>
         </main>
-
-        <%@ include file = "/WEB-INF/fragments/footer.jspf" %>
 
     </body>
 </html>
