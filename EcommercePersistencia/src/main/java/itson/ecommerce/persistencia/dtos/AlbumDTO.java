@@ -19,17 +19,31 @@ public class AlbumDTO {
     private Calendar fechaLanzamiento;
     private String imagenUrl;
     private Long idArtista;
+    private String nombreArtista;
     private List<String> canciones;
     private List<Long> idGeneros;
     private List<Long> idProductos;
 
-    public AlbumDTO(Long id, String nombre, String descripcion, Calendar fechaLanzamiento, String imagenUrl, Long idArtista, List<String> canciones, List<Long> idGeneros, List<Long> idProductos) {
+    public AlbumDTO(Long id, String nombre, String descripcion, Calendar fechaLanzamiento, String imagenUrl, Long idArtista, String nombreArtista, List<String> canciones, List<Long> idGeneros, List<Long> idProductos) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.fechaLanzamiento = fechaLanzamiento;
         this.imagenUrl = imagenUrl;
         this.idArtista = idArtista;
+        this.nombreArtista = nombreArtista;
+        this.canciones = canciones;
+        this.idGeneros = idGeneros;
+        this.idProductos = idProductos;
+    }
+
+    public AlbumDTO(String nombre, String descripcion, Calendar fechaLanzamiento, String imagenUrl, Long idArtista, String nombreArtista, List<String> canciones, List<Long> idGeneros, List<Long> idProductos) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.fechaLanzamiento = fechaLanzamiento;
+        this.imagenUrl = imagenUrl;
+        this.idArtista = idArtista;
+        this.nombreArtista = nombreArtista;
         this.canciones = canciones;
         this.idGeneros = idGeneros;
         this.idProductos = idProductos;
@@ -105,6 +119,14 @@ public class AlbumDTO {
 
     public void setIdProductos(List<Long> idProductos) {
         this.idProductos = idProductos;
+    }
+
+    public String getNombreArtista() {
+        return nombreArtista;
+    }
+
+    public void setNombreArtista(String nombreArtista) {
+        this.nombreArtista = nombreArtista;
     }
 
 }

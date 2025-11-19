@@ -5,12 +5,11 @@
 --%>
 
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Administrar Álbumes</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/admin.css">
     <style>
@@ -78,7 +77,7 @@
                                                  onerror="this.src='${pageContext.request.contextPath}/images/no-image.png'">
                                         </td>
                                         <td><strong>${album.nombre}</strong></td>
-                                        <td>${album.artista.nombreArtistico}</td>
+                                        <td>${album.nombreArtista}</td>
                                         <td>
                                             <fmt:formatDate value="${album.fechaLanzamiento.time}" pattern="dd/MM/yyyy" />
                                         </td>

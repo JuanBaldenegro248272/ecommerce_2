@@ -34,26 +34,22 @@ public class UsuarioBO implements IUsuarioBO {
             throw new BusinessException("Debe ingresar una contraseña.");
         }
 
-      
         Usuario usuario = persistencia.buscarPorCorreo(correo);
 
         if (usuario == null) {
             throw new BusinessException("Correo o contraseña incorrectos.");
         }
         String hashAlmacenado = usuario.getHashContrasena().trim();
-
         boolean match = SeguridadUtil.verificarHash(contrasena, hashAlmacenado);
 
         if (!match) {
             throw new BusinessException("Correo o contraseña incorrectos.");
         }
 
-        
         if (!Boolean.TRUE.equals(usuario.isEsActiva())) {
             throw new BusinessException("La cuenta no está activa.");
         }
-        
+
         return UsuarioMapper.toDTO(usuario);
     }
 }
-
