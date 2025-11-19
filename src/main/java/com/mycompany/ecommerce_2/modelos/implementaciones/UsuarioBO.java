@@ -11,6 +11,7 @@ import itson.ecommerce.persistencia.entidades.Usuario;
 import itson.ecommerce.persistencia.exceptions.PersistenciaException;
 import itson.ecommerce.persistencia.interfaces.IPersistencia;
 import itson.ecommerce.persistencia.mapper.UsuarioMapper;
+import itson.ecommerce.persistencia.utils.SeguridadUtil;
 
 /**
  *

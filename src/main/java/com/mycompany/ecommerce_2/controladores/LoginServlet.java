@@ -94,7 +94,7 @@ public class LoginServlet extends HttpServlet {
             sesion.setAttribute("usuarioLogueado", usuarioDTO);
             
             if ("ADMIN".equals(usuarioDTO.getRol())) {
-                response.sendRedirect(request.getContextPath() + "/pedidos-admin.jsp");
+                response.sendRedirect(request.getContextPath() + "/dashboard-admin.jsp");
             }else{
                 response.sendRedirect(request.getContextPath() + "/index.jsp");
             }     
