@@ -1148,13 +1148,21 @@ body {
 }
 
 
-.icon-blue { background-color: #A2E0DF; }
-.icon-pink { background-color: #EFA4A8; }
-.icon-red { background-color: #BA5E61; }
-.icon-dark { background-color: #1D2A2C; }
+.icon-blue {
+    background-color: #A2E0DF;
+}
+.icon-pink {
+    background-color: #EFA4A8;
+}
+.icon-red {
+    background-color: #BA5E61;
+}
+.icon-dark {
+    background-color: #1D2A2C;
+}
 
 .stat-number {
-    font-family: var(--staatliches); 
+    font-family: var(--staatliches);
     font-size: 32px;
     font-weight: bold;
     color: #1D2A2C;
@@ -1208,7 +1216,7 @@ body {
 }
 
 .list-item {
-    background-color: #dcece9; 
+    background-color: #dcece9;
     border-radius: 8px;
     padding: 15px;
     margin-bottom: 10px;
@@ -1238,8 +1246,12 @@ body {
     font-weight: 500;
 }
 
-.bg-red { background-color: #BA5E61; }
-.bg-green { background-color: #69AFAD; }
+.bg-red {
+    background-color: #BA5E61;
+}
+.bg-green {
+    background-color: #69AFAD;
+}
 
 .price-tag {
     font-weight: bold;

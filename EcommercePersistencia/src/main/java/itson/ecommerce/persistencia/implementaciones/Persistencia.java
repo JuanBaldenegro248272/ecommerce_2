@@ -221,6 +221,10 @@ public class Persistencia implements IPersistencia {
         }
     }
 
+//    public List<AlbumDTO> obtenerTodosAlbumes(String termino) throws PersistenciaException {
+//        termino = null;
+//    }
+
     @Override
     public List<AlbumDTO> buscarAlbumes(String termino) throws PersistenciaException {
         try {

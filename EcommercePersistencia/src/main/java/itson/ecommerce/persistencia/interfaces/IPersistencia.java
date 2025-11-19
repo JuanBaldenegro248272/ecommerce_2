@@ -56,6 +56,8 @@ public interface IPersistencia {
 
     List<AlbumDTO> buscarAlbumes(String termino) throws PersistenciaException;
     
+//    List<AlbumDTO> obtenerTodosAlbumes(String termino) throws PersistenciaException;
+    
     AlbumDTO consultarAlbum(Long id) throws PersistenciaException;
     
     AlbumDTO crearAlbum(AlbumDTO dto) throws PersistenciaException;

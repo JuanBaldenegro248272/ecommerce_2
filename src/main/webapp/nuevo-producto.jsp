@@ -35,7 +35,7 @@
                     <form action="${pageContext.request.contextPath}/admin/productos/nuevo" method="post">
                         <div class="field">
                             <label>Album *</label>
-                            <button type="button" class="select-album-btn">
+                            <button type="button" class="select-album-btn" onclick="document.getElementById('dialogAlbumes').showModal()">
                                 <img src="${pageContext.request.contextPath}/icons/search.png" 
                                      alt="buscar" 
                                      style="width:16px;height:16px;" />
@@ -44,6 +44,52 @@
                             <input type="hidden" name="albumId" value="${dto.albumId}" required />
                         </div>
 
+                        <dialog id="dialogAlbumes" class="dialog-admin">
+                            <div class="dialog-header">
+                                <h3>Seleccionar álbum</h3>
+                                <button type="button" class="btn-cerrar-dialog"
+                                        onclick="document.getElementById('dialogAlbumes').close()">
+                                    X
+                                </button>
+                            </div>
+
+                            <div class="dialog-body">
+                                <c:if test="${empty listaAlbumes}">
+                                    <p>No hay álbumes disponibles.</p>
+                                </c:if>
+
+                                <c:if test="${not empty listaAlbumes}">
+                                    <table class="tabla-admin tabla-albumes">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Título</th>
+                                                <th>Artista</th>
+                                                <th>Acción</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <c:forEach var="a" items="${listaAlbumes}">
+                                                <tr>
+                                                    <td>${a.id}</td>
+                                                    <td>${a.titulo}</td>
+                                                    <td>${a.artistaNombre}</td>
+                                                    <td>
+                                                        <button type="button"
+                                                                class="btn-elegir-album"
+                                                                data-id="${a.id}"
+                                                                data-nombre="${a.titulo}">
+                                                            Elegir
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+                                        </tbody>
+                                    </table>
+                                </c:if>
+                            </div>
+                        </dialog>
+                        
                         <div class="grid-2">
                             <div class="field">
                                 <label>Formato *</label>

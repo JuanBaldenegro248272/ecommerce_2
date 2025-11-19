@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
  *
  * @author Gael
  */
-@WebServlet(name = "DashboardServlet", urlPatterns = {"/DashboardServlet"})
+@WebServlet(name = "DashboardServlet", urlPatterns = {"/admin/dashboard"})
 public class DashboardServlet extends HttpServlet {
     
     private IProductosBO productosBO;

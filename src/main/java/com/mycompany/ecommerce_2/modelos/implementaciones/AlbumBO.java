@@ -74,4 +74,16 @@ public class AlbumBO implements IAlbumBO {
             return false;
         }
     }
+
+//    @Override
+//    public List<AlbumDTO> obtenerTodoAlbumes() {
+//        try{
+//            return this.persistencia.
+//        }
+//    }
+
+    @Override
+    public List<AlbumDTO> obtenerTodoAlbumes() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

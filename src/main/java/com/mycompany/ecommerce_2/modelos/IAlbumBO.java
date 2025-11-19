@@ -13,6 +13,7 @@ import java.util.List;
  */
 public interface IAlbumBO {
     List<AlbumDTO > buscar(String termino);
+    List<AlbumDTO> obtenerTodoAlbumes();
     AlbumDTO consultar(Long id);
     AlbumDTO crear(AlbumDTO dto);
     AlbumDTO actualizar(AlbumDTO dto);

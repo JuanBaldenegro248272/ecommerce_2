@@ -31,7 +31,7 @@
                     Albums                   
                 </a>
             </div>
-            <div class="nav-item active">
+            <div class="nav-item">
                 <a href="${pageContext.request.contextPath}/admin/productos">
                     <img src="${pageContext.request.contextPath}/icons/productosicon.png" alt="Productos">
                     Productos
