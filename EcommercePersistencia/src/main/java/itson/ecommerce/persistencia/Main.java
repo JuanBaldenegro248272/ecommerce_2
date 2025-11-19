@@ -5,41 +5,28 @@
 package itson.ecommerce.persistencia;
 
 import itson.ecommerce.persistencia.entidades.Administrador;
-import itson.ecommerce.persistencia.entidades.Album;
-import itson.ecommerce.persistencia.entidades.Usuario;
 import itson.ecommerce.persistencia.implementaciones.UsuarioDAO;
-import itson.ecommerce.persistencia.utils.SeguridadUtil;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import itson.ecommerce.persistencia.interfaces.IUsuarioDAO;
 
 public class Main {
+
     public static void main(String[] args) {
-        
-        UsuarioDAO usuario = new UsuarioDAO();
-        
+
+        IUsuarioDAO usuarioDAO = new UsuarioDAO();
+        final String correoAdmin = "admin@seeder.com";
+        final String contrasenia = "password123";
+
         try {
-                
-               
-                
+            Administrador nuevoAdmin = new Administrador();
+            nuevoAdmin.setNombre("Admin Seeder");
+            nuevoAdmin.setCorreoElectronico(correoAdmin);
+            nuevoAdmin.setContrasena(contrasenia);
+            nuevoAdmin.setEsActiva(true);
+            usuarioDAO.guardar(nuevoAdmin);
 
-                String correo = "admin@correo.com";
-                Usuario admin = usuario.buscarPorCorreo(correo);
-
-                if (admin == null) {
-                    System.out.println("admin con correo " + correo + " NO encontrado");
-                } else {
-                    System.out.println("album encontrado: " + admin.getNombre() + admin.getId());
-                }
-                
-
-                
-
-            } catch (Exception e) {
-                System.err.println("Error:");
-                e.printStackTrace();
-            } finally {
-                
-            }
+        } catch (Exception e) {
+            System.err.println("Error al crear al admin");
+            e.printStackTrace();
         }
+    }
 }
