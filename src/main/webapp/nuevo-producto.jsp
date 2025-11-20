@@ -34,62 +34,55 @@
                 <section class="panel">
                     <form action="${pageContext.request.contextPath}/admin/productos/nuevo" method="post">
                         <div class="field">
-                            <label>Album *</label>
-                            <button type="button" class="select-album-btn" onclick="document.getElementById('dialogAlbumes').showModal()">
-                                <img src="${pageContext.request.contextPath}/icons/search.png" 
-                                     alt="buscar" 
-                                     style="width:16px;height:16px;" />
-                                Seleccionar Album
-                            </button>
-                            <input type="hidden" name="albumId" value="${dto.albumId}" required />
+                            <label>Álbum *</label>
+                            <c:choose>
+                                <c:when test="${empty param.albumId}">
+                                    <button type="button"
+                                            class="select-album-btn"
+                                            onclick="document.getElementById('dialogAlbumes').showModal()">
+                                        <img src="${pageContext.request.contextPath}/icons/search.png"
+                                             alt="buscar"
+                                             style="width:16px;height:16px;" />
+                                        Seleccionar Álbum
+                                    </button>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="album-selected-card">
+
+                                        <div class="album-selected-info">
+
+                                            <div class="album-cover">
+                                                <c:if test="${not empty param.albumImagen}">
+                                                    <img src="${param.albumImagen}" alt="${param.albumNombre}">
+                                                </c:if>
+                                            </div>
+
+                                            <div class="album-selected-text">
+                                                <p class="album-selected-title">${param.albumNombre}</p>
+                                                <p class="album-selected-artist">${param.albumArtista}</p>
+
+                                                <div class="album-selected-tags">
+                                                    <c:if test="${not empty param.albumDescripcion}">
+                                                        <span class="album-tag">${param.albumDescripcion}</span>
+                                                    </c:if>
+
+                                                    <c:if test="${not empty param.albumAnio}">
+                                                        <span class="album-tag album-tag-muted">${param.albumAnio}</span>
+                                                    </c:if>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="button"
+                                                class="album-change-btn"
+                                                onclick="document.getElementById('dialogAlbumes').showModal()">
+                                            Cambiar
+                                        </button>
+                                    </div>
+                                </c:otherwise>
+                            </c:choose>
+                            <input type="hidden" name="albumId" value="${param.albumId}" required />
                         </div>
 
-                        <dialog id="dialogAlbumes" class="dialog-admin">
-                            <div class="dialog-header">
-                                <h3>Seleccionar álbum</h3>
-                                <button type="button" class="btn-cerrar-dialog"
-                                        onclick="document.getElementById('dialogAlbumes').close()">
-                                    X
-                                </button>
-                            </div>
-
-                            <div class="dialog-body">
-                                <c:if test="${empty listaAlbumes}">
-                                    <p>No hay álbumes disponibles.</p>
-                                </c:if>
-
-                                <c:if test="${not empty listaAlbumes}">
-                                    <table class="tabla-admin tabla-albumes">
-                                        <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Título</th>
-                                                <th>Artista</th>
-                                                <th>Acción</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <c:forEach var="a" items="${listaAlbumes}">
-                                                <tr>
-                                                    <td>${a.id}</td>
-                                                    <td>${a.titulo}</td>
-                                                    <td>${a.artistaNombre}</td>
-                                                    <td>
-                                                        <button type="button"
-                                                                class="btn-elegir-album"
-                                                                data-id="${a.id}"
-                                                                data-nombre="${a.titulo}">
-                                                            Elegir
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            </c:forEach>
-                                        </tbody>
-                                    </table>
-                                </c:if>
-                            </div>
-                        </dialog>
-                        
                         <div class="grid-2">
                             <div class="field">
                                 <label>Formato *</label>
@@ -144,6 +137,64 @@
                         </div>
                     </form>
                 </section>
+                <dialog id="dialogAlbumes" class="album-dialog">
+
+                    <div class="album-dialog-header">
+                        <h3>Seleccionar álbum</h3>
+                        <button type="button"
+                                class="album-dialog-close"
+                                onclick="document.getElementById('dialogAlbumes').close()">
+                            ✕
+                        </button>
+                    </div>
+
+                    <div class="album-dialog-body">
+                        <div class="album-search-wrapper">
+                            <span class="album-search-icon">
+                                <img src="${pageContext.request.contextPath}/icons/searchicon.png" 
+                                     alt="Buscar" 
+                                     style="width:16px;height:16px;">
+                            </span>
+                            <input type="text"
+                                   class="album-search-input"
+                                   placeholder="Buscar álbumes...">
+                        </div>
+                        <c:if test="${not empty listaAlbumes}">
+                            <div class="album-list">
+                                <c:forEach var="a" items="${listaAlbumes}">
+                                    <form method="get"
+                                          action="${pageContext.request.contextPath}/admin/productos/nuevo"
+                                          class="album-item-form">
+                                        <input type="hidden" name="albumId" value="${a.id}" />
+                                        <input type="hidden" name="albumNombre" value="${a.nombre}" />
+                                        <input type="hidden" name="albumArtista" value="${a.nombreArtista}" />
+                                        <input type="hidden" name="albumImagen" value="${a.imagenUrl}" />
+                                        <input type="hidden" name="albumDescripcion" value="${a.descripcion}" />
+                                        <button type="submit" class="album-item">
+                                            <div class="album-cover">
+                                                <img src="${a.imagenUrl}">
+                                            </div>
+                                            <div class="album-info">
+                                                <h3 class="album-title">${a.nombre}</h3>
+                                                <p class="album-artist">${a.nombreArtista}</p>
+
+                                                <div class="album-tags">
+                                                    <c:if test="${not empty a.descripcion}">
+                                                        <span class="album-tag">${a.descripcion}</span>
+                                                    </c:if>
+                                                </div>
+                                            </div>
+                                        </button>
+                                    </form>
+                                </c:forEach>
+                            </div>
+                        </c:if>
+                        <c:if test="${empty listaAlbumes}">
+                            <p>No hay álbumes disponibles.</p>
+                        </c:if>
+
+                    </div>
+                </dialog>
             </main>
         </div>
     </body>

@@ -243,9 +243,15 @@ public class Persistencia implements IPersistencia {
         }
     }
 
-//    public List<AlbumDTO> obtenerTodosAlbumes(String termino) throws PersistenciaException {
-//        termino = null;
-//    }
+    @Override
+    public List<AlbumDTO> obtenerTodosAlbumes() throws PersistenciaException {
+        try {
+            List<Album> albumes = albumDAO.consultarTodos();
+            return albumes.stream().map(AlbumMapper::toDTO).toList();
+        } catch (Exception e) {
+            throw new PersistenciaException("No se pudieron obtener los albumes", e);
+        }
+    }
 
     @Override
     public List<AlbumDTO> buscarAlbumes(String termino) throws PersistenciaException {

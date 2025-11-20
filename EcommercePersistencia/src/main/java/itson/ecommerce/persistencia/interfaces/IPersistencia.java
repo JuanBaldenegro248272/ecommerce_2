@@ -36,32 +36,34 @@ public interface IPersistencia {
 
     public abstract void aprobarResena(Long id) throws PersistenciaException;
 
-    public abstract void eliminarResena(Long id) throws PersistenciaException;
+    public boolean eliminarResena(Long idResena) throws PersistenciaException;
+
+    public Resena crearResena(NuevaResenaDTO dto) throws PersistenciaException;
     
     public abstract EditarProductoDTO obtenerProductoPorId(Long id) throws PersistenciaException;
-    
+
     public abstract void actualizarProducto(EditarProductoDTO dto) throws PersistenciaException;
 
     public Usuario buscarPorCorreo(String correo) throws PersistenciaException;
 
     public Usuario guardar(Usuario usuario) throws PersistenciaException;
 
-    public abstract List<PedidoDTO> obtenerTodosPedidos() throws PersistenciaException; 
-    
+    public abstract List<PedidoDTO> obtenerTodosPedidos() throws PersistenciaException;
+
     List<Artista> consultarArtistasTodos() throws PersistenciaException;
 
     List<AlbumDTO> buscarAlbumes(String termino) throws PersistenciaException;
-    
-//    List<AlbumDTO> obtenerTodosAlbumes(String termino) throws PersistenciaException;
-    
+
+    List<AlbumDTO> obtenerTodosAlbumes() throws PersistenciaException;
+
     AlbumDTO consultarAlbum(Long id) throws PersistenciaException;
-    
+
     AlbumDTO crearAlbum(AlbumDTO dto) throws PersistenciaException;
-    
+
     AlbumDTO actualizarAlbum(AlbumDTO dto) throws PersistenciaException;
-    
+
     boolean eliminarAlbum(Long id) throws PersistenciaException;
-    
+
     public PedidoDTO actualizarEstadoPedido(Long idPedido, String nuevoEstado) throws PersistenciaException;
 
     public abstract List<GeneroDTO> obtenerTodosGeneros() throws PersistenciaException;

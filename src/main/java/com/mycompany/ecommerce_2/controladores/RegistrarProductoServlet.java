@@ -5,6 +5,7 @@
 package com.mycompany.ecommerce_2.controladores;
 
 import com.mycompany.ecommerce_2.exceptions.BusinessException;
+import com.mycompany.ecommerce_2.modelos.IAlbumBO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,10 +14,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import com.mycompany.ecommerce_2.modelos.IProductosBO;
+import com.mycompany.ecommerce_2.modelos.implementaciones.AlbumBO;
 import com.mycompany.ecommerce_2.modelos.implementaciones.ProductosBO;
+import itson.ecommerce.persistencia.dtos.AlbumDTO;
 import itson.ecommerce.persistencia.dtos.NuevoProductoDTO;
 import itson.ecommerce.persistencia.implementaciones.Persistencia;
 import itson.ecommerce.persistencia.interfaces.IPersistencia;
+import java.util.List;
 
 /**
  *
@@ -24,8 +28,9 @@ import itson.ecommerce.persistencia.interfaces.IPersistencia;
  */
 @WebServlet(name = "RegistrarProducto", urlPatterns = {"/admin/productos/nuevo"})
 public class RegistrarProductoServlet extends HttpServlet {
-    
+
     private IProductosBO productosBO;
+    private IAlbumBO albumBO;
 
     public RegistrarProductoServlet() {
         super();
@@ -36,8 +41,9 @@ public class RegistrarProductoServlet extends HttpServlet {
         super.init();
         IPersistencia fachada = new Persistencia();
         productosBO = new ProductosBO(fachada);
+        albumBO = new AlbumBO(fachada);
     }
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -55,7 +61,7 @@ public class RegistrarProductoServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet RegistrarProducto</title>");            
+            out.println("<title>Servlet RegistrarProducto</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet RegistrarProducto at " + request.getContextPath() + "</h1>");
@@ -76,8 +82,14 @@ public class RegistrarProductoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try {
+            List<AlbumDTO> listaAlbumes = albumBO.obtenerTodoAlbumes();
+            System.out.println(listaAlbumes.size());
+            request.setAttribute("listaAlbumes", listaAlbumes);
+        } catch (BusinessException ex) {
+            request.setAttribute("error", ex.getMessage());
+        }
         request.getRequestDispatcher("/nuevo-producto.jsp").forward(request, response);
-        System.out.println("GET llamado");
     }
 
     /**
@@ -96,8 +108,7 @@ public class RegistrarProductoServlet extends HttpServlet {
         NuevoProductoDTO dto = new NuevoProductoDTO();
 
         try {
-            // String albumIdStr = request.getParameter("albumId");
-            String albumIdStr = "2";
+            String albumIdStr = request.getParameter("albumId");
             dto.setAlbumId(albumIdStr != null && !albumIdStr.isBlank() ? Long.valueOf(albumIdStr) : null);
         } catch (NumberFormatException nfe) {
             dto.setAlbumId(null);
@@ -124,7 +135,6 @@ public class RegistrarProductoServlet extends HttpServlet {
 
         dto.setDescripcion(trimToEmpty(request.getParameter("descripcion")));
 
-        // Llamar al BO
         try {
             NuevoProductoDTO creado = productosBO.crearProducto(dto);
 
@@ -133,13 +143,13 @@ public class RegistrarProductoServlet extends HttpServlet {
             request.setAttribute("error", be.getMessage());
             request.setAttribute("dto", dto);
             request.getRequestDispatcher("/nuevo-producto.jsp")
-                   .forward(request, response);
+                    .forward(request, response);
         } catch (Exception ex) {
             request.setAttribute("error", "Ocurrio un error interno al crear el producto.");
             request.setAttribute("dto", dto);
             ex.printStackTrace();
             request.getRequestDispatcher("/nuevo-producto.jsp")
-                   .forward(request, response);
+                    .forward(request, response);
         }
     }
 
@@ -152,10 +162,12 @@ public class RegistrarProductoServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
+
     // Helpers
     private String trimToNull(String s) {
-        if (s == null) return null;
+        if (s == null) {
+            return null;
+        }
         s = s.trim();
         return s.isEmpty() ? null : s;
     }

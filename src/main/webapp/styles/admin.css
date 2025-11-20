@@ -1265,3 +1265,150 @@ body {
     letter-spacing: 2px;
     font-size: 14px;
 }
+
+.album-selected-card {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center;
+    justify-content: space-between;
+    background: #e0f1ef;
+    padding: 12px;
+    border-radius: 8px;
+    width: 100%;
+    gap: 16px;
+}
+
+.album-selected-info {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.album-cover img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.album-selected-text {
+    display: grid;
+    gap: 4px;
+}
+
+.album-selected-title {
+    margin: 0;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.album-selected-artist {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #444;
+}
+
+.album-selected-tags {
+    display: flex;
+    gap: 6px;
+}
+
+.album-tag {
+    background: #ddd;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+}
+
+.album-change-btn {
+    background: #fff;
+    border: 1px solid #aaa;
+    border-radius: 6px;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.album-change-btn:hover {
+    background: #f5f5f5;
+}
+
+.album-dialog {
+    border: none;
+    border-radius: 10px;
+    padding: 0;
+    width: 520px;
+    max-width: 90%;
+    background: #ffffff;
+    align-self: center;
+    margin-left: 45%;
+}
+
+.album-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.25);
+}
+
+.album-dialog-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-bottom: 1px solid #ddd;
+}
+
+.album-dialog-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.album-dialog-close {
+    border: none;
+    background: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.album-dialog-body {
+    padding: 14px 16px 16px;
+    display: grid;
+    gap: 14px;
+}
+
+.album-search-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: #f5f5f5;
+}
+
+.album-search-input {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-size: 0.9rem;
+}
+
+.album-list {
+    display: grid;
+    gap: 10px;
+}
+
+.album-item-form {
+    margin: 0;
+}
+
+.album-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #c6e1de;
+    background: #e0f1ef;
+    cursor: pointer;
+    text-align: left;
+}

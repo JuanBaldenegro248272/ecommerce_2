@@ -4,6 +4,7 @@
  */
 package com.mycompany.ecommerce_2.modelos;
 
+import com.mycompany.ecommerce_2.exceptions.BusinessException;
 import itson.ecommerce.persistencia.dtos.AlbumDTO;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
  */
 public interface IAlbumBO {
     List<AlbumDTO > buscar(String termino);
-    List<AlbumDTO> obtenerTodoAlbumes();
+    List<AlbumDTO> obtenerTodoAlbumes() throws BusinessException;
     AlbumDTO consultar(Long id);
     AlbumDTO crear(AlbumDTO dto);
     AlbumDTO actualizar(AlbumDTO dto);

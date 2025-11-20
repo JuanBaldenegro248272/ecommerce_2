@@ -4,6 +4,7 @@
  */
 package com.mycompany.ecommerce_2.modelos.implementaciones;
 
+import com.mycompany.ecommerce_2.exceptions.BusinessException;
 import com.mycompany.ecommerce_2.modelos.IAlbumBO;
 import itson.ecommerce.persistencia.dtos.AlbumDTO;
 import itson.ecommerce.persistencia.exceptions.PersistenciaException;
@@ -18,10 +19,11 @@ import java.util.logging.Logger;
  * @author victoria
  */
 public class AlbumBO implements IAlbumBO {
+
     private final IPersistencia persistencia;
     private static final Logger LOG = Logger.getLogger(AlbumBO.class.getName());
 
-    public AlbumBO() {
+    public AlbumBO(IPersistencia persistencia) {
         this.persistencia = new Persistencia();
     }
 
@@ -31,7 +33,7 @@ public class AlbumBO implements IAlbumBO {
             return this.persistencia.buscarAlbumes(termino);
         } catch (PersistenciaException ex) {
             LOG.log(Level.SEVERE, "Error al buscar álbumes", ex);
-            return null; 
+            return null;
         }
     }
 
@@ -75,15 +77,12 @@ public class AlbumBO implements IAlbumBO {
         }
     }
 
-//    @Override
-//    public List<AlbumDTO> obtenerTodoAlbumes() {
-//        try{
-//            return this.persistencia.
-//        }
-//    }
-
     @Override
-    public List<AlbumDTO> obtenerTodoAlbumes() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public List<AlbumDTO> obtenerTodoAlbumes() throws BusinessException {
+        try {
+            return persistencia.obtenerTodosAlbumes();
+        } catch (PersistenciaException ex) {
+            throw new BusinessException("No se pudieron obtener todos los albumes", ex);
+        }
     }
 }

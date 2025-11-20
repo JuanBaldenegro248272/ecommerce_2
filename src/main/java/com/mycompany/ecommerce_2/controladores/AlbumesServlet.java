@@ -7,6 +7,8 @@ import com.mycompany.ecommerce_2.modelos.implementaciones.ArtistaBO;
 import itson.ecommerce.persistencia.dtos.AlbumDTO;
 import itson.ecommerce.persistencia.entidades.Album;
 import itson.ecommerce.persistencia.entidades.Artista;
+import itson.ecommerce.persistencia.implementaciones.Persistencia;
+import itson.ecommerce.persistencia.interfaces.IPersistencia;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -22,7 +24,8 @@ import jakarta.servlet.http.HttpSession;
 @WebServlet(name = "AlbumesServlet", urlPatterns = {"/admin/albumes/*"})
 public class AlbumesServlet extends HttpServlet {
 
-    private final IAlbumBO albumBO = new AlbumBO();
+    IPersistencia fachada = new Persistencia();
+    private final IAlbumBO albumBO = new AlbumBO(fachada);
     private final IArtistaBO artistaBO = new ArtistaBO();
 
     @Override
@@ -113,9 +116,9 @@ public class AlbumesServlet extends HttpServlet {
                             imagenUrl,
                             idArtista,
                             null,
-                            null, 
-                            null, 
-                            null 
+                            null,
+                            null,
+                            null
                     );
                     session.setAttribute("mensaje", "Álbum creado correctamente.");
                 } else {
