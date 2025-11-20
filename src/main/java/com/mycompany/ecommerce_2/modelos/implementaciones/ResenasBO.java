@@ -4,11 +4,10 @@
  */
 package com.mycompany.ecommerce_2.modelos.implementaciones;
 
+import com.mycompany.ecommerce_2.exceptions.BusinessException;
 import com.mycompany.ecommerce_2.modelos.IResenasBO;
-import itson.ecommerce.persistencia.entidades.EstadoResena;
-import itson.ecommerce.persistencia.entidades.Resena;
+import itson.ecommerce.persistencia.dtos.ResenaListaDTO;
 import itson.ecommerce.persistencia.exceptions.PersistenciaException;
-import itson.ecommerce.persistencia.implementaciones.Persistencia;
 import itson.ecommerce.persistencia.interfaces.IPersistencia; 
 import java.util.List;
 
@@ -18,29 +17,55 @@ import java.util.List;
  */
 
 public class ResenasBO implements IResenasBO {
-    private final IPersistencia persistencia;
-
-    public ResenasBO() {
-        this.persistencia = new Persistencia();
+    
+    private IPersistencia persistencia;
+    
+    public ResenasBO(IPersistencia persistencia) {
+        this.persistencia = persistencia;
     }
     
     @Override
-    public List<Resena> buscarResenas(String termino, EstadoResena estado) throws PersistenciaException {
-        return this.persistencia.buscarResenas(termino, estado);
+    public List<ResenaListaDTO> obtenerTodasResenas() throws BusinessException {
+        try {
+            List<ResenaListaDTO> resenas = persistencia.obtenerTodasResenas();
+            return resenas;
+        } catch (PersistenciaException ex) {
+            throw new BusinessException("No se pudieron obtener las reseñas.");
+        }
     }
-
+    
     @Override
-    public Resena consultar(Long id) throws PersistenciaException {
-        return this.persistencia.consultarResena(id);
+    public List<ResenaListaDTO> buscarResenas(String termino, String estado) throws BusinessException {
+        try {
+            List<ResenaListaDTO> resenas = persistencia.buscarResenas(termino, estado);
+            return resenas;
+        } catch (PersistenciaException ex) {
+            throw new BusinessException("No se pudieron buscar las reseñas.");
+        }
     }
-
+    
     @Override
-    public Resena actualizar(Resena resena) throws PersistenciaException {
-        return this.persistencia.actualizarResena(resena);
+    public void aprobarResena(Long id) throws BusinessException {
+        if (id == null || id <= 0) {
+            throw new BusinessException("El ID de la reseña no es válido.");
+        }
+        try {
+            persistencia.aprobarResena(id);
+        } catch (PersistenciaException ex) {
+            throw new BusinessException("No se pudo aprobar la reseña.");
+        }
     }
-
+    
     @Override
-    public boolean eliminar(Long idResena) throws PersistenciaException {
-        return this.persistencia.eliminarResena(idResena);
+    public void eliminarResena(Long id) throws BusinessException {
+        if (id == null || id <= 0) {
+            throw new BusinessException("El ID de la reseña no es válido.");
+        }
+        
+        try {
+            persistencia.eliminarResena(id);
+        } catch (PersistenciaException ex) {
+            throw new BusinessException("No se pudo eliminar la reseña.");
+        }
     }
 }

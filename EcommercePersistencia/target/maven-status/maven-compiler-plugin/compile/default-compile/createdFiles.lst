@@ -2,6 +2,7 @@ itson\ecommerce\persistencia\entidades\PagoTarjeta_.class
 itson\ecommerce\persistencia\entidades\Usuario_.class
 itson\ecommerce\persistencia\implementaciones\ProductosDAO.class
 itson\ecommerce\persistencia\entidades\Direccion_.class
+itson\ecommerce\persistencia\mapper\ResenaMapper.class
 itson\ecommerce\persistencia\entidades\Administrador.class
 itson\ecommerce\persistencia\utils\ManejadorConexiones.class
 itson\ecommerce\persistencia\entidades\Cliente.class
@@ -9,6 +10,7 @@ itson\ecommerce\persistencia\entidades\ContraEntrega.class
 itson\ecommerce\persistencia\entidades\Album.class
 itson\ecommerce\persistencia\entidades\PagoTransferencia_.class
 itson\ecommerce\persistencia\interfaces\IPedidoDAO.class
+itson\ecommerce\persistencia\dtos\ResenaListaDTO.class
 itson\ecommerce\persistencia\mapper\UsuarioMapper.class
 itson\ecommerce\persistencia\dtos\NuevaResenaDTO.class
 itson\ecommerce\persistencia\implementaciones\UsuarioDAO.class
@@ -19,6 +21,7 @@ itson\ecommerce\persistencia\entidades\Artista.class
 itson\ecommerce\persistencia\entidades\Usuario.class
 itson\ecommerce\persistencia\dtos\EditarProductoDTO.class
 itson\ecommerce\persistencia\entidades\Pago.class
+itson\ecommerce\persistencia\implementaciones\GenerosDAO.class
 itson\ecommerce\persistencia\implementaciones\Persistencia.class
 itson\ecommerce\persistencia\entidades\Genero_.class
 itson\ecommerce\persistencia\interfaces\IResenasDAO.class
@@ -29,8 +32,10 @@ itson\ecommerce\persistencia\entidades\DetallePedido_.class
 itson\ecommerce\persistencia\entidades\Pago_.class
 itson\ecommerce\persistencia\entidades\Pedido.class
 itson\ecommerce\persistencia\entidades\Resena.class
+itson\ecommerce\persistencia\interfaces\IGenerosDAO.class
 itson\ecommerce\persistencia\implementaciones\ResenasDAO.class
 itson\ecommerce\persistencia\mapper\ProductoMapper.class
+itson\ecommerce\persistencia\dtos\GeneroDTO.class
 itson\ecommerce\persistencia\entidades\FormatoProducto.class
 itson\ecommerce\persistencia\entidades\Carrito_.class
 itson\ecommerce\persistencia\dtos\UsuarioDTO.class
@@ -66,4 +71,5 @@ itson\ecommerce\persistencia\entidades\Producto.class
 itson\ecommerce\persistencia\interfaces\IArtistaDAO.class
 itson\ecommerce\persistencia\entidades\GeneroAlbum_.class
 itson\ecommerce\persistencia\mapper\AlbumMapper.class
+itson\ecommerce\persistencia\mapper\GeneroMapper.class
 itson\ecommerce\persistencia\entidades\Resena_.class

@@ -5,17 +5,9 @@
 package com.mycompany.ecommerce_2.controladores;
 
 import com.mycompany.ecommerce_2.exceptions.BusinessException;
-import com.mycompany.ecommerce_2.modelos.IPedidoBO;
-import com.mycompany.ecommerce_2.modelos.IProductosBO;
-import com.mycompany.ecommerce_2.modelos.IResenasBO;
-import com.mycompany.ecommerce_2.modelos.implementaciones.PedidosBO;
-import com.mycompany.ecommerce_2.modelos.implementaciones.ProductosBO;
-import com.mycompany.ecommerce_2.modelos.implementaciones.ResenasBO;
-import itson.ecommerce.persistencia.dtos.PedidoDTO;
-import itson.ecommerce.persistencia.dtos.ProductoListaDTO;
-import itson.ecommerce.persistencia.dtos.ResenaListaDTO;
-import itson.ecommerce.persistencia.entidades.EstadoResena;
-import itson.ecommerce.persistencia.entidades.Resena;
+import com.mycompany.ecommerce_2.modelos.IGenerosBO;
+import com.mycompany.ecommerce_2.modelos.implementaciones.GenerosBO;
+import itson.ecommerce.persistencia.dtos.GeneroDTO;
 import itson.ecommerce.persistencia.implementaciones.Persistencia;
 import itson.ecommerce.persistencia.interfaces.IPersistencia;
 import java.io.IOException;
@@ -25,26 +17,24 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  *
- * @author Gael
+ * @author Dana Chavez
  */
-@WebServlet(name = "DashboardServlet", urlPatterns = {"/admin/dashboard"})
-public class DashboardServlet extends HttpServlet {
+@WebServlet(name = "ListarCategoriasServlet", urlPatterns = {"/admin/categorias"})
+public class ListarCategoriasServlet extends HttpServlet {
     
-    private IProductosBO productosBO;
-    private IPedidoBO pedidosBO;
-    private IResenasBO resenasBO;
+    private IGenerosBO generosBO;
     
+    @Override
     public void init() throws ServletException {
-       IPersistencia persistencia = new Persistencia();
-        this.productosBO = new ProductosBO(persistencia);
-        this.pedidosBO = new PedidosBO(persistencia);
-        this.resenasBO = new ResenasBO(persistencia);
+        IPersistencia persistencia = new Persistencia();
+        this.generosBO = new GenerosBO(persistencia);
     }
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -62,10 +52,10 @@ public class DashboardServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DashboardServlet</title>");
+            out.println("<title>Servlet ListarCategoriasServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet DashboardServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ListarCategoriasServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -83,37 +73,52 @@ public class DashboardServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //mock BD
+        
+        request.setCharacterEncoding("UTF-8");
+        
+        List<GeneroDTO> generos = new ArrayList<>();
+        
         try {
-            List<ProductoListaDTO> productos = productosBO.obtenerTodosProductos();
-            int totalProductos = productos.size();
+            generos = generosBO.obtenerTodosGeneros();
             
-            List<PedidoDTO> pedidos = pedidosBO.obtenerTodosPedidos();
-            
-            long pedidosPendientesCuenta = pedidos.stream().filter(p -> "PENDIENTE".equalsIgnoreCase(p.getEstado())).count();
-            List<PedidoDTO> pedidosRecientes = pedidos.stream().limit(2).collect(Collectors.toList());
-            List<ResenaListaDTO> resenasPendientes = resenasBO.buscarResenas(null, "PENDIENTE");
-            int totalResenasPendientes = resenasPendientes.size();
-            List<ResenaListaDTO> resenasWidget = resenasPendientes.stream().limit(2).collect(Collectors.toList());
+            request.setAttribute("listaGeneros", generos);
 
-            int totalUsuarios = 0; 
-            request.setAttribute("totalUsuarios", totalUsuarios); 
-            request.setAttribute("totalProductos", totalProductos);
-            request.setAttribute("totalPedidosPendientes", pedidosPendientesCuenta);
-            request.setAttribute("totalResenasNuevas", totalResenasPendientes);
-            
-            request.setAttribute("pedidosRecientes", pedidosRecientes);
-            request.setAttribute("resenasPendientes", resenasWidget);
+            String success = request.getParameter("success");
+            if ("1".equals(success)) {
+                request.setAttribute("mensaje", "Categoría creada exitosamente");
+            } else if ("2".equals(success)) {
+                request.setAttribute("mensaje", "Categoría actualizada exitosamente");
+            } else if ("3".equals(success)) {
+                request.setAttribute("mensaje", "Categoría eliminada exitosamente");
+            }
 
+            String error = request.getParameter("error");
+            if ("id_invalido".equals(error)) {
+                request.setAttribute("error", "ID de categoría inválido");
+            } else if ("error_eliminar".equals(error)) {
+                request.setAttribute("error", "Ocurrió un error al eliminar la categoría");
+            } else if (error != null && !error.isEmpty()) {
+                try {
+                    String mensajeDecodificado = java.net.URLDecoder.decode(error, "UTF-8");
+                    request.setAttribute("error", mensajeDecodificado);
+                } catch (Exception e) {
+                    request.setAttribute("error", "Error desconocido");
+                }
+            }
+            
+        } catch (BusinessException ex) {
+            System.out.println("BusinessException: " + ex.getMessage());
+            request.setAttribute("error", ex.getMessage());
+            request.setAttribute("listaGeneros", generos);
         } catch (Exception ex) {
-            request.setAttribute("error", "Error al cargar el dashboard: " + ex.getMessage());
+            System.out.println("Exception general: " + ex.getMessage());
+            request.setAttribute("error", "Ocurrió un error al cargar las categorías");
+            request.setAttribute("listaGeneros", generos);
             ex.printStackTrace();
         }
-
-        request.getRequestDispatcher("/dashboard-admin.jsp").forward(request, response);
-    }
-
         
+        request.getRequestDispatcher("/genero-admin.jsp").forward(request, response);
+    }
 
     /**
      * Handles the HTTP <code>POST</code> method.

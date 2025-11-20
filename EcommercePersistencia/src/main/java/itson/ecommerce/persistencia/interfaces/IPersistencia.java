@@ -6,14 +6,12 @@ package itson.ecommerce.persistencia.interfaces;
 
 import itson.ecommerce.persistencia.dtos.AlbumDTO;
 import itson.ecommerce.persistencia.dtos.EditarProductoDTO;
-import itson.ecommerce.persistencia.dtos.NuevaResenaDTO;
+import itson.ecommerce.persistencia.dtos.GeneroDTO;
 import itson.ecommerce.persistencia.dtos.NuevoProductoDTO;
 import itson.ecommerce.persistencia.dtos.PedidoDTO;
 import itson.ecommerce.persistencia.dtos.ProductoListaDTO;
-import itson.ecommerce.persistencia.entidades.Album;
+import itson.ecommerce.persistencia.dtos.ResenaListaDTO;
 import itson.ecommerce.persistencia.entidades.Artista;
-import itson.ecommerce.persistencia.entidades.EstadoResena;
-import itson.ecommerce.persistencia.entidades.Resena;
 import itson.ecommerce.persistencia.entidades.Usuario;
 import itson.ecommerce.persistencia.exceptions.PersistenciaException;
 import java.util.List;
@@ -32,15 +30,13 @@ public interface IPersistencia {
 
     public abstract void eliminarProducto(Long id) throws PersistenciaException;
 
-    public List<Resena> buscarResenas(String termino, EstadoResena estado) throws PersistenciaException;
+    public abstract List<ResenaListaDTO> obtenerTodasResenas() throws PersistenciaException;
 
-    public Resena consultarResena(Long id) throws PersistenciaException;
+    public abstract List<ResenaListaDTO> buscarResenas(String termino, String estado) throws PersistenciaException;
 
-    public Resena actualizarResena(Resena resena) throws PersistenciaException;
+    public abstract void aprobarResena(Long id) throws PersistenciaException;
 
-    public boolean eliminarResena(Long idResena) throws PersistenciaException;
-
-    public Resena crearResena(NuevaResenaDTO dto) throws PersistenciaException;
+    public abstract void eliminarResena(Long id) throws PersistenciaException;
     
     public abstract EditarProductoDTO obtenerProductoPorId(Long id) throws PersistenciaException;
     
@@ -67,5 +63,13 @@ public interface IPersistencia {
     boolean eliminarAlbum(Long id) throws PersistenciaException;
     
     public PedidoDTO actualizarEstadoPedido(Long idPedido, String nuevoEstado) throws PersistenciaException;
+
+    public abstract List<GeneroDTO> obtenerTodosGeneros() throws PersistenciaException;
+
+    public abstract void crearGenero(String nombre) throws PersistenciaException;
+
+    public abstract void actualizarGenero(Long id, String nombre) throws PersistenciaException;
+
+    public abstract void eliminarGenero(Long id) throws PersistenciaException;
 
 }

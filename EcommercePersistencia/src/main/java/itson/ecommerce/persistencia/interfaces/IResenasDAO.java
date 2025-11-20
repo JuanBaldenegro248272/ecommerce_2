@@ -14,9 +14,9 @@ import java.util.List;
  */
 public interface IResenasDAO {
 
-    List<Resena> buscarResenas(String termino, EstadoResena estado);
-    Resena consultar(Long id);
-    Resena actualizar(Resena resena);
-    boolean eliminar(Long idResena);
-    Resena crear(NuevaResenaDTO dto);
+    List<Resena> obtenerTodas();
+    List<Resena> buscarPorFiltros(String termino, EstadoResena estado);    
+    Resena obtenerPorId(Long id);   
+    void actualizar(Resena resena);    
+    void eliminar(Long id);
 }

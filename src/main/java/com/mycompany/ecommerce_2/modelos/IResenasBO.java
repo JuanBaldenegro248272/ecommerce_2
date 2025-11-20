@@ -4,9 +4,8 @@
  */
 package com.mycompany.ecommerce_2.modelos;
 
-import itson.ecommerce.persistencia.entidades.EstadoResena;
-import itson.ecommerce.persistencia.entidades.Resena;
-import itson.ecommerce.persistencia.exceptions.PersistenciaException;
+import com.mycompany.ecommerce_2.exceptions.BusinessException;
+import itson.ecommerce.persistencia.dtos.ResenaListaDTO;
 import java.util.List;
 
 /**
@@ -14,11 +13,11 @@ import java.util.List;
  * @author victoria
  */
 public interface IResenasBO {
-    public List<Resena> buscarResenas(String termino, EstadoResena estado) throws PersistenciaException;
-
-    public Resena consultar(Long id) throws PersistenciaException;
-
-    public Resena actualizar(Resena resena) throws PersistenciaException;
-
-    public boolean eliminar(Long idResena) throws PersistenciaException;
+    public abstract List<ResenaListaDTO> obtenerTodasResenas() throws BusinessException;
+    
+    public abstract List<ResenaListaDTO> buscarResenas(String termino, String estado) throws BusinessException;
+    
+    public abstract void aprobarResena(Long id) throws BusinessException;
+    
+    public abstract void eliminarResena(Long id) throws BusinessException;
 }

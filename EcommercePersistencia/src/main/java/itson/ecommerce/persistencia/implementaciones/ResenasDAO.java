@@ -10,7 +10,7 @@ import itson.ecommerce.persistencia.entidades.EstadoResena;
 import itson.ecommerce.persistencia.entidades.Producto;
 import itson.ecommerce.persistencia.entidades.Resena;
 import itson.ecommerce.persistencia.interfaces.IResenasDAO;
-import itson.ecommerce.persistencia.utils.ManejadorConexiones; // ¡Importamos tu clase!
+import itson.ecommerce.persistencia.utils.ManejadorConexiones; 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,125 +23,181 @@ import javax.persistence.TypedQuery;
 public class ResenasDAO implements IResenasDAO {
 
     @Override
-    public List<Resena> buscarResenas(String termino, EstadoResena estado) {
-        EntityManager em = ManejadorConexiones.getEntityManager();
-        
-        Map<String, Object> parametros = new HashMap<>();
-        
-        String jpql = "SELECT r FROM Resena r JOIN FETCH r.cliente JOIN FETCH r.producto WHERE 1=1 ";
-        if (termino != null && !termino.trim().isEmpty()) {
-            jpql += "AND LOWER(r.comentario) LIKE LOWER(:termino) ";
-            parametros.put("termino", "%" + termino + "%");
-        }
-        if (estado != null) {
-            jpql += "AND r.estado = :estado ";
-            parametros.put("estado", estado);
-        }
-        jpql += "ORDER BY r.estado ASC, r.id ASC";
+    public List<Resena> obtenerTodas() {
+        EntityManager em = null;
         try {
-            TypedQuery<Resena> query = em.createQuery(jpql, Resena.class);
-            for (Map.Entry<String, Object> entry : parametros.entrySet()) {
-                query.setParameter(entry.getKey(), entry.getValue());
-            }
+            em = ManejadorConexiones.getEntityManager();
             
-            return query.getResultList();
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-    }
+            String jpql = "SELECT DISTINCT r FROM Resena r " +
+                         "LEFT JOIN FETCH r.cliente c " +
+                         "LEFT JOIN FETCH r.producto p " +
+                         "LEFT JOIN FETCH p.album a " +
+                         "LEFT JOIN FETCH a.artista art " +
+                         "ORDER BY r.id DESC";
+            
+            TypedQuery<Resena> query = em.createQuery(jpql, Resena.class);
+            List<Resena> resultado = query.getResultList();
 
-    @Override
-    public Resena consultar(Long id) {
-        EntityManager em = ManejadorConexiones.getEntityManager();
-        try {
-            return em.find(Resena.class, id);
+            return resultado;
+            
+        } catch (Exception ex) {
+            System.out.println("ERROR en obtenerTodas(): " + ex.getMessage());
+            ex.printStackTrace();
+            throw new RuntimeException("Error al obtener reseñas", ex);
         } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-    }
-
-    @Override
-    public Resena actualizar(Resena resena) {
-        EntityManager em = ManejadorConexiones.getEntityManager();
-        try {
-            em.getTransaction().begin();
-            Resena actualizada = em.merge(resena);
-            em.getTransaction().commit();
-            return actualizada;
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            return null;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-    }
-
-    @Override
-    public boolean eliminar(Long idResena) {
-        EntityManager em = ManejadorConexiones.getEntityManager();
-        try {
-            em.getTransaction().begin();
-            Resena resena = em.find(Resena.class, idResena);
-            if (resena != null) {
-                em.remove(resena);
-                em.getTransaction().commit();
-                return true;
-            } else {
-                em.getTransaction().rollback();
-                return false; 
-            }
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            return false; 
-        } finally {
-            if (em != null) {
+            if (em != null && em.isOpen()) {
                 em.close();
             }
         }
     }
     
     @Override
-    public Resena crear(NuevaResenaDTO dto) {
-        EntityManager em = ManejadorConexiones.getEntityManager();
+    public List<Resena> buscarPorFiltros(String termino, EstadoResena estado) {
+        EntityManager em = null;
         try {
-            em.getTransaction().begin();
+            em = ManejadorConexiones.getEntityManager();
 
-            Cliente cliente = em.find(Cliente.class, dto.getIdCliente());
-            Producto producto = em.find(Producto.class, dto.getIdProducto());
-
-            if (cliente == null || producto == null) {
-                throw new IllegalArgumentException("Cliente o Producto no encontrado");
-            }
-
-            Resena nuevaResena = new Resena();
-            nuevaResena.setCliente(cliente);
-            nuevaResena.setProducto(producto);
-            nuevaResena.setComentario(dto.getComentario());
-            nuevaResena.setCalificacion(dto.getCalificacion());
+            System.out.println("Término: " + termino + ", Estado: " + estado);
             
-            nuevaResena.setEstado(EstadoResena.PENDIENTE);
+            StringBuilder jpql = new StringBuilder(
+                "SELECT DISTINCT r FROM Resena r " +
+                "LEFT JOIN FETCH r.cliente c " +
+                "LEFT JOIN FETCH r.producto p " +
+                "LEFT JOIN FETCH p.album a " +
+                "LEFT JOIN FETCH a.artista art " +
+                "WHERE 1=1 "
+            );
+            
+            if (termino != null && !termino.trim().isEmpty()) {
+                jpql.append("AND LOWER(r.comentario) LIKE LOWER(:termino) ");
+            }
+            
+            if (estado != null) {
+                jpql.append("AND r.estado = :estado ");
+            }
+            
+            jpql.append("ORDER BY r.id DESC");
+            
+            TypedQuery<Resena> query = em.createQuery(jpql.toString(), Resena.class);
+            
+            if (termino != null && !termino.trim().isEmpty()) {
+                query.setParameter("termino", "%" + termino + "%");
+            }
+            
+            if (estado != null) {
+                query.setParameter("estado", estado);
+            }
+            
+            List<Resena> resultado = query.getResultList();
+            
+            return resultado;
+            
+        } catch (Exception ex) {
+            System.out.println("ERROR en buscarPorFiltros(): " + ex.getMessage());
+            ex.printStackTrace();
+            throw new RuntimeException("Error al buscar reseñas", ex);
+        } finally {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
+        }
+    }
+    
+    @Override
+    public Resena obtenerPorId(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("El ID no puede ser nulo.");
+        }
+        
+        EntityManager em = null;
+        try {
+            em = ManejadorConexiones.getEntityManager();
+            
+            String jpql = "SELECT r FROM Resena r " +
+                         "LEFT JOIN FETCH r.cliente " +
+                         "LEFT JOIN FETCH r.producto " +
+                         "WHERE r.id = :id";
+            
+            TypedQuery<Resena> query = em.createQuery(jpql, Resena.class);
+            query.setParameter("id", id);
+            
+            Resena resena = query.getSingleResult();
 
-            em.persist(nuevaResena);
-
+            return resena;
+            
+        } catch (javax.persistence.NoResultException ex) {
+            System.out.println("Reseña no encontrada con ID: " + id);
+            throw new IllegalArgumentException("Reseña no encontrada con ID: " + id);
+        } catch (Exception ex) {
+            System.out.println("ERROR al obtener reseña: " + ex.getMessage());
+            ex.printStackTrace();
+            throw new RuntimeException("Error al obtener la reseña", ex);
+        } finally {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
+        }
+    }
+    
+    @Override
+    public void actualizar(Resena resena) {
+        if (resena == null) {
+            throw new IllegalArgumentException("La reseña no puede ser nula.");
+        }
+        
+        EntityManager em = null;
+        try {
+            em = ManejadorConexiones.getEntityManager();
+            em.getTransaction().begin();
+             
+            em.merge(resena);
+            em.flush();
             em.getTransaction().commit();
-            return nuevaResena;
-        } catch (IllegalArgumentException e) {
-            if (em.getTransaction().isActive()) {
+            
+        } catch (Exception ex) {
+            if (em != null && em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-            return null; 
+            System.out.println("ERROR al actualizar reseña: " + ex.getMessage());
+            ex.printStackTrace();
+            throw new RuntimeException("Error al actualizar la reseña", ex);
         } finally {
-            if (em != null) {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
+        }
+    }
+    
+    @Override
+    public void eliminar(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("El ID no puede ser nulo.");
+        }
+        
+        EntityManager em = null;
+        try {
+            em = ManejadorConexiones.getEntityManager();
+            em.getTransaction().begin();
+            
+            Resena resena = em.find(Resena.class, id);
+            
+            if (resena == null) {
+                throw new IllegalArgumentException("Reseña no encontrada con ID: " + id);
+            }
+            
+            em.remove(resena);
+            em.flush();
+            em.getTransaction().commit();
+            
+        } catch (Exception ex) {
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            System.out.println("ERROR al eliminar reseña: " + ex.getMessage());
+            ex.printStackTrace();
+            throw new RuntimeException("Error al eliminar la reseña", ex);
+        } finally {
+            if (em != null && em.isOpen()) {
                 em.close();
             }
         }
