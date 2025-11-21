@@ -65,5 +65,27 @@
             <span>Admin</span>
             <span class="small">Administrador</span>
         </div>
+        <div id ="LogoutMenu" class ="Logout-menu">
+            <a href="${pageContext.request.contextPath}/LogoutServlet" class ="logout-item"
+               <span>Cerrar Sesión</span>
+            </a>
+        </div>
     </div>
+               
 </aside>
+               
+               <script>
+                   function LogoutMenu(event){
+                       event.stopPropagation();
+                       const menu = document.getElementById('logoutMenu');
+                       menu.classList.toggle('show');
+                   }
+                   document.addEventListener('click' function(event)){
+                       const menu = document.getElementById('logoutMenu');
+                       const profileDiv = document.querySelector('.profile');
+                       
+                       if(menu && menu.classList.contains('show') && !profileDiv.contains(event.target)){
+                           menu.classList.remove('show');
+                       }
+                   }
+                   </script>
