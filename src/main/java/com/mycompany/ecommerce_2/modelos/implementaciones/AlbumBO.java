@@ -7,6 +7,9 @@ package com.mycompany.ecommerce_2.modelos.implementaciones;
 import com.mycompany.ecommerce_2.exceptions.BusinessException;
 import com.mycompany.ecommerce_2.modelos.IAlbumBO;
 import itson.ecommerce.persistencia.dtos.AlbumDTO;
+import itson.ecommerce.persistencia.dtos.ArtistaSimpleDTO;
+import itson.ecommerce.persistencia.dtos.GeneroDTO;
+import itson.ecommerce.persistencia.dtos.NuevoAlbumDTO;
 import itson.ecommerce.persistencia.exceptions.PersistenciaException;
 import itson.ecommerce.persistencia.implementaciones.Persistencia;
 import itson.ecommerce.persistencia.interfaces.IPersistencia;
@@ -48,16 +51,6 @@ public class AlbumBO implements IAlbumBO {
     }
 
     @Override
-    public AlbumDTO crear(AlbumDTO album) {
-        try {
-            return this.persistencia.crearAlbum(album);
-        } catch (PersistenciaException ex) {
-            LOG.log(Level.SEVERE, "Error al crear álbum", ex);
-            return null;
-        }
-    }
-
-    @Override
     public AlbumDTO actualizar(AlbumDTO album) {
         try {
             return this.persistencia.actualizarAlbum(album);
@@ -83,6 +76,57 @@ public class AlbumBO implements IAlbumBO {
             return persistencia.obtenerTodosAlbumes();
         } catch (PersistenciaException ex) {
             throw new BusinessException("No se pudieron obtener todos los albumes", ex);
+        }
+    }
+    
+    @Override
+    public List<ArtistaSimpleDTO> obtenerTodosArtistas() throws BusinessException {
+        try {
+            return persistencia.obtenerTodosArtistas();
+        } catch (PersistenciaException ex) {
+            throw new BusinessException("No se pudieron obtener los artistas.");
+        }
+    }
+    
+    @Override
+    public List<GeneroDTO> obtenerTodosGeneros() throws BusinessException {
+        try {
+            return persistencia.obtenerTodosGeneros();
+        } catch (PersistenciaException ex) {
+            throw new BusinessException("No se pudieron obtener los géneros.");
+        }
+    }
+    
+    @Override
+    public void crearAlbum(NuevoAlbumDTO dto) throws BusinessException {
+        if (dto.getNombre() == null || dto.getNombre().trim().isEmpty()) {
+            throw new BusinessException("El nombre del álbum es obligatorio.");
+        }
+        
+        if (dto.getNombre().length() > 50) {
+            throw new BusinessException("El nombre del álbum no puede exceder 50 caracteres.");
+        }
+        
+        if (dto.getIdArtista() == null) {
+            throw new BusinessException("Debes seleccionar un artista.");
+        }
+        
+        if (dto.getFechaLanzamiento() == null) {
+            throw new BusinessException("La fecha de lanzamiento es obligatoria.");
+        }
+        
+        if (dto.getImagenUrl() == null || dto.getImagenUrl().trim().isEmpty()) {
+            throw new BusinessException("La URL de la imagen es obligatoria.");
+        }
+        
+        if (dto.getDescripcion() != null && dto.getDescripcion().length() > 255) {
+            throw new BusinessException("La descripción no puede exceder 255 caracteres.");
+        }
+        
+        try {
+            persistencia.crearAlbum(dto);
+        } catch (PersistenciaException ex) {
+            throw new BusinessException("No se pudo crear el álbum.");
         }
     }
 }

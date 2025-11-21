@@ -55,18 +55,31 @@ public class AlbumDAO implements IAlbumDAO{
     }
 
     @Override
-    public Album crear(Album album) {
-        EntityManager em = ManejadorConexiones.getEntityManager();
+    public void crear(Album album) {
+        if (album == null) {
+            throw new IllegalArgumentException("El álbum no puede ser nulo.");
+        }
+        
+        EntityManager em = null;
         try {
+            em = ManejadorConexiones.getEntityManager();
             em.getTransaction().begin();
+
             em.persist(album);
+            em.flush();
+            
             em.getTransaction().commit();
-            return album;
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) em.getTransaction().rollback();
-            return null;
+            
+        } catch (Exception ex) {
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            ex.printStackTrace();
+            throw new RuntimeException("Error al crear el álbum", ex);
         } finally {
-            if (em != null) em.close();
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
         }
     }
 

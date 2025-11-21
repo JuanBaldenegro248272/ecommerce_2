@@ -1,148 +1,229 @@
 package com.mycompany.ecommerce_2.controladores;
 
+import com.mycompany.ecommerce_2.exceptions.BusinessException;
 import com.mycompany.ecommerce_2.modelos.IAlbumBO;
-import com.mycompany.ecommerce_2.modelos.IArtistaBO;
 import com.mycompany.ecommerce_2.modelos.implementaciones.AlbumBO;
-import com.mycompany.ecommerce_2.modelos.implementaciones.ArtistaBO;
 import itson.ecommerce.persistencia.dtos.AlbumDTO;
-import itson.ecommerce.persistencia.entidades.Album;
-import itson.ecommerce.persistencia.entidades.Artista;
+import itson.ecommerce.persistencia.dtos.ArtistaSimpleDTO;
+import itson.ecommerce.persistencia.dtos.GeneroDTO;
 import itson.ecommerce.persistencia.implementaciones.Persistencia;
 import itson.ecommerce.persistencia.interfaces.IPersistencia;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
 
-@WebServlet(name = "AlbumesServlet", urlPatterns = {"/admin/albums"})
+@WebServlet(name = "AlbumesServlet", urlPatterns = {"/admin/albums", "/admin/albums/*"})
 public class AlbumesServlet extends HttpServlet {
 
-    IPersistencia fachada = new Persistencia();
-    private final IAlbumBO albumBO = new AlbumBO(fachada);
-    private final IArtistaBO artistaBO = new ArtistaBO();
+    private IAlbumBO albumesBO;
+
+    @Override
+    public void init() throws ServletException {
+        IPersistencia persistencia = new Persistencia();
+        this.albumesBO = new AlbumBO(persistencia);
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        request.setCharacterEncoding("UTF-8");
+
         String pathInfo = request.getPathInfo();
-        String jspPage;
 
         if (pathInfo == null || pathInfo.equals("/")) {
-            String termino = request.getParameter("buscar");
-            List<AlbumDTO> albumes = albumBO.buscar(termino);
-            request.setAttribute("listaAlbumes", albumes);
-            request.setAttribute("terminoBusqueda", termino);
-            jspPage = "/albumes-admin.jsp";
-
-        } else if (pathInfo.equals("/nuevo")) {
-            List<Artista> artistas = artistaBO.consultarTodos();
-            request.setAttribute("artistas", artistas);
-            request.setAttribute("album", new Album());
-            jspPage = "/form-album.jsp";
-
-        } else if (pathInfo.startsWith("/editar")) {
-            try {
-                Long id = Long.parseLong(request.getParameter("id"));
-                AlbumDTO album = albumBO.consultar(id);
-                List<Artista> artistas = artistaBO.consultarTodos();
-
-                request.setAttribute("album", album);
-                request.setAttribute("artistas", artistas);
-                jspPage = "/form-album.jsp";
-            } catch (Exception e) {
-                response.sendRedirect(request.getContextPath() + "/admin/albumes");
-                return;
-            }
-
-        } else if (pathInfo.startsWith("/eliminar")) {
-            // Ruta: /admin/albumes/eliminar
-            try {
-                Long id = Long.parseLong(request.getParameter("id"));
-                albumBO.eliminar(id);
-                request.getSession().setAttribute("mensaje", "Álbum eliminado correctamente.");
-            } catch (Exception e) {
-                request.getSession().setAttribute("error", "No se pudo eliminar el álbum.");
-            }
-            response.sendRedirect(request.getContextPath() + "/admin/albumes");
-            return;
-
-        } else {
-            response.sendRedirect(request.getContextPath() + "/admin/albumes");
+            listarAlbumes(request, response);
             return;
         }
 
-        request.getRequestDispatcher(jspPage).forward(request, response);
+        if (pathInfo.equals("/nuevo")) {
+            mostrarFormularioNuevo(request, response);
+            return;
+        }
+
+        if (pathInfo.equals("/editar")) {
+            mostrarFormularioEditar(request, response);
+            return;
+        }
+
+        if (pathInfo.equals("/eliminar")) {
+            eliminarAlbum(request, response);
+            return;
+        }
+
+        response.sendRedirect(request.getContextPath() + "/admin/albums");
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        request.setCharacterEncoding("UTF-8");
+
         String pathInfo = request.getPathInfo();
-        HttpSession session = request.getSession();
+        System.out.println("PathInfo: " + pathInfo);
 
-        if (pathInfo.equals("/guardar")) {
-            try {
-                String idStr = request.getParameter("id");
-                String nombre = request.getParameter("nombre");
-                String descripcion = request.getParameter("descripcion");
-                String imagenUrl = request.getParameter("imagenUrl");
-                Long idArtista = Long.parseLong(request.getParameter("idArtista"));
-
-                String fechaStr = request.getParameter("fechaLanzamiento");
-                Calendar fecha = Calendar.getInstance();
-                fecha.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(fechaStr));
-
-                Artista artista = new Artista();
-                artista.setId(idArtista);
-
-                AlbumDTO albumDto;
-                boolean esNuevo = (idStr == null || idStr.isEmpty());
-
-                if (esNuevo) {
-                    albumDto = new AlbumDTO(
-                            null,
-                            nombre,
-                            descripcion,
-                            fecha,
-                            imagenUrl,
-                            idArtista,
-                            null,
-                            null,
-                            null,
-                            null
-                    );
-                    session.setAttribute("mensaje", "Álbum creado correctamente.");
-                } else {
-                    albumDto = albumBO.consultar(Long.parseLong(idStr));
-                    session.setAttribute("mensaje", "Álbum actualizado correctamente.");
-                }
-
-                albumDto.setNombre(nombre);
-                albumDto.setDescripcion(descripcion);
-                albumDto.setImagenUrl(imagenUrl);
-                albumDto.setFechaLanzamiento(fecha);
-                albumDto.setIdArtista(idArtista);
-
-                if (esNuevo) {
-                    albumBO.crear(albumDto);
-                } else {
-                    albumBO.actualizar(albumDto);
-                }
-
-            } catch (Exception e) {
-                session.setAttribute("error", "Error al guardar el álbum: " + e.getMessage());
-            }
+        if (pathInfo != null && pathInfo.equals("/guardar")) {
+            guardarAlbum(request, response);
+            return;
         }
 
-        response.sendRedirect(request.getContextPath() + "/admin/albumes");
+        response.sendRedirect(request.getContextPath() + "/admin/albums");
+    }
+
+    private void listarAlbumes(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String termino = request.getParameter("buscar");
+        List<AlbumDTO> albums = new ArrayList<>();
+
+        try {
+            if (termino != null && !termino.trim().isEmpty()) {
+                albums = albumesBO.buscar(termino);
+            } else {
+                albums = albumesBO.obtenerTodoAlbumes();
+            }
+
+            request.setAttribute("listaAlbumes", albums);
+            request.setAttribute("terminoBusqueda", termino);
+
+            String success = request.getParameter("success");
+            if ("1".equals(success)) {
+                request.setAttribute("mensaje", "Álbum creado exitosamente");
+            } else if ("2".equals(success)) {
+                request.setAttribute("mensaje", "Álbum actualizado exitosamente");
+            } else if ("3".equals(success)) {
+                request.setAttribute("mensaje", "Álbum eliminado exitosamente");
+            }
+
+            String error = request.getParameter("error");
+            if (error != null && !error.isEmpty()) {
+                try {
+                    String mensajeDecodificado = java.net.URLDecoder.decode(error, "UTF-8");
+                    request.setAttribute("error", mensajeDecodificado);
+                } catch (Exception e) {
+                    request.setAttribute("error", "Error desconocido");
+                }
+            }
+
+        } catch (Exception ex) {
+            System.out.println("Exception general: " + ex.getMessage());
+            request.setAttribute("error", "Ocurrió un error al cargar los álbumes");
+            request.setAttribute("listaAlbumes", albums);
+            ex.printStackTrace();
+        }
+
+        request.getRequestDispatcher("/albums-admin.jsp").forward(request, response);
+    }
+
+    private void mostrarFormularioNuevo(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        try {
+            List<ArtistaSimpleDTO> artistas = albumesBO.obtenerTodosArtistas();
+            List<GeneroDTO> generos = albumesBO.obtenerTodosGeneros();
+
+            request.setAttribute("artistas", artistas);
+            request.setAttribute("generos", generos);
+
+
+        } catch (BusinessException ex) {
+            request.setAttribute("error", ex.getMessage());
+        } catch (Exception ex) {
+            request.setAttribute("error", "Ocurrió un error al cargar el formulario");
+            ex.printStackTrace();
+        }
+
+        request.getRequestDispatcher("/nuevo-album.jsp").forward(request, response);
+    }
+
+    private void mostrarFormularioEditar(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String idStr = request.getParameter("id");
+
+        if (idStr == null || idStr.trim().isEmpty()) {
+            response.sendRedirect(request.getContextPath() + "/admin/albums?error=id_invalido");
+            return;
+        }
+
+        try {
+            Long id = Long.valueOf(idStr);
+
+            AlbumDTO album = albumesBO.consultar(id);
+
+            List<ArtistaSimpleDTO> artistas = albumesBO.obtenerTodosArtistas();
+            List<GeneroDTO> generos = albumesBO.obtenerTodosGeneros();
+
+            request.setAttribute("album", album);
+            request.setAttribute("artistas", artistas);
+            request.setAttribute("generos", generos);
+
+
+            request.getRequestDispatcher("/editar-album.jsp").forward(request, response);
+
+        } catch (NumberFormatException ex) {
+            response.sendRedirect(request.getContextPath() + "/admin/albums?error=id_invalido");
+
+        } catch (BusinessException ex) {
+            response.sendRedirect(request.getContextPath() + "/admin/albums?error="
+                    + java.net.URLEncoder.encode(ex.getMessage(), "UTF-8"));
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            response.sendRedirect(request.getContextPath() + "/admin/albums?error=error_cargar");
+        }
+    }
+
+    private void eliminarAlbum(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String idStr = request.getParameter("id");
+
+        if (idStr == null || idStr.trim().isEmpty()) {
+            response.sendRedirect(request.getContextPath() + "/admin/albums?error=id_invalido");
+            return;
+        }
+
+        try {
+            Long id = Long.valueOf(idStr);
+
+            //TODO ELIMINAR ALBUM
+
+            response.sendRedirect(request.getContextPath() + "/admin/albums?success=3");
+
+        } catch (NumberFormatException ex) {
+            System.out.println("ID inválido: " + idStr);
+            response.sendRedirect(request.getContextPath() + "/admin/albums?error=id_invalido");
+
+        } catch (Exception ex) {
+            System.out.println("Exception general: " + ex.getMessage());
+            ex.printStackTrace();
+            response.sendRedirect(request.getContextPath() + "/admin/albums?error=error_eliminar");
+        }
+    }
+
+    private void guardarAlbum(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String idStr = request.getParameter("id");
+        boolean esNuevo = (idStr == null || idStr.trim().isEmpty());
+
+        if (esNuevo) {
+            request.getRequestDispatcher("/admin/albums/nuevo").forward(request, response);
+        } else {
+            response.sendRedirect(request.getContextPath() + "/admin/albums?success=2");
+        }
+    }
+
+    @Override
+    public String getServletInfo() {
+        return "Servlet para gestión de álbumes";
     }
 }

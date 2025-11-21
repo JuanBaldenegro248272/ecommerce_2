@@ -15,7 +15,7 @@ public interface IAlbumDAO {
     List<Album> consultarTodos();
     List<Album> buscar(String termino);
     Album consultar(Long id);
-    Album crear(Album album);
+    void crear(Album album);
     Album actualizar(Album album);
     boolean eliminar(Long id);
 }

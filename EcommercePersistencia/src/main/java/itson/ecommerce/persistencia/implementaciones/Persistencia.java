@@ -5,9 +5,10 @@
 package itson.ecommerce.persistencia.implementaciones;
 
 import itson.ecommerce.persistencia.dtos.AlbumDTO;
+import itson.ecommerce.persistencia.dtos.ArtistaSimpleDTO;
 import itson.ecommerce.persistencia.dtos.EditarProductoDTO;
 import itson.ecommerce.persistencia.dtos.GeneroDTO;
-import itson.ecommerce.persistencia.dtos.NuevaResenaDTO;
+import itson.ecommerce.persistencia.dtos.NuevoAlbumDTO;
 import itson.ecommerce.persistencia.dtos.NuevoProductoDTO;
 import itson.ecommerce.persistencia.dtos.PedidoDTO;
 import itson.ecommerce.persistencia.dtos.ProductoListaDTO;
@@ -16,6 +17,7 @@ import itson.ecommerce.persistencia.entidades.Album;
 import itson.ecommerce.persistencia.entidades.Artista;
 import itson.ecommerce.persistencia.entidades.EstadoResena;
 import itson.ecommerce.persistencia.entidades.Genero;
+import itson.ecommerce.persistencia.entidades.GeneroAlbum;
 import itson.ecommerce.persistencia.entidades.Pedido;
 import itson.ecommerce.persistencia.entidades.Producto;
 import itson.ecommerce.persistencia.entidades.Resena;
@@ -34,9 +36,11 @@ import itson.ecommerce.persistencia.mapper.GeneroMapper;
 import itson.ecommerce.persistencia.mapper.PedidoMapper;
 import itson.ecommerce.persistencia.mapper.ProductoMapper;
 import itson.ecommerce.persistencia.mapper.ResenaMapper;
+import itson.ecommerce.persistencia.utils.ManejadorConexiones;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.persistence.EntityManager;
 
 /**
  *
@@ -106,8 +110,8 @@ public class Persistencia implements IPersistencia {
         try {
             List<Resena> resenas = resenasDAO.obtenerTodas();
             List<ResenaListaDTO> dtos = resenas.stream()
-                .map(ResenaMapper::toListaDTO)
-                .collect(Collectors.toList());
+                    .map(ResenaMapper::toListaDTO)
+                    .collect(Collectors.toList());
             return dtos;
         } catch (Exception ex) {
             System.out.println("ERROR en Persistencia: " + ex.getMessage());
@@ -128,8 +132,8 @@ public class Persistencia implements IPersistencia {
             }
             List<Resena> resenas = resenasDAO.buscarPorFiltros(termino, estado);
             List<ResenaListaDTO> dtos = resenas.stream()
-                .map(ResenaMapper::toListaDTO)
-                .collect(Collectors.toList());
+                    .map(ResenaMapper::toListaDTO)
+                    .collect(Collectors.toList());
             return dtos;
         } catch (Exception ex) {
             System.out.println("ERROR en Persistencia: " + ex.getMessage());
@@ -281,19 +285,6 @@ public class Persistencia implements IPersistencia {
     }
 
     @Override
-    public AlbumDTO crearAlbum(AlbumDTO dto) throws PersistenciaException {
-        try {
-            Album album = AlbumMapper.toEntity(dto);
-
-            Album creado = albumDAO.crear(album);
-
-            return AlbumMapper.toDTO(album);
-        } catch (Exception e) {
-            throw new PersistenciaException("Error al crear álbum", e);
-        }
-    }
-
-    @Override
     public AlbumDTO actualizarAlbum(AlbumDTO dto) throws PersistenciaException {
         try {
             Album album = AlbumMapper.toEntity(dto);
@@ -320,8 +311,8 @@ public class Persistencia implements IPersistencia {
 
             List<Genero> generos = generosDAO.obtenerTodos();
             List<GeneroDTO> dtos = generos.stream()
-                .map(GeneroMapper::toDTO)
-                .collect(Collectors.toList());
+                    .map(GeneroMapper::toDTO)
+                    .collect(Collectors.toList());
 
             return dtos;
         } catch (Exception ex) {
@@ -369,4 +360,70 @@ public class Persistencia implements IPersistencia {
         }
     }
 
+    @Override
+    public List<ArtistaSimpleDTO> obtenerTodosArtistas() throws PersistenciaException {
+        try {
+            List<Artista> artistas = artistaDAO.obtenerTodos();
+            List<ArtistaSimpleDTO> dtos = artistas.stream()
+                    .map(a -> new ArtistaSimpleDTO(a.getId(), a.getNombreArtistico()))
+                    .collect(Collectors.toList());
+
+            return dtos;
+        } catch (Exception ex) {
+            throw new PersistenciaException("Error al obtener artistas", ex);
+        }
+    }
+
+    @Override
+    public void crearAlbum(NuevoAlbumDTO dto) throws PersistenciaException {
+        try {
+            Artista artista = artistaDAO.obtenerPorId(dto.getIdArtista());
+            if (artista == null) {
+                throw new IllegalArgumentException("Artista no encontrado");
+            }
+
+            Album album = new Album();
+            album.setNombre(dto.getNombre());
+            album.setDescripcion(dto.getDescripcion());
+            album.setFechaLanzamiento(dto.getFechaLanzamiento());
+            album.setImagenUrl(dto.getImagenUrl());
+            album.setArtista(artista);
+            album.setCanciones(dto.getCanciones());
+
+            albumDAO.crear(album);
+
+            if (dto.getIdsGeneros() != null && !dto.getIdsGeneros().isEmpty()) {
+                EntityManager em = null;
+                try {
+                    em = ManejadorConexiones.getEntityManager();
+                    em.getTransaction().begin();
+
+                    for (Long idGenero : dto.getIdsGeneros()) {
+                        Genero genero = em.find(Genero.class, idGenero);
+                        if (genero != null) {
+                            GeneroAlbum generoAlbum = new GeneroAlbum();
+                            generoAlbum.setGenero(genero);
+                            generoAlbum.setAlbum(album);
+                            em.persist(generoAlbum);
+                        }
+                    }
+
+                    em.getTransaction().commit();
+                } catch (Exception ex) {
+                    if (em != null && em.getTransaction().isActive()) {
+                        em.getTransaction().rollback();
+                    }
+                    throw ex;
+                } finally {
+                    if (em != null && em.isOpen()) {
+                        em.close();
+                    }
+                }
+            }
+
+        } catch (Exception ex) {
+            System.out.println("ERROR en Persistencia: " + ex.getMessage());
+            throw new PersistenciaException("Error al crear álbum", ex);
+        }
+    }
 }
