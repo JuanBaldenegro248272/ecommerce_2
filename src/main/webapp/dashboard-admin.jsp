@@ -114,8 +114,8 @@
                     <c:forEach var="r" items="${resenasPendientes}">
                         <div class="list-item">
                             <div class="item-info">
-                                <h4>${r.producto.album.nombre} - ${r.producto.album.artista.nombreArtistico}</h4>
-                                <p>${r.cliente.nombre}</p>
+                                <h4>${r.albumNombre} - ${r.artistaNombre}</h4>
+                                <p>${r.clienteNombre}</p>
                                 <p style="font-style: italic; font-size: 12px;">"${r.comentario}"</p>
                             </div>
                             <div class="stars">
