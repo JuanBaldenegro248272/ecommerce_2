@@ -5,6 +5,7 @@
 package itson.ecommerce.persistencia.interfaces;
 
 import itson.ecommerce.persistencia.entidades.Album;
+import itson.ecommerce.persistencia.entidades.Artista;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ public interface IAlbumDAO {
     List<Album> consultarTodos();
     List<Album> buscar(String termino);
     Album consultar(Long id);
-    void crear(Album album);
+    void crear(Album album, Artista artista);
     Album actualizar(Album album);
     boolean eliminar(Long id);
 }

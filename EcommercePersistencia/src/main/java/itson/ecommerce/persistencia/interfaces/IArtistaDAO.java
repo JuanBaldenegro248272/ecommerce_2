@@ -14,4 +14,5 @@ import java.util.List;
 public interface IArtistaDAO {
     public abstract List<Artista> obtenerTodos();
     public abstract Artista obtenerPorId(Long id);
+    public Artista guardar(Artista artista);
 }

@@ -4,11 +4,14 @@
  */
 package itson.ecommerce.persistencia.implementaciones;
 
+import itson.ecommerce.persistencia.entidades.Cliente;
 import itson.ecommerce.persistencia.entidades.EstadoPedido;
+import itson.ecommerce.persistencia.entidades.Pago;
 import itson.ecommerce.persistencia.entidades.Pedido;
 import itson.ecommerce.persistencia.exceptions.PersistenciaException;
 import itson.ecommerce.persistencia.interfaces.IPedidoDAO;
 import itson.ecommerce.persistencia.utils.ManejadorConexiones;
+import java.util.Calendar;
 import java.util.List;
 import javax.persistence.EntityManager;
 
@@ -59,6 +62,36 @@ public class PedidoDAO implements IPedidoDAO {
                 em.getTransaction().rollback();
             }
             throw new PersistenciaException("Error al actualizar el pedido", e);
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    @Override
+    public Pedido crearPedido(Cliente cliente, float total, EstadoPedido estado) throws PersistenciaException {
+        EntityManager em = ManejadorConexiones.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            Pedido pedido = new Pedido();
+            pedido.setCliente(cliente);
+            pedido.setDireccion(cliente.getDireccion());
+            pedido.setEstado(estado);
+            pedido.setFechaCompra(Calendar.getInstance());
+            pedido.setTotal(total);
+            Pago pago = new Pago();
+            pago.setFecha(Calendar.getInstance());
+
+            pedido.setPago(pago);
+            em.persist(pedido);
+            em.getTransaction().commit();
+            return pedido;
+        } catch (Exception e) {
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new PersistenciaException("Error al insertar el pedido", e);
         } finally {
             if (em != null) {
                 em.close();

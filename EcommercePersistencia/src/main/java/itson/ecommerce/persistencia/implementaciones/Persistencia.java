@@ -390,7 +390,7 @@ public class Persistencia implements IPersistencia {
             album.setArtista(artista);
             album.setCanciones(dto.getCanciones());
 
-            albumDAO.crear(album);
+            albumDAO.crear(album, artista);
 
             if (dto.getIdsGeneros() != null && !dto.getIdsGeneros().isEmpty()) {
                 EntityManager em = null;

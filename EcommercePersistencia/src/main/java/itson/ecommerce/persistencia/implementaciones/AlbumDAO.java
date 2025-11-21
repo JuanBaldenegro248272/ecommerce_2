@@ -5,6 +5,7 @@
 package itson.ecommerce.persistencia.implementaciones;
 
 import itson.ecommerce.persistencia.entidades.Album;
+import itson.ecommerce.persistencia.entidades.Artista;
 import itson.ecommerce.persistencia.interfaces.IAlbumDAO;
 import itson.ecommerce.persistencia.utils.ManejadorConexiones;
 import java.util.List;
@@ -15,13 +16,13 @@ import javax.persistence.TypedQuery;
  *
  * @author victoria
  */
-public class AlbumDAO implements IAlbumDAO{
+public class AlbumDAO implements IAlbumDAO {
     
     @Override
     public List<Album> consultarTodos() {
-        return buscar(null); 
+        return buscar(null);        
     }
-
+    
     @Override
     public List<Album> buscar(String termino) {
         EntityManager em = ManejadorConexiones.getEntityManager();
@@ -29,8 +30,8 @@ public class AlbumDAO implements IAlbumDAO{
             String jpql = "SELECT a FROM Album a JOIN FETCH a.artista ORDER BY a.nombre ASC";
             if (termino != null && !termino.trim().isEmpty()) {
                 jpql = "SELECT a FROM Album a JOIN FETCH a.artista ar "
-                     + "WHERE LOWER(a.nombre) LIKE LOWER(:termino) OR LOWER(ar.nombreArtistico) LIKE LOWER(:termino) "
-                     + "ORDER BY a.nombre ASC";
+                        + "WHERE LOWER(a.nombre) LIKE LOWER(:termino) OR LOWER(ar.nombreArtistico) LIKE LOWER(:termino) "
+                        + "ORDER BY a.nombre ASC";
             }
             
             TypedQuery<Album> query = em.createQuery(jpql, Album.class);
@@ -40,22 +41,26 @@ public class AlbumDAO implements IAlbumDAO{
             }
             return query.getResultList();
         } finally {
-            if (em != null) em.close();
+            if (em != null) {
+                em.close();
+            }
         }
     }
-
+    
     @Override
     public Album consultar(Long id) {
         EntityManager em = ManejadorConexiones.getEntityManager();
         try {
             return em.find(Album.class, id);
         } finally {
-            if (em != null) em.close();
+            if (em != null) {
+                em.close();
+            }
         }
     }
-
+    
     @Override
-    public void crear(Album album) {
+    public void crear(Album album, Artista artista) {
         if (album == null) {
             throw new IllegalArgumentException("El álbum no puede ser nulo.");
         }
@@ -64,7 +69,8 @@ public class AlbumDAO implements IAlbumDAO{
         try {
             em = ManejadorConexiones.getEntityManager();
             em.getTransaction().begin();
-
+            
+            album.setArtista(artista);
             em.persist(album);
             em.flush();
             
@@ -82,7 +88,7 @@ public class AlbumDAO implements IAlbumDAO{
             }
         }
     }
-
+    
     @Override
     public Album actualizar(Album album) {
         EntityManager em = ManejadorConexiones.getEntityManager();
@@ -92,13 +98,17 @@ public class AlbumDAO implements IAlbumDAO{
             em.getTransaction().commit();
             return actualizado;
         } catch (Exception e) {
-            if (em.getTransaction().isActive()) em.getTransaction().rollback();
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
             return null;
         } finally {
-            if (em != null) em.close();
+            if (em != null) {
+                em.close();
+            }
         }
     }
-
+    
     @Override
     public boolean eliminar(Long id) {
         EntityManager em = ManejadorConexiones.getEntityManager();
@@ -113,10 +123,14 @@ public class AlbumDAO implements IAlbumDAO{
             em.getTransaction().rollback();
             return false;
         } catch (Exception e) {
-            if (em.getTransaction().isActive()) em.getTransaction().rollback();
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
             return false;
         } finally {
-            if (em != null) em.close();
+            if (em != null) {
+                em.close();
+            }
         }
     }
     

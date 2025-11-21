@@ -7,6 +7,7 @@ package itson.ecommerce.persistencia.entidades;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -17,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -24,36 +26,36 @@ import javax.persistence.Table;
  * @author Dana Chavez
  */
 @Entity
-@Table (name = "pedidos")
+@Table(name = "pedidos")
 public class Pedido implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name = "id")
+    @Column(name = "id")
     private Long id;
-    
+
     @Enumerated(EnumType.STRING)
-    @Column (nullable = false)
+    @Column(nullable = false)
     private EstadoPedido estado;
-    
-    @Column (name = "fecha_compra", nullable = false)
+
+    @Column(name = "fecha_compra", nullable = false)
     private Calendar fechaCompra;
-    
-    @Column (name = "total", nullable = false)
+
+    @Column(name = "total", nullable = false)
     private Float total;
-    
+
     @ManyToOne
-    @JoinColumn (name = "id_cliente", nullable = false)
+    @JoinColumn(name = "id_cliente", nullable = false)
     private Cliente cliente;
 
     @ManyToOne
-    @JoinColumn (name = "id_direccion", nullable = false)
+    @JoinColumn(name = "id_direccion", nullable = false)
     private Direccion direccion;
-    
-    @ManyToOne
-    @JoinColumn (name = "id_pago", nullable = false)
+
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "id_pago", nullable = false)
     private Pago pago;
-    
+
     @OneToMany(mappedBy = "pedido")
     private List<DetallePedido> detalles;
 
@@ -159,5 +161,5 @@ public class Pedido implements Serializable {
     public String toString() {
         return "itson.ecommerce.persistencia.entidades.Pedido[ id=" + id + " ]";
     }
-    
+
 }

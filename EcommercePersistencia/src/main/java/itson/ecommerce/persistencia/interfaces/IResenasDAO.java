@@ -4,9 +4,11 @@
  */
 package itson.ecommerce.persistencia.interfaces;
 
-import itson.ecommerce.persistencia.dtos.NuevaResenaDTO;
+import itson.ecommerce.persistencia.entidades.Cliente;
 import itson.ecommerce.persistencia.entidades.EstadoResena;
+import itson.ecommerce.persistencia.entidades.Producto;
 import itson.ecommerce.persistencia.entidades.Resena;
+import itson.ecommerce.persistencia.exceptions.PersistenciaException;
 import java.util.List;
 
 /**
@@ -19,4 +21,5 @@ public interface IResenasDAO {
     Resena obtenerPorId(Long id);   
     void actualizar(Resena resena);    
     void eliminar(Long id);
+   public Resena crearResena(Cliente cliente, Producto producto, int estrellas, String comentario, EstadoResena estado) throws PersistenciaException;
 }

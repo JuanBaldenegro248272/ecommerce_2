@@ -50,7 +50,7 @@ public class Album implements Serializable {
     
     @ElementCollection
     @CollectionTable(name = "canciones", joinColumns = @JoinColumn(name = "id_album"))
-    @Column(name = "cancion", length = 20, nullable = false)
+    @Column(name = "cancion", length = 100, nullable = false)
     private List<String> canciones;
     
     @OneToMany(mappedBy = "album")

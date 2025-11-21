@@ -4,6 +4,8 @@
  */
 package itson.ecommerce.persistencia.interfaces;
 
+import itson.ecommerce.persistencia.entidades.Cliente;
+import itson.ecommerce.persistencia.entidades.EstadoPedido;
 import itson.ecommerce.persistencia.entidades.Pedido;
 import itson.ecommerce.persistencia.exceptions.PersistenciaException;
 import java.util.List;
@@ -15,4 +17,5 @@ import java.util.List;
 public interface IPedidoDAO {
     public List<Pedido> obtenerTodos() throws PersistenciaException;
     public Pedido actualizarEstado(Long idPedido, String nuevoEstado) throws PersistenciaException;
+    public Pedido crearPedido(Cliente cliente, float total, EstadoPedido estado) throws PersistenciaException;
 }
