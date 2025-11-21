@@ -21,7 +21,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet(name = "AlbumesServlet", urlPatterns = {"/admin/albumes/*"})
+@WebServlet(name = "AlbumesServlet", urlPatterns = {"/admin/albums"})
 public class AlbumesServlet extends HttpServlet {
 
     IPersistencia fachada = new Persistencia();

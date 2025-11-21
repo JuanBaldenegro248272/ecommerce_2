@@ -7,6 +7,7 @@ package itson.ecommerce.persistencia.implementaciones;
 import itson.ecommerce.persistencia.dtos.AlbumDTO;
 import itson.ecommerce.persistencia.dtos.EditarProductoDTO;
 import itson.ecommerce.persistencia.dtos.GeneroDTO;
+import itson.ecommerce.persistencia.dtos.NuevaResenaDTO;
 import itson.ecommerce.persistencia.dtos.NuevoProductoDTO;
 import itson.ecommerce.persistencia.dtos.PedidoDTO;
 import itson.ecommerce.persistencia.dtos.ProductoListaDTO;
@@ -237,7 +238,7 @@ public class Persistencia implements IPersistencia {
     @Override
     public List<Artista> consultarArtistasTodos() throws PersistenciaException {
         try {
-            return this.artistaDAO.consultarTodos();
+            return this.artistaDAO.obtenerTodos();
         } catch (Exception e) {
             throw new PersistenciaException("Error al consultar artistas", e);
         }

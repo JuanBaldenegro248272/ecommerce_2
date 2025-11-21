@@ -7,11 +7,13 @@ package itson.ecommerce.persistencia.interfaces;
 import itson.ecommerce.persistencia.dtos.AlbumDTO;
 import itson.ecommerce.persistencia.dtos.EditarProductoDTO;
 import itson.ecommerce.persistencia.dtos.GeneroDTO;
+import itson.ecommerce.persistencia.dtos.NuevaResenaDTO;
 import itson.ecommerce.persistencia.dtos.NuevoProductoDTO;
 import itson.ecommerce.persistencia.dtos.PedidoDTO;
 import itson.ecommerce.persistencia.dtos.ProductoListaDTO;
 import itson.ecommerce.persistencia.dtos.ResenaListaDTO;
 import itson.ecommerce.persistencia.entidades.Artista;
+import itson.ecommerce.persistencia.entidades.Resena;
 import itson.ecommerce.persistencia.entidades.Usuario;
 import itson.ecommerce.persistencia.exceptions.PersistenciaException;
 import java.util.List;
@@ -36,9 +38,7 @@ public interface IPersistencia {
 
     public abstract void aprobarResena(Long id) throws PersistenciaException;
 
-    public boolean eliminarResena(Long idResena) throws PersistenciaException;
-
-    public Resena crearResena(NuevaResenaDTO dto) throws PersistenciaException;
+    public void eliminarResena(Long idResena) throws PersistenciaException;
     
     public abstract EditarProductoDTO obtenerProductoPorId(Long id) throws PersistenciaException;
 

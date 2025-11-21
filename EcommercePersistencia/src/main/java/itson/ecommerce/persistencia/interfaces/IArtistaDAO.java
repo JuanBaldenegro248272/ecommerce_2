@@ -12,5 +12,6 @@ import java.util.List;
  * @author victoria
  */
 public interface IArtistaDAO {
-    List<Artista> consultarTodos();
+    public abstract List<Artista> obtenerTodos();
+    public abstract Artista obtenerPorId(Long id);
 }

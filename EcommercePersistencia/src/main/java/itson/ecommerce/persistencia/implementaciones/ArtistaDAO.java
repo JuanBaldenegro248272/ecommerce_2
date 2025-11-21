@@ -16,14 +16,41 @@ import javax.persistence.TypedQuery;
  * @author victoria
  */
 public class ArtistaDAO implements IArtistaDAO{
+    
     @Override
-    public List<Artista> consultarTodos() {
-        EntityManager em = ManejadorConexiones.getEntityManager();
+    public List<Artista> obtenerTodos() {
+        EntityManager em = null;
         try {
-            TypedQuery<Artista> query = em.createQuery("SELECT a FROM Artista a ORDER BY a.nombreArtistico ASC", Artista.class);
+            em = ManejadorConexiones.getEntityManager();
+            
+            String jpql = "SELECT a FROM Artista a ORDER BY a.nombreArtistico ASC";
+            TypedQuery<Artista> query = em.createQuery(jpql, Artista.class);
+            
             return query.getResultList();
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw new RuntimeException("Error al obtener artistas", ex);
         } finally {
-            if (em != null) em.close();
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
+        }
+    }
+    
+    @Override
+    public Artista obtenerPorId(Long id) {
+        EntityManager em = null;
+        try {
+            em = ManejadorConexiones.getEntityManager();
+            return em.find(Artista.class, id);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw new RuntimeException("Error al obtener artista", ex);
+        } finally {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
         }
     }
 }
