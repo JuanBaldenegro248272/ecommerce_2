@@ -119,7 +119,7 @@ public class AlbumesServlet extends HttpServlet {
             ex.printStackTrace();
         }
 
-        request.getRequestDispatcher("/albums-admin.jsp").forward(request, response);
+        request.getRequestDispatcher("/albumes-admin.jsp").forward(request, response);
     }
 
     private void mostrarFormularioNuevo(HttpServletRequest request, HttpServletResponse response)

@@ -35,7 +35,7 @@
                     <h1>Álbumes</h1>
                     <p>Administra los metadatos de los álbumes</p>
                 </div>
-                <a href="${pageContext.request.contextPath}/admin/albumes/nuevo" class="btn-primary">
+                <a href="${pageContext.request.contextPath}/admin/albums/nuevo" class="btn-primary">
                     + Nuevo Álbum
                 </a>
             </div>
@@ -50,7 +50,6 @@
                 <button type="submit">Buscar</button>
             </form>
 
-            <%-- Tabla de Maquetado --%>
             <div class="pedidos-table-container" style="background-color: white;">
                 <table class="pedidos-table">
                     <thead>
