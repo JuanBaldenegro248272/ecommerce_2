@@ -29,50 +29,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="cart-row">
-                            <td>
-                                <div class="cart-item">
-                                    <button class="remove-btn">✕</button>
-                                    <img src="albumcovers/folklore.png" alt="folklore" class="cart-thumb">
-                                    <div class="product-info">
-                                        <p class="product-name">folklore</p>
-                                        <p class="product-artist">Taylor Swift</p>
-                                        <span class="format-icon"> vinyl </span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="price">$40.00</td>
-                            <td>
-                                <div class="qty">
-                                    <button class="qty-btn">−</button>
-                                    <input class="qty-input" type="text" value="1" readonly>
-                                    <button class="qty-btn">+</button>
-                                </div>
-                            </td>
-                            <td class="subtotal">$40.00</td>
-                        </tr>
-                        <tr class="cart-row">
-                            <td>
-                                <div class="cart-item">
-                                    <button class="remove-btn">✕</button>
-                                    <img src="albumcovers/nevermind.png" alt="Nevermind" class="cart-thumb">
-                                    <div class="product-info">
-                                        <p class="product-name">NEVERMIND</p>
-                                        <p class="product-artist">NIRVANA</p>
-                                        <span class="format-icon">vinyl</span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="price">$20.00</td>
-                            <td>
-                                <div class="qty">
-                                    <button class="qty-btn">−</button>
-                                    <input class="qty-input" type="text" value="2" readonly>
-                                    <button class="qty-btn">+</button>
-                                </div>
-                            </td>
-                            <td class="subtotal">$40.00</td>
-                        </tr>
                     </tbody>
                 </table>
                 
@@ -89,7 +45,7 @@
                 <h3>CART TOTAL</h3>
                 <div class="summary-line">
                     <span>SUBTOTAL</span>
-                    <span class="summary-value">$80.00</span>
+                    <span class="summary-value">$0.00</span>
                 </div>
                 <div class="summary-line">
                     <span>SHIPPING</span>
@@ -97,16 +53,18 @@
                 </div>
                 <div class="summary-total">
                     <span>TOTAL</span>
-                    <span class="total-value">$80.00</span>
+                    <span class="total-value">$0.00</span>
                 </div>
                 <div class="summary-actions">
-                    <button class="btn-return">RETURN TO SHOP</button>
+                    <button class="btn-return" onclick="window.location.href='store.html'">RETURN TO SHOP</button>
                     <button class="btn-checkout">PROCEED TO CHECKOUT</button>
                 </div>
             </aside>
         </section>
         
         <%@ include file="/WEB-INF/fragments/footer.jspf" %>
+        
+        <script src="js/cart-logic.js"></script>
         
     </body>
 </html>
