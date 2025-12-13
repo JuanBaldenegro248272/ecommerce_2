@@ -1,79 +1,56 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package itson.ecommerce.persistencia.interfaces;
 
-import itson.ecommerce.persistencia.dtos.AlbumDTO;
-import itson.ecommerce.persistencia.dtos.ArtistaSimpleDTO;
-import itson.ecommerce.persistencia.dtos.EditarProductoDTO;
-import itson.ecommerce.persistencia.dtos.GeneroDTO;
-import itson.ecommerce.persistencia.dtos.NuevoAlbumDTO;
-import itson.ecommerce.persistencia.dtos.NuevoProductoDTO;
-import itson.ecommerce.persistencia.dtos.PedidoDTO;
-import itson.ecommerce.persistencia.dtos.ProductoListaDTO;
-import itson.ecommerce.persistencia.dtos.ResenaListaDTO;
-import itson.ecommerce.persistencia.entidades.Artista;
-import itson.ecommerce.persistencia.entidades.Usuario;
+import itson.ecommerce.persistencia.dtos.*;
+import itson.ecommerce.persistencia.entidades.*;
 import itson.ecommerce.persistencia.exceptions.PersistenciaException;
 import java.util.List;
 
-/**
- *
- * @author Dana Chavez
- */
 public interface IPersistencia {
 
-    public abstract NuevoProductoDTO crearProducto(NuevoProductoDTO dto) throws PersistenciaException;
+    // --- MÉTODOS DEL CARRITO (LOS QUE TE FALTABAN) ---
+    public Carrito crearCarrito(Carrito c) throws PersistenciaException;
+    public Carrito buscarCarritoPorId(Long id) throws PersistenciaException;
+    public Producto buscarProductoPorIdEntity(Long id) throws PersistenciaException;
+    public void agregarDetalleCarrito(DetalleCarrito d) throws PersistenciaException;
+    public void actualizarDetalleCarrito(DetalleCarrito d) throws PersistenciaException; // <--- AQUÍ ESTÁ EL QUE FALLABA
+    public void eliminarDetalleCarrito(Long idDetalle) throws PersistenciaException;
+    public void actualizarCarrito(Carrito c) throws PersistenciaException;
 
-    public abstract List<ProductoListaDTO> obtenerTodosProductos() throws PersistenciaException;
+    // --- PRODUCTOS ---
+    public NuevoProductoDTO crearProducto(NuevoProductoDTO dto) throws PersistenciaException;
+    public List<ProductoListaDTO> obtenerTodosProductos() throws PersistenciaException;
+    public List<ProductoListaDTO> buscarProductos(String termino) throws PersistenciaException;
+    public void eliminarProducto(Long id) throws PersistenciaException;
+    public EditarProductoDTO obtenerProductoPorId(Long id) throws PersistenciaException;
+    public void actualizarProducto(EditarProductoDTO dto) throws PersistenciaException;
 
-    public abstract List<ProductoListaDTO> buscarProductos(String termino) throws PersistenciaException;
-
-    public abstract void eliminarProducto(Long id) throws PersistenciaException;
-
-    public abstract List<ResenaListaDTO> obtenerTodasResenas() throws PersistenciaException;
-
-    public abstract List<ResenaListaDTO> buscarResenas(String termino, String estado) throws PersistenciaException;
-
-    public abstract void aprobarResena(Long id) throws PersistenciaException;
-
-    public void eliminarResena(Long idResena) throws PersistenciaException;
+    // --- RESEÑAS ---
+    public List<ResenaListaDTO> obtenerTodasResenas() throws PersistenciaException;
+    public List<ResenaListaDTO> buscarResenas(String termino, String estado) throws PersistenciaException;
+    public void aprobarResena(Long id) throws PersistenciaException;
+    public void eliminarResena(Long id) throws PersistenciaException;
     
-    public abstract EditarProductoDTO obtenerProductoPorId(Long id) throws PersistenciaException;
-
-    public abstract void actualizarProducto(EditarProductoDTO dto) throws PersistenciaException;
-
+    // --- USUARIOS ---
     public Usuario buscarPorCorreo(String correo) throws PersistenciaException;
-
     public Usuario guardar(Usuario usuario) throws PersistenciaException;
 
-    public abstract List<PedidoDTO> obtenerTodosPedidos() throws PersistenciaException;
-
-    List<Artista> consultarArtistasTodos() throws PersistenciaException;
-
-    List<AlbumDTO> buscarAlbumes(String termino) throws PersistenciaException;
-
-    List<AlbumDTO> obtenerTodosAlbumes() throws PersistenciaException;
-
-    AlbumDTO consultarAlbum(Long id) throws PersistenciaException;
-
-    List<ArtistaSimpleDTO> obtenerTodosArtistas() throws PersistenciaException;
-    
-    void crearAlbum(NuevoAlbumDTO dto) throws PersistenciaException;
-
-    AlbumDTO actualizarAlbum(AlbumDTO dto) throws PersistenciaException;
-
-    boolean eliminarAlbum(Long id) throws PersistenciaException;
-
+    // --- PEDIDOS ---
+    public List<PedidoDTO> obtenerTodosPedidos() throws PersistenciaException;
     public PedidoDTO actualizarEstadoPedido(Long idPedido, String nuevoEstado) throws PersistenciaException;
 
-    public abstract List<GeneroDTO> obtenerTodosGeneros() throws PersistenciaException;
+    // --- ALBUMES Y ARTISTAS ---
+    List<Artista> consultarArtistasTodos() throws PersistenciaException;
+    List<AlbumDTO> buscarAlbumes(String termino) throws PersistenciaException;
+    List<AlbumDTO> obtenerTodosAlbumes() throws PersistenciaException;
+    AlbumDTO consultarAlbum(Long id) throws PersistenciaException;
+    List<ArtistaSimpleDTO> obtenerTodosArtistas() throws PersistenciaException;
+    void crearAlbum(NuevoAlbumDTO dto) throws PersistenciaException;
+    AlbumDTO actualizarAlbum(AlbumDTO dto) throws PersistenciaException;
+    boolean eliminarAlbum(Long id) throws PersistenciaException;
 
-    public abstract void crearGenero(String nombre) throws PersistenciaException;
-
-    public abstract void actualizarGenero(Long id, String nombre) throws PersistenciaException;
-
-    public abstract void eliminarGenero(Long id) throws PersistenciaException;
-
+    // --- GÉNEROS ---
+    public List<GeneroDTO> obtenerTodosGeneros() throws PersistenciaException;
+    public void crearGenero(String nombre) throws PersistenciaException;
+    public void actualizarGenero(Long id, String nombre) throws PersistenciaException;
+    public void eliminarGenero(Long id) throws PersistenciaException;
 }

@@ -1,51 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package itson.ecommerce.persistencia.implementaciones;
 
-import itson.ecommerce.persistencia.dtos.AlbumDTO;
-import itson.ecommerce.persistencia.dtos.ArtistaSimpleDTO;
-import itson.ecommerce.persistencia.dtos.EditarProductoDTO;
-import itson.ecommerce.persistencia.dtos.GeneroDTO;
-import itson.ecommerce.persistencia.dtos.NuevoAlbumDTO;
-import itson.ecommerce.persistencia.dtos.NuevoProductoDTO;
-import itson.ecommerce.persistencia.dtos.PedidoDTO;
-import itson.ecommerce.persistencia.dtos.ProductoListaDTO;
-import itson.ecommerce.persistencia.dtos.ResenaListaDTO;
-import itson.ecommerce.persistencia.entidades.Album;
-import itson.ecommerce.persistencia.entidades.Artista;
-import itson.ecommerce.persistencia.entidades.EstadoResena;
-import itson.ecommerce.persistencia.entidades.Genero;
-import itson.ecommerce.persistencia.entidades.GeneroAlbum;
-import itson.ecommerce.persistencia.entidades.Pedido;
-import itson.ecommerce.persistencia.entidades.Producto;
-import itson.ecommerce.persistencia.entidades.Resena;
-import itson.ecommerce.persistencia.entidades.Usuario;
+import itson.ecommerce.persistencia.dtos.*;
+import itson.ecommerce.persistencia.entidades.*;
 import itson.ecommerce.persistencia.exceptions.PersistenciaException;
-import itson.ecommerce.persistencia.interfaces.IAlbumDAO;
-import itson.ecommerce.persistencia.interfaces.IArtistaDAO;
-import itson.ecommerce.persistencia.interfaces.IGenerosDAO;
-import itson.ecommerce.persistencia.interfaces.IPedidoDAO;
-import itson.ecommerce.persistencia.interfaces.IPersistencia;
-import itson.ecommerce.persistencia.interfaces.IProductosDAO;
-import itson.ecommerce.persistencia.interfaces.IResenasDAO;
-import itson.ecommerce.persistencia.mapper.AlbumMapper;
-import itson.ecommerce.persistencia.interfaces.IUsuarioDAO;
-import itson.ecommerce.persistencia.mapper.GeneroMapper;
-import itson.ecommerce.persistencia.mapper.PedidoMapper;
-import itson.ecommerce.persistencia.mapper.ProductoMapper;
-import itson.ecommerce.persistencia.mapper.ResenaMapper;
-import itson.ecommerce.persistencia.utils.ManejadorConexiones;
+import itson.ecommerce.persistencia.interfaces.*;
+import itson.ecommerce.persistencia.mapper.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.persistence.EntityManager;
 
-/**
- *
- * @author Dana Chavez
- */
 public class Persistencia implements IPersistencia {
 
     private IProductosDAO productosDAO;
@@ -55,6 +18,7 @@ public class Persistencia implements IPersistencia {
     private IAlbumDAO albumDAO;
     private IArtistaDAO artistaDAO;
     private IGenerosDAO generosDAO;
+    private CarritosDAO carritosDAO; 
 
     public Persistencia() {
         this.productosDAO = new ProductosDAO();
@@ -64,7 +28,52 @@ public class Persistencia implements IPersistencia {
         this.artistaDAO = new ArtistaDAO();
         this.usuarioDAO = new UsuarioDAO();
         this.generosDAO = new GenerosDAO();
+        this.carritosDAO = new CarritosDAO(); 
     }
+
+    // --- MÉTODOS DEL CARRITO ---
+
+    @Override
+    public Carrito crearCarrito(Carrito c) throws PersistenciaException {
+        return carritosDAO.crear(c);
+    }
+
+    @Override
+    public Carrito buscarCarritoPorId(Long id) throws PersistenciaException {
+        return carritosDAO.buscarPorId(id);
+    }
+
+    @Override
+    public void agregarDetalleCarrito(DetalleCarrito d) throws PersistenciaException {
+        carritosDAO.guardarDetalle(d);
+    }
+
+    @Override
+    public void actualizarDetalleCarrito(DetalleCarrito d) throws PersistenciaException {
+        carritosDAO.actualizarDetalle(d);
+    }
+
+    @Override
+    public void eliminarDetalleCarrito(Long id) throws PersistenciaException {
+        carritosDAO.eliminarDetalle(id);
+    }
+
+    @Override
+    public void actualizarCarrito(Carrito c) throws PersistenciaException {
+        carritosDAO.actualizar(c);
+    }
+
+    @Override
+    public Producto buscarProductoPorIdEntity(Long id) throws PersistenciaException {
+        // Necesitamos la entidad directa para relacionarla con el carrito
+        try {
+             return productosDAO.obtenerPorId(id);
+        } catch(Exception e) {
+             throw new PersistenciaException("Error al obtener entidad producto", e);
+        }
+    }
+
+    // --- MÉTODOS DE PRODUCTOS, ÁLBUMES, USUARIOS, ETC. ---
 
     @Override
     public NuevoProductoDTO crearProducto(NuevoProductoDTO dto) throws PersistenciaException {
@@ -73,49 +82,43 @@ public class Persistencia implements IPersistencia {
 
     @Override
     public List<ProductoListaDTO> obtenerTodosProductos() throws PersistenciaException {
-        try {
-            List<Producto> productos = productosDAO.obtenerTodos();
-            return productos.stream()
+        try { 
+            return productosDAO.obtenerTodos().stream()
                     .map(ProductoMapper::toListaDTO)
-                    .collect(Collectors.toList());
-        } catch (Exception ex) {
-            throw new PersistenciaException("Error al obtener productos", ex);
+                    .collect(Collectors.toList()); 
+        } catch (Exception ex) { 
+            throw new PersistenciaException("Error al obtener productos", ex); 
         }
     }
 
     @Override
     public List<ProductoListaDTO> buscarProductos(String termino) throws PersistenciaException {
-        try {
-            List<Producto> productos = productosDAO.buscarPorNombre(termino);
-            return productos.stream()
+        try { 
+            return productosDAO.buscarPorNombre(termino).stream()
                     .map(ProductoMapper::toListaDTO)
-                    .collect(Collectors.toList());
-        } catch (Exception ex) {
-            throw new PersistenciaException("Error al buscar productos", ex);
+                    .collect(Collectors.toList()); 
+        } catch (Exception ex) { 
+            throw new PersistenciaException("Error al buscar productos", ex); 
         }
     }
 
     @Override
     public void eliminarProducto(Long id) throws PersistenciaException {
-        try {
-            productosDAO.eliminar(id);
-        } catch (Exception ex) {
-            System.out.println("ERROR en Persistencia.eliminarProducto: " + ex.getMessage());
-            throw new PersistenciaException("Error al eliminar producto", ex);
+        try { 
+            productosDAO.eliminar(id); 
+        } catch (Exception ex) { 
+            throw new PersistenciaException("Error al eliminar producto", ex); 
         }
     }
 
     @Override
     public List<ResenaListaDTO> obtenerTodasResenas() throws PersistenciaException {
-        try {
-            List<Resena> resenas = resenasDAO.obtenerTodas();
-            List<ResenaListaDTO> dtos = resenas.stream()
+        try { 
+            return resenasDAO.obtenerTodas().stream()
                     .map(ResenaMapper::toListaDTO)
-                    .collect(Collectors.toList());
-            return dtos;
-        } catch (Exception ex) {
-            System.out.println("ERROR en Persistencia: " + ex.getMessage());
-            throw new PersistenciaException("Error al obtener reseñas", ex);
+                    .collect(Collectors.toList()); 
+        } catch (Exception ex) { 
+            throw new PersistenciaException("Error al obtener reseñas", ex); 
         }
     }
 
@@ -123,307 +126,220 @@ public class Persistencia implements IPersistencia {
     public List<ResenaListaDTO> buscarResenas(String termino, String estadoStr) throws PersistenciaException {
         try {
             EstadoResena estado = null;
-            if (estadoStr != null && !estadoStr.trim().isEmpty()) {
-                try {
-                    estado = EstadoResena.valueOf(estadoStr);
-                } catch (IllegalArgumentException e) {
-
-                }
+            if (estadoStr != null && !estadoStr.trim().isEmpty()) { 
+                try { 
+                    estado = EstadoResena.valueOf(estadoStr); 
+                } catch (Exception e) {
+                    // Si el estado no es válido, se ignora
+                } 
             }
-            List<Resena> resenas = resenasDAO.buscarPorFiltros(termino, estado);
-            List<ResenaListaDTO> dtos = resenas.stream()
+            return resenasDAO.buscarPorFiltros(termino, estado).stream()
                     .map(ResenaMapper::toListaDTO)
                     .collect(Collectors.toList());
-            return dtos;
-        } catch (Exception ex) {
-            System.out.println("ERROR en Persistencia: " + ex.getMessage());
-            throw new PersistenciaException("Error al buscar reseñas", ex);
+        } catch (Exception ex) { 
+            throw new PersistenciaException("Error al buscar reseñas", ex); 
         }
     }
 
     @Override
     public void aprobarResena(Long id) throws PersistenciaException {
-        try {
-            Resena resena = resenasDAO.obtenerPorId(id);
-            resena.setEstado(EstadoResena.APROBADA);
-            resenasDAO.actualizar(resena);
-
-            System.out.println("Reseña aprobada en persistencia");
-        } catch (Exception ex) {
-            System.out.println("ERROR en Persistencia: " + ex.getMessage());
-            throw new PersistenciaException("Error al aprobar reseña", ex);
+        try { 
+            Resena r = resenasDAO.obtenerPorId(id); 
+            r.setEstado(EstadoResena.APROBADA); 
+            resenasDAO.actualizar(r); 
+        } catch (Exception ex) { 
+            throw new PersistenciaException("Error al aprobar reseña", ex); 
         }
     }
 
     @Override
     public void eliminarResena(Long id) throws PersistenciaException {
-        try {
-            resenasDAO.eliminar(id);
-        } catch (Exception ex) {
-            System.out.println("ERROR en Persistencia: " + ex.getMessage());
-            throw new PersistenciaException("Error al eliminar reseña", ex);
+        try { 
+            resenasDAO.eliminar(id); 
+        } catch (Exception ex) { 
+            throw new PersistenciaException("Error al eliminar reseña", ex); 
         }
     }
 
     @Override
     public EditarProductoDTO obtenerProductoPorId(Long id) throws PersistenciaException {
-        try {
-
-            Producto producto = productosDAO.obtenerPorId(id);
-            EditarProductoDTO dto = ProductoMapper.toEditarDTO(producto);
-
-            return dto;
-        } catch (Exception ex) {
-            System.out.println("ERROR en Persistencia.obtenerProductoPorId: " + ex.getMessage());
-            throw new PersistenciaException("Error al obtener producto", ex);
+        try { 
+            return ProductoMapper.toEditarDTO(productosDAO.obtenerPorId(id)); 
+        } catch (Exception ex) { 
+            throw new PersistenciaException("Error al obtener producto", ex); 
         }
     }
 
     @Override
     public Usuario buscarPorCorreo(String correo) throws PersistenciaException {
-        try {
-
-            return this.usuarioDAO.buscarPorCorreo(correo);
-
-        } catch (Exception e) {
-            throw new PersistenciaException("Error al buscar por correo: " + e.getMessage());
-        }
+        return usuarioDAO.buscarPorCorreo(correo);
     }
 
+    @Override
     public Usuario guardar(Usuario usuario) throws PersistenciaException {
-        try {
-
-            return this.usuarioDAO.guardar(usuario);
-
-        } catch (Exception e) {
-            throw new PersistenciaException("Error al guardar usuario: " + e.getMessage());
-
-        }
+        return usuarioDAO.guardar(usuario);
     }
 
     @Override
     public void actualizarProducto(EditarProductoDTO dto) throws PersistenciaException {
-        try {
-            Producto producto = productosDAO.obtenerPorId(dto.getId());
-
-            ProductoMapper.updateEntity(producto, dto);
-
-            productosDAO.actualizar(producto);
-
-            System.out.println("Producto actualizado en persistencia");
-        } catch (Exception ex) {
-            System.out.println("ERROR en Persistencia.actualizarProducto: " + ex.getMessage());
-            throw new PersistenciaException("Error al actualizar producto", ex);
+        try { 
+            Producto p = productosDAO.obtenerPorId(dto.getId()); 
+            ProductoMapper.updateEntity(p, dto); 
+            productosDAO.actualizar(p); 
+        } catch (Exception ex) { 
+            throw new PersistenciaException("Error al actualizar producto", ex); 
         }
     }
 
     @Override
     public List<PedidoDTO> obtenerTodosPedidos() throws PersistenciaException {
-
-        try {
-            List<Pedido> pedidos = pedidosDAO.obtenerTodos();
-            return pedidos.stream().map(PedidoMapper::toDTO).collect(Collectors.toList());
-        } catch (Exception ex) {
-            throw new PersistenciaException("Error al obtener pedidos ", ex);
+        try { 
+            return pedidosDAO.obtenerTodos().stream()
+                    .map(PedidoMapper::toDTO)
+                    .collect(Collectors.toList()); 
+        } catch (Exception ex) { 
+            throw new PersistenciaException("Error al obtener pedidos", ex); 
         }
-
     }
 
     @Override
     public PedidoDTO actualizarEstadoPedido(Long idPedido, String nuevoEstado) throws PersistenciaException {
-        try {
-            Pedido pedidoActualizado = pedidosDAO.actualizarEstado(idPedido, nuevoEstado);
-            return PedidoMapper.toDTO(pedidoActualizado);
-        } catch (Exception e) {
-            throw new PersistenciaException("Error al actualizar el pedido", e);
+        try { 
+            Pedido p = pedidosDAO.actualizarEstado(idPedido, nuevoEstado); 
+            return PedidoMapper.toDTO(p); 
+        } catch (Exception ex) { 
+            throw new PersistenciaException("Error al actualizar estado pedido", ex); 
         }
     }
 
     @Override
     public List<Artista> consultarArtistasTodos() throws PersistenciaException {
-        try {
-            return this.artistaDAO.obtenerTodos();
-        } catch (Exception e) {
-            throw new PersistenciaException("Error al consultar artistas", e);
+        try { 
+            return artistaDAO.obtenerTodos(); 
+        } catch (Exception ex) { 
+            throw new PersistenciaException("Error al consultar artistas", ex); 
         }
     }
 
     @Override
     public List<AlbumDTO> obtenerTodosAlbumes() throws PersistenciaException {
-        try {
-            List<Album> albumes = albumDAO.consultarTodos();
-            return albumes.stream().map(AlbumMapper::toDTO).toList();
-        } catch (Exception e) {
-            throw new PersistenciaException("No se pudieron obtener los albumes", e);
+        try { 
+            return albumDAO.consultarTodos().stream()
+                    .map(AlbumMapper::toDTO)
+                    .collect(Collectors.toList()); 
+        } catch (Exception ex) { 
+            throw new PersistenciaException("Error al obtener álbumes", ex); 
         }
     }
 
     @Override
     public List<AlbumDTO> buscarAlbumes(String termino) throws PersistenciaException {
         try {
-
-            List<Album> albumEntidad = albumDAO.buscar(termino);
-            List<AlbumDTO> albumDTO = new ArrayList<>();
-            for (Album album : albumEntidad) {
-                AlbumDTO dto = AlbumMapper.toDTO(album);
-                albumDTO.add(dto);
+            List<AlbumDTO> list = new ArrayList<>();
+            for(Album a : albumDAO.buscar(termino)) {
+                list.add(AlbumMapper.toDTO(a));
             }
-            return albumDTO;
-        } catch (Exception e) {
-            throw new PersistenciaException("Error al buscar álbumes", e);
+            return list;
+        } catch (Exception ex) { 
+            throw new PersistenciaException("Error al buscar álbumes", ex); 
         }
     }
 
     @Override
     public AlbumDTO consultarAlbum(Long id) throws PersistenciaException {
-        try {
-            Album album = albumDAO.consultar(id);
-            return AlbumMapper.toDTO(album);
-        } catch (Exception e) {
-            throw new PersistenciaException("Error al consultar álbum", e);
+        try { 
+            return AlbumMapper.toDTO(albumDAO.consultar(id)); 
+        } catch (Exception ex) { 
+            throw new PersistenciaException("Error al consultar álbum", ex); 
         }
     }
 
     @Override
     public AlbumDTO actualizarAlbum(AlbumDTO dto) throws PersistenciaException {
-        try {
-            Album album = AlbumMapper.toEntity(dto);
-
-            Album actualizado = albumDAO.actualizar(album);
-            return AlbumMapper.toDTO(actualizado);
-        } catch (Exception e) {
-            throw new PersistenciaException("Error al actualizar álbum", e);
+        try { 
+            Album a = AlbumMapper.toEntity(dto); 
+            return AlbumMapper.toDTO(albumDAO.actualizar(a)); 
+        } catch (Exception ex) { 
+            throw new PersistenciaException("Error al actualizar álbum", ex); 
         }
     }
 
     @Override
     public boolean eliminarAlbum(Long id) throws PersistenciaException {
-        try {
-            return this.albumDAO.eliminar(id);
-        } catch (Exception e) {
-            throw new PersistenciaException("Error al eliminar álbum", e);
+        try { 
+            return albumDAO.eliminar(id); 
+        } catch (Exception ex) { 
+            throw new PersistenciaException("Error al eliminar álbum", ex); 
         }
     }
 
     @Override
     public List<GeneroDTO> obtenerTodosGeneros() throws PersistenciaException {
-        try {
-
-            List<Genero> generos = generosDAO.obtenerTodos();
-            List<GeneroDTO> dtos = generos.stream()
+        try { 
+            return generosDAO.obtenerTodos().stream()
                     .map(GeneroMapper::toDTO)
-                    .collect(Collectors.toList());
-
-            return dtos;
-        } catch (Exception ex) {
-            System.out.println("ERROR en Persistencia: " + ex.getMessage());
-            throw new PersistenciaException("Error al obtener géneros", ex);
+                    .collect(Collectors.toList()); 
+        } catch (Exception ex) { 
+            throw new PersistenciaException("Error al obtener géneros", ex); 
         }
     }
 
     @Override
     public void crearGenero(String nombre) throws PersistenciaException {
-        try {
-
-            Genero genero = new Genero();
-            genero.setNombre(nombre);
-
-            generosDAO.crear(genero);
-
-        } catch (Exception ex) {
-            System.out.println("ERROR en Persistencia: " + ex.getMessage());
-            throw new PersistenciaException("Error al crear género", ex);
+        try { 
+            Genero g = new Genero(); 
+            g.setNombre(nombre); 
+            generosDAO.crear(g); 
+        } catch (Exception ex) { 
+            throw new PersistenciaException("Error al crear género", ex); 
         }
     }
 
     @Override
     public void actualizarGenero(Long id, String nombre) throws PersistenciaException {
-        try {
-            Genero genero = generosDAO.obtenerPorId(id);
-            genero.setNombre(nombre);
-
-            generosDAO.actualizar(genero);
-
-        } catch (Exception ex) {
-            System.out.println("ERROR en Persistencia: " + ex.getMessage());
-            throw new PersistenciaException("Error al actualizar género", ex);
+        try { 
+            Genero g = generosDAO.obtenerPorId(id); 
+            g.setNombre(nombre); 
+            generosDAO.actualizar(g); 
+        } catch (Exception ex) { 
+            throw new PersistenciaException("Error al actualizar género", ex); 
         }
     }
 
     @Override
     public void eliminarGenero(Long id) throws PersistenciaException {
-        try {
-            generosDAO.eliminar(id);
-        } catch (Exception ex) {
-            System.out.println("ERROR en Persistencia: " + ex.getMessage());
-            throw new PersistenciaException("Error al eliminar género", ex);
+        try { 
+            generosDAO.eliminar(id); 
+        } catch (Exception ex) { 
+            throw new PersistenciaException("Error al eliminar género", ex); 
         }
     }
 
     @Override
     public List<ArtistaSimpleDTO> obtenerTodosArtistas() throws PersistenciaException {
-        try {
-            List<Artista> artistas = artistaDAO.obtenerTodos();
-            List<ArtistaSimpleDTO> dtos = artistas.stream()
+        try { 
+            return artistaDAO.obtenerTodos().stream()
                     .map(a -> new ArtistaSimpleDTO(a.getId(), a.getNombreArtistico()))
-                    .collect(Collectors.toList());
-
-            return dtos;
-        } catch (Exception ex) {
-            throw new PersistenciaException("Error al obtener artistas", ex);
+                    .collect(Collectors.toList()); 
+        } catch (Exception ex) { 
+            throw new PersistenciaException("Error al obtener artistas simples", ex); 
         }
     }
 
     @Override
     public void crearAlbum(NuevoAlbumDTO dto) throws PersistenciaException {
         try {
-            Artista artista = artistaDAO.obtenerPorId(dto.getIdArtista());
-            if (artista == null) {
-                throw new IllegalArgumentException("Artista no encontrado");
-            }
-
-            Album album = new Album();
-            album.setNombre(dto.getNombre());
-            album.setDescripcion(dto.getDescripcion());
-            album.setFechaLanzamiento(dto.getFechaLanzamiento());
-            album.setImagenUrl(dto.getImagenUrl());
-            album.setArtista(artista);
-            album.setCanciones(dto.getCanciones());
-
-            albumDAO.crear(album, artista);
-
-            if (dto.getIdsGeneros() != null && !dto.getIdsGeneros().isEmpty()) {
-                EntityManager em = null;
-                try {
-                    em = ManejadorConexiones.getEntityManager();
-                    em.getTransaction().begin();
-
-                    for (Long idGenero : dto.getIdsGeneros()) {
-                        Genero genero = em.find(Genero.class, idGenero);
-                        if (genero != null) {
-                            GeneroAlbum generoAlbum = new GeneroAlbum();
-                            generoAlbum.setGenero(genero);
-                            generoAlbum.setAlbum(album);
-                            em.persist(generoAlbum);
-                        }
-                    }
-
-                    em.getTransaction().commit();
-                } catch (Exception ex) {
-                    if (em != null && em.getTransaction().isActive()) {
-                        em.getTransaction().rollback();
-                    }
-                    throw ex;
-                } finally {
-                    if (em != null && em.isOpen()) {
-                        em.close();
-                    }
-                }
-            }
-
-        } catch (Exception ex) {
-            System.out.println("ERROR en Persistencia: " + ex.getMessage());
-            throw new PersistenciaException("Error al crear álbum", ex);
+            Artista a = artistaDAO.obtenerPorId(dto.getIdArtista());
+            Album al = new Album(); 
+            al.setNombre(dto.getNombre()); 
+            al.setDescripcion(dto.getDescripcion()); 
+            al.setFechaLanzamiento(dto.getFechaLanzamiento()); 
+            al.setImagenUrl(dto.getImagenUrl()); 
+            al.setArtista(a); 
+            al.setCanciones(dto.getCanciones());
+            albumDAO.crear(al, a);
+        } catch (Exception ex) { 
+            throw new PersistenciaException("Error al crear álbum", ex); 
         }
     }
 }

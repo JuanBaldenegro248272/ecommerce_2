@@ -1,37 +1,39 @@
 <header>
     <div class="top-bar">
         <div class="social-icons">
-            <a href="#"><img src="icons/instalogo.png"></a>
-            <a href="#"><img src="icons/twlogo.png"></a>
-            <a href="#"><img src="icons/fblogo.png"></a>
+            <a href="#"><img src="${pageContext.request.contextPath}/icons/instalogo.png" alt="insta"></a>
+            <a href="#"><img src="${pageContext.request.contextPath}/icons/twlogo.png" alt="twitter"></a>
+            <a href="#"><img src="${pageContext.request.contextPath}/icons/fblogo.png" alt="facebook"></a>
         </div>
         <div class="top-links">
-            <a href="contact.jsp">contact</a>
-            <a href="about.jsp">about</a>
-            <a href="login.jsp" id="myAccountLink">log in</a>
+            <a href="${pageContext.request.contextPath}/contact.jsp">contact</a>
+            <a href="${pageContext.request.contextPath}/about.jsp">about</a>
+            <a href="${pageContext.request.contextPath}/login.jsp" id="myAccountLink">log in</a>
         </div>
     </div>
     <div class="header-top">
-        <a href="index.jsp" class="logo">
-            <img src="icons/logoeco.png" alt="logo ECOstore"/>
+        <a href="${pageContext.request.contextPath}/index.jsp" class="logo">
+            <img src="${pageContext.request.contextPath}/icons/logoeco.png" alt="logo ECOstore"/>
             <span class="titulo">
                 <span class="resaltado">ECO</span>store
             </span>
         </a>
         <nav>
-            <a href="store.jsp">STORE</a>
-            <a href="formato.jsp">FORMATO</a>
-            <a href="estilos.jsp">ESTILOS</a>
+            <a href="${pageContext.request.contextPath}/store.jsp">STORE</a>
+            <a href="${pageContext.request.contextPath}/formato.jsp">FORMATO</a>
+            <a href="${pageContext.request.contextPath}/estilos.jsp">ESTILOS</a>
         </nav>
         <div class="iconos-derecha">
             <a href='#'>
-                <img src="icons/searchicon.png" alt="search"/>
+                <img src="${pageContext.request.contextPath}/icons/searchicon.png" alt="search"/>
             </a>
-            <a href='carrito.jsp'>
-                <img src="icons/carticon.png" alt="shopping bag"/>
+            
+            <a href="${pageContext.request.contextPath}/carrito">
+                <img src="${pageContext.request.contextPath}/icons/carticon.png" alt="shopping bag"/>
             </a>
-            <a href='micuenta.jsp'>
-                <img src="icons/accounticon.png" alt="my account"/>
+            
+            <a href='${pageContext.request.contextPath}/micuenta.jsp'>
+                <img src="${pageContext.request.contextPath}/icons/accounticon.png" alt="my account"/>
             </a>
         </div>
     </div>
