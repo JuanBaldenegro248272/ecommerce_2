@@ -11,6 +11,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="styles/styles.css">
+        <script src ="js/login.js"></script>
         <title>Iniciar Sesión - ECOstore</title>
     </head>
     <body>
@@ -21,7 +22,7 @@
                 <p>Bienvenido de vuelta!</p>
 
                 
-                <form class="login-form" action="LoginServlet" method="post">
+                <form class="login-form" id="loginForm">
                     <label for="email-login">CORREO ELECTRÓNICO</label>
                     <input 
                         type="email" 
