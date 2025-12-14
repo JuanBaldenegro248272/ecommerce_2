@@ -1,172 +1,100 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/WebServices/GenericResource.java to edit this template
+ */
 package com.mycompany.ecommerce_2.resources;
 
+import com.mycompany.ecommerce_2.modelos.implementaciones.CarritoBO;
 import itson.ecommerce.persistencia.dtos.CarritoDTO;
-import itson.ecommerce.persistencia.entidades.Carrito;
-import itson.ecommerce.persistencia.entidades.Producto;
-import itson.ecommerce.persistencia.entidades.DetalleCarrito;
-import itson.ecommerce.persistencia.mapper.CarritoMapper;
-import jakarta.ws.rs.*; 
+import itson.ecommerce.persistencia.implementaciones.Persistencia;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.Path;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import javax.persistence.*; 
 
-import java.util.ArrayList;
-
-
-@Path("/carrito")
+/**
+ * REST Web Service
+ *
+ * @author jrasc
+ */
+@Path("carrito")
+@RequestScoped
 public class CarritoResource {
 
-    private static EntityManagerFactory emf;
+    private final CarritoBO carritoBO;
 
-    static {
-        try {
-            emf = Persistence.createEntityManagerFactory("ecommercePU");
-        } catch (Throwable t) {
-            System.err.println("--- ERROR CRÍTICO AL INICIAR EMF ---");
-            t.printStackTrace();
-        }
+    public CarritoResource() {
+        this.carritoBO = new CarritoBO(new Persistencia());
     }
 
-    // --- GET: VER CARRITO ---
     @GET
-    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response obtenerCarrito(@PathParam("id") Long id) {
-        if (emf == null) return Response.status(500).entity("Error de conexión").build();
-        
-        EntityManager em = emf.createEntityManager();
+    public Response obtenerCarrito(@Context HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Long idCarrito = (Long) session.getAttribute("idCarrito");
+
+        if (idCarrito == null) {
+            return Response.status(Response.Status.NOT_FOUND).entity("No hay carrito activo").build();
+        }
+
         try {
-            Carrito carrito = em.find(Carrito.class, id);
-            
-            if (carrito == null) {
-                return Response.ok("{\"detalles\": [], \"total\": 0.0}").build();
-            }
-            
-            em.refresh(carrito);
-            CarritoDTO dto = CarritoMapper.toDTO(carrito);
-            return Response.ok(dto).build();
-            
+            CarritoDTO carrito = carritoBO.obtenerCarrito(idCarrito);
+            return Response.ok(carrito).build();
         } catch (Exception e) {
-            e.printStackTrace();
-            return Response.serverError().entity("Error al leer carrito").build();
-        } finally {
-            em.close();
+            return Response.serverError().entity(e.getMessage()).build();
         }
     }
 
-    // --- POST: AGREGAR PRODUCTO ---
     @POST
-    @Path("/{idCarrito}/producto/{idProducto}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response agregarProducto(@PathParam("idCarrito") Long idCarrito, 
-                                    @PathParam("idProducto") Long idProducto) {
-        
-        System.out.println("--- API: Agregando Producto " + idProducto + " al Carrito " + idCarrito + " ---");
+    @Path("agregar")
+    public Response agregarProducto(
+            @QueryParam("idProducto") Long idProducto,
+            @Context HttpServletRequest request) {
 
-        if (emf == null) return Response.status(500).entity("DB Error").build();
-
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction tx = em.getTransaction();
+        HttpSession session = request.getSession();
+        Long idCarrito = (Long) session.getAttribute("idCarrito");
 
         try {
-            tx.begin();
-
-            Carrito carrito = em.find(Carrito.class, idCarrito);
-            if (carrito == null) {
-                carrito = new Carrito();
-                carrito.setTotal(0.0f);
-                carrito.setDetalles(new ArrayList<>());
-                em.persist(carrito);
-                em.flush();
+            if (idCarrito == null) {
+                CarritoDTO nuevo = carritoBO.crearCarrito();
+                session.setAttribute("idCarrito", nuevo.getId());
+                idCarrito = nuevo.getId();
             }
-
-            Producto producto = em.find(Producto.class, idProducto);
-            if (producto == null) {
-                tx.rollback();
-                return Response.status(Response.Status.NOT_FOUND).entity("Producto no existe").build();
-            }
-
-            if (carrito.getDetalles() == null) {
-                carrito.setDetalles(new ArrayList<>());
-            }
-
-            DetalleCarrito detalle = null;
-            for (DetalleCarrito d : carrito.getDetalles()) {
-                if (d.getProducto() != null && d.getProducto().getId().equals(idProducto)) {
-                    detalle = d;
-                    break;
-                }
-            }
-
-            if (detalle != null) {
-                detalle.setCantidad(detalle.getCantidad() + 1);
-                em.merge(detalle);
-            } else {
-                detalle = new DetalleCarrito();
-                detalle.setCarrito(carrito);
-                detalle.setProducto(producto);
-                detalle.setCantidad(1);
-                carrito.getDetalles().add(detalle);
-                em.persist(detalle);
-            }
-
-            double totalCalculado = 0.0;
-            for (DetalleCarrito d : carrito.getDetalles()) {
-                if (d.getProducto() != null && d.getProducto().getPrecio() != null) {
-                    totalCalculado += (d.getProducto().getPrecio() * d.getCantidad());
-                }
-            }
-            carrito.setTotal((float) totalCalculado);
-            em.merge(carrito);
-
-            tx.commit();
-            return Response.ok("{\"mensaje\": \"Agregado\", \"nuevoTotal\": " + carrito.getTotal() + "}").build();
+            carritoBO.agregarProducto(idCarrito, idProducto, 1);
+            return Response.ok("Producto agregado correctamente").build();
 
         } catch (Exception e) {
-            if (tx.isActive()) tx.rollback();
-            e.printStackTrace();
-            return Response.status(500).entity("Error interno").build();
-        } finally {
-            em.close();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Error al agregar: " + e.getMessage()).build();
         }
     }
-    
+
     @DELETE
-    @Path("/{idCarrito}/producto/{idDetalle}")
-    public Response eliminarProducto(@PathParam("idCarrito") Long idCarrito,
-                                     @PathParam("idDetalle") Long idDetalle) {
-        if (emf == null) return Response.serverError().build();
-        
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction tx = em.getTransaction();
+    @Path("eliminar/{idDetalle}")
+    public Response eliminarProducto(
+            @PathParam("idDetalle") Long idDetalle,
+            @Context HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
+        Long idCarrito = (Long) session.getAttribute("idCarrito");
+
+        if (idCarrito == null) {
+            return Response.status(Response.Status.BAD_REQUEST).entity("No hay carrito").build();
+        }
         try {
-            tx.begin();
-            DetalleCarrito d = em.find(DetalleCarrito.class, idDetalle);
-            
-            if (d != null) {
-                Carrito c = d.getCarrito();
-                c.getDetalles().remove(d);
-                
-                // --- CORRECCIÓN DE LA LÍNEA QUE FALLABA ---
-                // Simplemente obtenemos el valor. Java convierte float a double automáticamente.
-                double totalActual = c.getTotal(); 
-                
-                double precio = (d.getProducto().getPrecio() != null) ? d.getProducto().getPrecio() : 0.0;
-                double nuevoTotal = totalActual - (precio * d.getCantidad());
-                
-                c.setTotal((float) (nuevoTotal < 0 ? 0.0 : nuevoTotal));
-                
-                em.merge(c);
-                em.remove(d);
-            }
-            tx.commit();
-            return Response.ok().build();
+            carritoBO.eliminarProducto(idCarrito, idDetalle);
+            return Response.ok("Producto eliminado").build();
         } catch (Exception e) {
-            if(tx.isActive()) tx.rollback();
-            e.printStackTrace();
-            return Response.serverError().build();
-        } finally {
-            em.close();
+            return Response.serverError().entity(e.getMessage()).build();
         }
     }
 }
