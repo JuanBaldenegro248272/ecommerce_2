@@ -4,7 +4,6 @@
  */
 package com.mycompany.ecommerce_2.resources;
 
-import com.mycompany.ecommerce_2.exceptions.BusinessException;
 import com.mycompany.ecommerce_2.modelos.IUsuarioBO;
 import com.mycompany.ecommerce_2.modelos.implementaciones.UsuarioBO;
 import itson.ecommerce.persistencia.dtos.UsuarioDTO;
