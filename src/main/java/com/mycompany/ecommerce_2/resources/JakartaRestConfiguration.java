@@ -11,6 +11,6 @@ import jakarta.ws.rs.core.Application;
  *
  * @author Gael
  */
-@ApplicationPath("api")
+@ApplicationPath("resources")
 public class JakartaRestConfiguration extends Application {
 }
