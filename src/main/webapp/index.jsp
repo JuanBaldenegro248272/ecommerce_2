@@ -189,7 +189,7 @@
                     <a href="#" class='cat'>
                         <img src="${pageContext.request.contextPath}/albumcovers/fondoreg.png" alt='Fondo Reggaeton'>
                         <span class="genero">Reggaeton</span>
-                        <span class="cta">SHOP THIS</span>                        
+                        <span class="cta">SHOP THIS</span>                         
                     </a>
                 </div>
             </section>
@@ -241,7 +241,7 @@
                     </div>
                     <div class="modal-actions">
                         <button class="btn-modal btn-continue" onclick="closeModal()">SEGUIR COMPRANDO</button>
-                        <a href="${pageContext.request.contextPath}/carrito" class="btn-modal btn-view-cart">VER CARRITO</a>
+                        <a href="${pageContext.request.contextPath}/carrito.jsp" class="btn-modal btn-view-cart">VER CARRITO</a>
                     </div>
                 </div>
             </div>
@@ -261,38 +261,47 @@
         </style>
 
         <script>
-            function agregarAlCarrito(idProducto) {
-                // Mensaje en consola para verificar
-                console.log("Enviando ID al servidor:", idProducto);
-                
-                // NOTA IMPORTANTE: Usamos la ruta base '/carrito' con método POST.
-                // Esto es más seguro que '/carrito/agregar' para evitar errores de ruta en el Servlet.
-                const url = '${pageContext.request.contextPath}/carrito';
+            // Función para agregar al carrito
+            async function agregarAlCarrito(idProducto) {
+                const idCarrito = 1; 
 
-                fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: 'idProducto=' + idProducto
-                })
-                .then(response => {
+                // 1. CONSTRUCCIÓN DE LA URL
+                // Usamos la variable de JSP para obtener la raíz del proyecto (ej: /ecommerce_2)
+                const contextPath = "${pageContext.request.contextPath}";
+                
+                // 2. RUTA FINAL
+                // Se asume que en Java tienes: @Path("{idCarrito}/producto/{idProducto}")
+                const url = contextPath + "/api/carrito/" + idCarrito + "/producto/" + idProducto;
+
+                console.log("Intentando agregar a: " + url);
+
+                try {
+                    const response = await fetch(url, { 
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
                     if (response.ok) {
+                        // Si todo sale bien, mostramos el modal
                         document.getElementById('cartModal').style.display = 'flex';
                     } else {
-                        // Si falla, intentamos leer el error
-                        return response.text().then(text => { throw new Error(text) });
+                        // Si falla (ej. 404 o 500), mostramos el error
+                        console.error("Error Status:", response.status);
+                        alert("Error al agregar producto. Verifica que el servidor esté corriendo. (Código " + response.status + ")");
                     }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert("Error de conexión: " + error.message);
-                });
+                } catch (error) {
+                    console.error("Error de red:", error);
+                    alert("No se pudo conectar con el servidor.");
+                }
             }
 
             function closeModal() {
                 document.getElementById('cartModal').style.display = 'none';
             }
             
-            // Cerrar al dar clic fuera del modal
+            // Cerrar modal si se hace clic afuera
             window.onclick = function(event) {
                 if (event.target == document.getElementById('cartModal')) {
                     closeModal();
