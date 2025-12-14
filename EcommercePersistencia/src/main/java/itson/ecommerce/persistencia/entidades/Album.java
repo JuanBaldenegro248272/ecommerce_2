@@ -7,6 +7,7 @@ package itson.ecommerce.persistencia.entidades;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -53,7 +54,7 @@ public class Album implements Serializable {
     @Column(name = "cancion", length = 100, nullable = false)
     private List<String> canciones;
     
-    @OneToMany(mappedBy = "album")
+    @OneToMany(mappedBy = "album", cascade = CascadeType.ALL)
     private List<GeneroAlbum> generos;
     
     @OneToMany (mappedBy = "album")
