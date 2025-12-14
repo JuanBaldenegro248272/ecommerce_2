@@ -39,6 +39,9 @@ public interface IPersistencia {
     // --- PEDIDOS ---
     public List<PedidoDTO> obtenerTodosPedidos() throws PersistenciaException;
     public PedidoDTO actualizarEstadoPedido(Long idPedido, String nuevoEstado) throws PersistenciaException;
+    public ClienteDTO obtenerClienteDTO(String correo) throws PersistenciaException;
+    CarritoDTO obtenerCarritoDTO(Long idCarrito) throws PersistenciaException;
+    public PedidoDTO crearPedido(PedidoDTO pedidoDTO, String correo) throws PersistenciaException;
 
     // --- ALBUMES Y ARTISTAS ---
     List<Artista> consultarArtistasTodos() throws PersistenciaException;

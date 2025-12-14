@@ -41,4 +41,27 @@ public class PedidosBO implements IPedidoBO {
         }
     }
 
+    public PedidoDTO crearPedido(PedidoDTO pedidoDTO, String correo) throws BusinessException {
+        if (pedidoDTO == null) {
+            throw new BusinessException("Pedido requerido.");
+        }
+        if (correo == null || correo.isBlank()) {
+            throw new BusinessException("Correo requerido.");
+        }
+        if (pedidoDTO.getIdCarrito() == null) {
+            throw new BusinessException("Falta idCarrito.");
+        }
+        if (pedidoDTO.getIdDireccion() == null) {
+            throw new BusinessException("Falta idDireccion.");
+        }
+        if (pedidoDTO.getIdPago() == null) {
+            throw new BusinessException("Falta idPago.");
+        }
+
+        try {
+            return persistencia.crearPedido(pedidoDTO, correo);
+        } catch (PersistenciaException ex) {
+            throw new BusinessException(ex.getMessage(), ex);
+        }
+    }
 }

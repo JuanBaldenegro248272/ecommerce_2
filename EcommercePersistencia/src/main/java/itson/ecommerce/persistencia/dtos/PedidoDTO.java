@@ -23,8 +23,9 @@ public class PedidoDTO {
     private Long idCliente;
     private Long idDireccion;
     private Long idPago;
+    private Long idCarrito;
 
-    public PedidoDTO(Long id, String estado, Calendar fechaCompra, Float total, String nombreCliente, String correoCliente, String direccion, String tipoPago, Long idCliente, Long idDireccion, Long idPago) {
+    public PedidoDTO(Long id, String estado, Calendar fechaCompra, Float total, String nombreCliente, String correoCliente, String direccion, String tipoPago, Long idCliente, Long idDireccion, Long idPago, Long idCarrito) {
         this.id = id;
         this.estado = estado;
         this.fechaCompra = fechaCompra;
@@ -36,6 +37,7 @@ public class PedidoDTO {
         this.idCliente = idCliente;
         this.idDireccion = idDireccion;
         this.idPago = idPago;
+        this.idCarrito = idCarrito;
     }
 
     public Long getId() {
@@ -124,6 +126,14 @@ public class PedidoDTO {
 
     public void setIdPago(Long idPago) {
         this.idPago = idPago;
+    }
+
+    public Long getIdCarrito() {
+        return idCarrito;
+    }
+
+    public void setIdCarrito(Long idCarrito) {
+        this.idCarrito = idCarrito;
     }
 
 }

@@ -72,7 +72,8 @@ public class PedidoMapper {
                 tipoPago,
                 idCliente,
                 idDireccion,
-                idPago
+                idPago,
+                null
         );
     }
 

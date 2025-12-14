@@ -119,8 +119,6 @@ public class Main {
 
             usuarioDAO.guardar(chalino);
 
-            pedidoDAO.crearPedido(chalino, 0, EstadoPedido.ENVIADO);
-
             resenasDAO.crearResena(chalino, productoEntity, 5, "Hola", EstadoResena.PENDIENTE);
 
             System.out.println("Datos insertados correctamente");

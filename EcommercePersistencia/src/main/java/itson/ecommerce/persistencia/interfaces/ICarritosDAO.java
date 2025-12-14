@@ -17,4 +17,6 @@ public interface ICarritosDAO {
     void actualizarDetalle(DetalleCarrito detalle) throws PersistenciaException;
 
     void eliminarDetalle(Long idDetalle) throws PersistenciaException;
+
+    public int contarDetalles(Long idCarrito) throws PersistenciaException;
 }

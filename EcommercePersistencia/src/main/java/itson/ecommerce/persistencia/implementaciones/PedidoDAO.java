@@ -4,6 +4,7 @@
  */
 package itson.ecommerce.persistencia.implementaciones;
 
+import itson.ecommerce.persistencia.entidades.Carrito;
 import itson.ecommerce.persistencia.entidades.Cliente;
 import itson.ecommerce.persistencia.entidades.EstadoPedido;
 import itson.ecommerce.persistencia.entidades.Pago;
@@ -70,28 +71,21 @@ public class PedidoDAO implements IPedidoDAO {
     }
 
     @Override
-    public Pedido crearPedido(Cliente cliente, float total, EstadoPedido estado) throws PersistenciaException {
+    public Pedido crearPedido(Pedido nuevoPedido, Carrito carritoAEliminar) throws PersistenciaException {
         EntityManager em = ManejadorConexiones.getEntityManager();
+
         try {
             em.getTransaction().begin();
-            Pedido pedido = new Pedido();
-            pedido.setCliente(cliente);
-            pedido.setDireccion(cliente.getDireccion());
-            pedido.setEstado(estado);
-            pedido.setFechaCompra(Calendar.getInstance());
-            pedido.setTotal(total);
-            Pago pago = new Pago();
-            pago.setFecha(Calendar.getInstance());
-
-            pedido.setPago(pago);
-            em.persist(pedido);
+            em.persist(nuevoPedido);
+            Carrito carritoGestionado = em.merge(carritoAEliminar);
+            em.remove(carritoGestionado);
             em.getTransaction().commit();
-            return pedido;
+            return nuevoPedido;
         } catch (Exception e) {
             if (em != null && em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-            throw new PersistenciaException("Error al insertar el pedido", e);
+            throw new PersistenciaException("No se pudo completar el pedido", e);
         } finally {
             if (em != null) {
                 em.close();

@@ -1,16 +1,18 @@
 package com.mycompany.ecommerce_2.modelos.implementaciones;
 
 import com.mycompany.ecommerce_2.exceptions.BusinessException;
+import com.mycompany.ecommerce_2.modelos.ICarritoBO;
 import itson.ecommerce.persistencia.dtos.CarritoDTO;
 import itson.ecommerce.persistencia.dtos.DetalleCarritoDTO;
 import itson.ecommerce.persistencia.entidades.Carrito;
 import itson.ecommerce.persistencia.entidades.DetalleCarrito;
 import itson.ecommerce.persistencia.entidades.Producto;
+import itson.ecommerce.persistencia.exceptions.PersistenciaException;
 import itson.ecommerce.persistencia.interfaces.IPersistencia;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CarritoBO {
+public class CarritoBO implements ICarritoBO {
 
     private final IPersistencia persistencia;
 
@@ -18,21 +20,24 @@ public class CarritoBO {
         this.persistencia = persistencia;
     }
 
+    @Override
     public CarritoDTO crearCarrito() throws BusinessException {
         try {
             Carrito c = new Carrito();
             c.setTotal(0.0f);
             c.setDetalles(new ArrayList<>());
             return convertirADTO(persistencia.crearCarrito(c));
-        } catch (Exception e) { throw new BusinessException(e.getMessage()); }
+        } catch (PersistenciaException e) { throw new BusinessException(e.getMessage()); }
     }
 
+    @Override
     public CarritoDTO obtenerCarrito(Long id) throws BusinessException {
         try {
             return convertirADTO(persistencia.buscarCarritoPorId(id));
-        } catch (Exception e) { throw new BusinessException(e.getMessage()); }
+        } catch (PersistenciaException e) { throw new BusinessException(e.getMessage()); }
     }
 
+    @Override
     public void agregarProducto(Long idCarrito, Long idProducto, Integer cantidad) throws BusinessException {
         try {
             Carrito carrito = persistencia.buscarCarritoPorId(idCarrito);
@@ -69,11 +74,11 @@ public class CarritoBO {
             recalcularTotal(carrito);
 
         } catch (Exception e) {
-            e.printStackTrace();
             throw new BusinessException("Error al agregar: " + e.getMessage());
         }
     }
     
+    @Override
     public void eliminarProducto(Long idCarrito, Long idDetalle) throws BusinessException {
         try {
             persistencia.eliminarDetalleCarrito(idDetalle);
@@ -87,6 +92,7 @@ public class CarritoBO {
         }
     }
     
+    @Override
     public void vaciarCarrito(Long idCarrito) throws BusinessException {
         try {
             Carrito c = persistencia.buscarCarritoPorId(idCarrito);
@@ -95,7 +101,7 @@ public class CarritoBO {
                 c.setTotal(0f);
                 persistencia.actualizarCarrito(c);
             }
-        } catch (Exception e) { throw new BusinessException("Error al vaciar"); }
+        } catch (PersistenciaException e) { throw new BusinessException("Error al vaciar"); }
     }
 
     private void recalcularTotal(Carrito carrito) throws Exception {
