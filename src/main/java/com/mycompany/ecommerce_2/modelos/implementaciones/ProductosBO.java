@@ -17,10 +17,10 @@ import java.util.List;
  *
  * @author Dana Chavez
  */
-public class ProductosBO implements IProductosBO{
-    
+public class ProductosBO implements IProductosBO {
+
     private IPersistencia persistencia;
-    
+
     private static final int LIMITE_DESCRIPCION = 255;
 
     public ProductosBO(IPersistencia persistencia) {
@@ -76,7 +76,7 @@ public class ProductosBO implements IProductosBO{
         if (termino == null || termino.trim().isEmpty()) {
             return obtenerTodosProductos();
         }
-        
+
         try {
             return persistencia.buscarProductos(termino.trim());
         } catch (PersistenciaException ex) {
@@ -89,26 +89,26 @@ public class ProductosBO implements IProductosBO{
         if (id == null || id <= 0) {
             throw new BusinessException("El ID del producto no es válido.");
         }
-        
+
         try {
             persistencia.eliminarProducto(id);
         } catch (PersistenciaException ex) {
-            if (ex.getMessage() != null && 
-                (ex.getMessage().contains("foreign key") || 
-                 ex.getMessage().contains("constraint") ||
-                 ex.getMessage().contains("integrity"))) {
+            if (ex.getMessage() != null
+                    && (ex.getMessage().contains("foreign key")
+                    || ex.getMessage().contains("constraint")
+                    || ex.getMessage().contains("integrity"))) {
                 throw new BusinessException("No se puede eliminar el producto porque tiene pedidos o está en carritos. Desactívalo en su lugar.");
             }
             throw new BusinessException("No se pudo eliminar el producto.");
         }
     }
 
-   @Override
+    @Override
     public EditarProductoDTO obtenerProductoPorId(Long id) throws BusinessException {
         if (id == null || id <= 0) {
             throw new BusinessException("El ID del producto no es válido.");
         }
-        
+
         try {
             return persistencia.obtenerProductoPorId(id);
         } catch (PersistenciaException ex) {
@@ -121,31 +121,43 @@ public class ProductosBO implements IProductosBO{
         if (dto.getId() == null || dto.getId() <= 0) {
             throw new BusinessException("El ID del producto no es válido.");
         }
-        
+
         if (dto.getFormato() == null || dto.getFormato().isEmpty()) {
             throw new BusinessException("Debes seleccionar un formato.");
         }
-        
+
         if (dto.getPrecio() == null || dto.getPrecio() < 0) {
             throw new BusinessException("El precio no puede ser negativo.");
         }
-        
+
         if (dto.getStock() == null || dto.getStock() < 0) {
             throw new BusinessException("El stock no puede ser negativo.");
         }
-        
+
         if (dto.getDescripcion() == null || dto.getDescripcion().trim().isEmpty()) {
             throw new BusinessException("Debes escribir una descripción.");
         }
-        
+
         if (dto.getDescripcion().length() > LIMITE_DESCRIPCION) {
             throw new BusinessException("La descripción excede los " + LIMITE_DESCRIPCION + " caracteres.");
         }
-        
+
         try {
             persistencia.actualizarProducto(dto);
         } catch (PersistenciaException ex) {
             throw new BusinessException("No se pudo actualizar el producto.");
         }
+    }
+
+    public NuevoProductoDTO devolverProducto(Long id) throws BusinessException {
+        if (id == null) {
+            throw new BusinessException("El id vacio");
+        }
+        try {
+            return persistencia.devolverProducto(id);
+        } catch (PersistenciaException ex) {
+            throw new BusinessException("Error", ex);
+        }
+
     }
 }

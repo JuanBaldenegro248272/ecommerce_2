@@ -15,15 +15,19 @@ import java.util.List;
  * @author Dana Chavez
  */
 public interface IProductosBO {
+
     public abstract NuevoProductoDTO crearProducto(NuevoProductoDTO dto) throws BusinessException;
-       
+
     public abstract List<ProductoListaDTO> obtenerTodosProductos() throws BusinessException;
 
     public abstract List<ProductoListaDTO> buscarProductos(String termino) throws BusinessException;
-    
+
     public abstract void eliminarProducto(Long id) throws BusinessException;
-    
+
     public abstract EditarProductoDTO obtenerProductoPorId(Long id) throws BusinessException;
-    
+
     public abstract void actualizarProducto(EditarProductoDTO dto) throws BusinessException;
+
+    public NuevoProductoDTO devolverProducto(Long id) throws BusinessException;
+
 }

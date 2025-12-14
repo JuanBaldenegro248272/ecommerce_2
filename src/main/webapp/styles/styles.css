@@ -1898,6 +1898,81 @@ nav a:hover {
     background: var(--color-dark-pink);
 }
 
+.store-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 40px;
+    justify-content: center;
+}
+
+.product-card {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 8px;
+    width: 250px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    background-color: var(--color-white);
+}
+
+.product-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.btn-add {
+    background-color: #000;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+    font-weight: bold;
+    font-family: var(--staatliches);
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease;
+}
+
+.btn-add:hover {
+    background-color: #333;
+}
+
+.card-footer {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0 5px;
+    box-sizing: border-box;
+}
+
+.store-grid .card-footer {
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.album-grid .card-footer {
+    justify-content: center;
+    margin-top: 5px;
+}
+
+.card-price {
+    font-family: var(--outfit);
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: var(--color-primary);
+    text-align: right;
+}
+
+.album-link {
+    display: block;
+    width: 100%;
+    text-decoration: none;
+    color: inherit;
+}
+
 /* responsive */
 
 @media (max-width: 968px) {
