@@ -342,4 +342,22 @@ public class Persistencia implements IPersistencia {
             throw new PersistenciaException("Error al crear álbum", ex); 
         }
     }
+
+    @Override
+    public Usuario buscarPorId(Long id) throws PersistenciaException {
+        try {
+            return usuarioDAO.buscarPorId(id);
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al buscar usuario.");
+        }
+    }
+
+    @Override
+    public Usuario actualizar(Usuario usuario) throws PersistenciaException {
+        try {
+            return usuarioDAO.actualizar(usuario);
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al actualizar el usuario.");
+        }
+    }
 }

@@ -16,5 +16,8 @@ public interface IUsuarioDAO {
 
       public Usuario guardar(Usuario usuario) throws PersistenciaException;
       public Usuario buscarPorCorreo(String correo) throws PersistenciaException;
+      public Usuario buscarPorId(Long id) throws PersistenciaException ;
+      public Usuario actualizar(Usuario usuario) throws PersistenciaException ;
+
 
 }

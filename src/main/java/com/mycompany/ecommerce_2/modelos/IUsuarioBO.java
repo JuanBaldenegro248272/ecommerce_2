@@ -15,6 +15,7 @@ import itson.ecommerce.persistencia.exceptions.PersistenciaException;
 public interface IUsuarioBO {
     
         public UsuarioDTO login(String correo, String contrasena) throws BusinessException, PersistenciaException;
+        public UsuarioDTO actualizarUsuario(UsuarioDTO usuarioDTO) throws BusinessException, PersistenciaException;
 
     
 }

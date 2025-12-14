@@ -52,4 +52,21 @@ public class UsuarioBO implements IUsuarioBO {
 
         return UsuarioMapper.toDTO(usuario);
     }
+    
+    public UsuarioDTO actualizarUsuario(UsuarioDTO usuarioDTO) throws BusinessException, PersistenciaException {
+        if (usuarioDTO.getId() == null) {
+            throw new BusinessException("El ID del usuario es requerido para actualizar.");
+        }
+
+        Usuario usuarioEntidad = persistencia.buscarPorCorreo(usuarioDTO.getCorreoElectronico());
+
+        if (usuarioEntidad == null) {
+            throw new BusinessException("Usuario no encontrado.");
+        }
+
+        
+        Usuario usuarioActualizado = persistencia.actualizar(usuarioEntidad);
+
+        return UsuarioMapper.toDTO(usuarioActualizado);
+    }
 }

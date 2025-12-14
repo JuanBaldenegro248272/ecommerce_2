@@ -56,5 +56,30 @@ public class UsuarioDAO implements IUsuarioDAO{
         }
     }
     
+   public Usuario actualizar(Usuario usuario) throws PersistenciaException {
+        EntityManager em = ManejadorConexiones.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            Usuario usuarioActualizado = em.merge(usuario);
+            em.getTransaction().commit();
+            return usuarioActualizado;
+        } catch (Exception ex) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new PersistenciaException("Error al actualizar el usuario", ex);
+        } finally {
+            em.close();
+        }
+    }
+    
+    public Usuario buscarPorId(Long id) throws PersistenciaException {
+        EntityManager em = ManejadorConexiones.getEntityManager();
+        try {
+            return em.find(Usuario.class, id);
+        } finally {
+            em.close();
+        }
+    }
     
 }
