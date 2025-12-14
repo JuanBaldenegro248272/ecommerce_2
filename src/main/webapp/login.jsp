@@ -40,10 +40,12 @@
                         class="login-input" 
                         required
                     >
-
+                    
                     <button type="submit" class="login-button">ACCEDER</button>
                 </form>
-
+                <div id="error-message" style="display:none; color: red; text-align: center; margin-top: 10px;">
+                    
+                </div>
                 <p class="switch-form-link">
                     ¿No tienes cuenta? 
                     <a href="register.jsp">Regístrate aquí</a>
