@@ -9,25 +9,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (loginForm) {
         loginForm.addEventListener('submit', async (event) => {
-            // 1. Evitar que el formulario se envíe de forma tradicional (recargando la página)
             event.preventDefault();
             
-            // Limpiar mensajes de error previos
             errorMessageDiv.style.display = 'none';
             errorMessageDiv.textContent = '';
 
-            // 2. Obtener los datos de los campos
             const correo = document.getElementById('email-login').value;
             const contrasena = document.getElementById('password-login').value;
 
-            // 3. Crear el objeto JSON a enviar
             const credenciales = {
                 correo: correo,
                 contrasena: contrasena
             };
 
             try {
-                // 4. Realizar la petición POST a la API REST
                 const response = await fetch('resources/auth/login', {
                     method: 'POST',
                     headers: {
@@ -36,22 +31,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     body: JSON.stringify(credenciales)
                 });
 
-                // 5. Procesar la respuesta
                 if (response.ok) {
-                    // Login exitoso (Status 200)
                     const usuario = await response.json();
                     console.log('Login exitoso:', usuario);
                     
-                    // Redirigir a la página principal o store
                     window.location.href = 'index.jsp'; 
                 } else {
-                    // Error de autenticación (Status 401, 400, 500)
                     const errorData = await response.json();
                     throw new Error(errorData.error || 'Error al iniciar sesión');
                 }
 
             } catch (error) {
-                // Mostrar el error en pantalla
                 console.error('Error:', error);
                 errorMessageDiv.textContent = error.message;
                 errorMessageDiv.style.display = 'block';

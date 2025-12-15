@@ -50,6 +50,7 @@ itson\ecommerce\persistencia\entidades\Genero.class
 itson\ecommerce\persistencia\entidades\DetalleCarrito.class
 itson\ecommerce\persistencia\implementaciones\AlbumDAO.class
 itson\ecommerce\persistencia\entidades\PagoTransferencia.class
+itson\ecommerce\persistencia\Prueba.class
 itson\ecommerce\persistencia\utils\JasyptUtil.class
 itson\ecommerce\persistencia\dtos\AlbumDTO.class
 itson\ecommerce\persistencia\dtos\ProductoListaDTO.class

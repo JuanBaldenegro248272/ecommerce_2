@@ -4,6 +4,7 @@
  */
 package com.mycompany.ecommerce_2.controladores;
 
+import com.mycompany.ecommerce_2.exceptions.BusinessException;
 import com.mycompany.ecommerce_2.modelos.IUsuarioBO;
 import com.mycompany.ecommerce_2.modelos.implementaciones.UsuarioBO;
 import itson.ecommerce.persistencia.implementaciones.Persistencia;
@@ -70,8 +71,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-    }
+            request.getRequestDispatcher("login.jsp").forward(request, response);    }
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -91,20 +91,26 @@ public class LoginServlet extends HttpServlet {
         try {
             UsuarioDTO usuarioDTO = usuarioBO.login(correo, contrasena);
             HttpSession sesion = request.getSession();
-            sesion.setAttribute("usuarioLogueado", usuarioDTO);
-            
+            sesion.setAttribute("usuarioLogueado", usuarioDTO);     
+
             if ("ADMIN".equals(usuarioDTO.getRol())) {
                 response.sendRedirect(request.getContextPath() + "/dashboard-admin.jsp");
-            }else{
+            } else {
                 response.sendRedirect(request.getContextPath() + "/index.jsp");
             }     
             
-        } catch (Exception e) {
+        } catch (BusinessException e) {
+            e.printStackTrace();
             request.setAttribute("error", e.getMessage());
             request.getRequestDispatcher("login.jsp").forward(request, response);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("error", "Error interno del servidor.");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
-        
     }
+
 
     /**
      * Returns a short description of the servlet.
