@@ -6,6 +6,7 @@ package itson.ecommerce.persistencia.implementaciones;
 
 import itson.ecommerce.persistencia.entidades.Pago;
 import itson.ecommerce.persistencia.exceptions.PersistenciaException;
+import itson.ecommerce.persistencia.interfaces.IPagoDAO;
 import itson.ecommerce.persistencia.utils.ManejadorConexiones;
 import javax.persistence.EntityManager;
 
@@ -13,7 +14,7 @@ import javax.persistence.EntityManager;
  *
  * @author jrasc
  */
-public class PagoDAO {
+public class PagoDAO implements IPagoDAO{
 
     public Pago buscarPorId(Long idPago) throws PersistenciaException {
         EntityManager em = null;

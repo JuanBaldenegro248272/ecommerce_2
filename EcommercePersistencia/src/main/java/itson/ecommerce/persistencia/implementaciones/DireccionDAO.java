@@ -6,6 +6,7 @@ package itson.ecommerce.persistencia.implementaciones;
 
 import itson.ecommerce.persistencia.entidades.Direccion;
 import itson.ecommerce.persistencia.exceptions.PersistenciaException;
+import itson.ecommerce.persistencia.interfaces.IDireccionDAO;
 import itson.ecommerce.persistencia.utils.ManejadorConexiones;
 import javax.persistence.EntityManager;
 
@@ -13,7 +14,7 @@ import javax.persistence.EntityManager;
  *
  * @author jrasc
  */
-public class DireccionDAO {
+public class DireccionDAO implements IDireccionDAO{
 
     public Direccion buscarPorId(Long idDireccion) throws PersistenciaException {
         EntityManager em = null;

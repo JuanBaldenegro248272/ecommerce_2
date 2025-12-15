@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package itson.ecommerce.persistencia.implementaciones;
 
 import itson.ecommerce.persistencia.dtos.*;
@@ -19,6 +23,8 @@ public class Persistencia implements IPersistencia {
     private IArtistaDAO artistaDAO;
     private IGenerosDAO generosDAO;
     private ICarritosDAO carritosDAO;
+    
+    // Estas eran las que causaban el error al estar nulas
     private IPagoDAO pagoDAO;
     private IDireccionDAO direccionDAO;
 
@@ -31,6 +37,10 @@ public class Persistencia implements IPersistencia {
         this.usuarioDAO = new UsuarioDAO();
         this.generosDAO = new GenerosDAO();
         this.carritosDAO = new CarritosDAO();
+        
+        // --- CORRECCIÓN: Inicialización de los DAOs faltantes ---
+        this.pagoDAO = new PagoDAO();
+        this.direccionDAO = new DireccionDAO();
     }
 
     // --- MÉTODOS DEL CARRITO ---
@@ -66,7 +76,6 @@ public class Persistencia implements IPersistencia {
 
     @Override
     public Producto buscarProductoPorIdEntity(Long id) throws PersistenciaException {
-        // Necesitamos la entidad directa para relacionarla con el carrito
         try {
             return productosDAO.obtenerPorId(id);
         } catch (Exception e) {
@@ -425,7 +434,6 @@ public class Persistencia implements IPersistencia {
     @Override
     public PedidoDTO crearPedido(PedidoDTO pedidoDTO, String correo) throws PersistenciaException {
         try {
-
             Carrito carrito = carritosDAO.buscarPorId(pedidoDTO.getIdCarrito());
             if (carrito == null) {
                 throw new PersistenciaException("Carrito no encontrado.");
@@ -434,14 +442,19 @@ public class Persistencia implements IPersistencia {
             if (usuario == null) {
                 throw new PersistenciaException("Usuario/Cliente no encontrado.");
             }
+            
+            // Ahora esto funcionará porque direccionDAO ya está inicializado
             Direccion direccion = direccionDAO.buscarPorId(pedidoDTO.getIdDireccion());
             if (direccion == null) {
                 throw new PersistenciaException("Dirección no encontrada.");
             }
+            
+            // Ahora esto funcionará porque pagoDAO ya está inicializado
             Pago pago = pagoDAO.buscarPorId(pedidoDTO.getIdPago());
             if (pago == null) {
                 throw new PersistenciaException("Pago no encontrado.");
             }
+            
             if (!(usuario instanceof Cliente)) {
                 throw new PersistenciaException("El usuario encontrado no es Cliente.");
             }
@@ -460,7 +473,7 @@ public class Persistencia implements IPersistencia {
         } catch (PersistenciaException ex) {
             throw ex;
         } catch (Exception ex) {
-            throw new PersistenciaException("Error inesperado al crear pedido.", ex);
+            throw new PersistenciaException("Error inesperado al crear pedido: " + ex.getMessage(), ex);
         }
     }
 
