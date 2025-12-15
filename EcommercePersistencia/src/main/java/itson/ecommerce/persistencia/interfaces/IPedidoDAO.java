@@ -17,4 +17,5 @@ public interface IPedidoDAO {
     public List<Pedido> obtenerTodos() throws PersistenciaException;
     public Pedido actualizarEstado(Long idPedido, String nuevoEstado) throws PersistenciaException;
     public Pedido crearPedido(Pedido nuevoPedido, Carrito carritoAEliminar) throws PersistenciaException;
+    public List<Pedido> obtenerPedidosUsuario(String correo) throws PersistenciaException;
 }

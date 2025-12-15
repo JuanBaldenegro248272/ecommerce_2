@@ -30,21 +30,22 @@ public interface IPersistencia {
     public List<ResenaListaDTO> buscarResenas(String termino, String estado) throws PersistenciaException;
     public void aprobarResena(Long id) throws PersistenciaException;
     public void eliminarResena(Long id) throws PersistenciaException;
+    public void crearResena(NuevaResenaDTO nuevaResena) throws PersistenciaException;
     
     // --- USUARIOS ---
     public Usuario buscarPorCorreo(String correo) throws PersistenciaException;
     public Usuario guardar(Usuario usuario) throws PersistenciaException;
     public Usuario buscarPorId(Long id) throws PersistenciaException ;
-    public Usuario actualizar(Usuario usuario) throws PersistenciaException ;
-    public ClienteDTO obtenerClientePorId(Long idUsuario) throws PersistenciaException;
-
+    public ClienteDTO actualizarCliente(ClienteDTO clienteDTO) throws PersistenciaException;
+    public ClienteDTO obtenerClientePorId(Long id) throws PersistenciaException;
+    public ClienteDTO obtenerClientePorCorreo(String correo) throws PersistenciaException;
 
     // --- PEDIDOS ---
     public List<PedidoDTO> obtenerTodosPedidos() throws PersistenciaException;
     public PedidoDTO actualizarEstadoPedido(Long idPedido, String nuevoEstado) throws PersistenciaException;
-    public ClienteDTO obtenerClienteDTO(String correo) throws PersistenciaException;
     CarritoDTO obtenerCarritoDTO(Long idCarrito) throws PersistenciaException;
     public PedidoDTO crearPedido(PedidoDTO pedidoDTO, String correo) throws PersistenciaException;
+    public List<PedidoDTO> obtenerPedidosUsuario(String correo) throws PersistenciaException;
 
     // --- ALBUMES Y ARTISTAS ---
     List<Artista> consultarArtistasTodos() throws PersistenciaException;

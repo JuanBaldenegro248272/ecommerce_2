@@ -64,4 +64,17 @@ public class PedidosBO implements IPedidoBO {
             throw new BusinessException(ex.getMessage(), ex);
         }
     }
+
+    @Override
+    public List<PedidoDTO> obtenerPedidosUsuario(String correo) throws BusinessException {
+        if (correo == null || correo.trim().isEmpty()) {
+            throw new BusinessException("Ingresa el correo del usuario");
+        }
+
+        try {
+            return persistencia.obtenerPedidosUsuario(correo);
+        } catch (PersistenciaException ex) {
+            throw new BusinessException("Error al consultar el historial de pedidos: " + ex.getMessage());
+        }
+    }
 }

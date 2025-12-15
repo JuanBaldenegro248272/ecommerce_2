@@ -23,7 +23,7 @@ public class AlbumDTO {
     private List<String> canciones;
     private List<Long> idGeneros;
     private List<Long> idProductos;
-
+    
     public AlbumDTO(Long id, String nombre, String descripcion, Calendar fechaLanzamiento, String imagenUrl, Long idArtista, String nombreArtista, List<String> canciones, List<Long> idGeneros, List<Long> idProductos) {
         this.id = id;
         this.nombre = nombre;

@@ -4,7 +4,7 @@
  */
 
 document.getElementById('loginForm').addEventListener('submit', async function (event) {
-    event.preventDefault(); // Evita que el formulario recargue la página
+    event.preventDefault();
     const correo = document.querySelector('input[name="correo"]').value;
     const contrasena = document.querySelector('input[name="contrasena"]').value;
 

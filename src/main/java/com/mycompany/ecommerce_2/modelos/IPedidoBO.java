@@ -16,4 +16,5 @@ public interface IPedidoBO {
     public List<PedidoDTO> obtenerTodosPedidos() throws BusinessException;
     public PedidoDTO actualizarEstadoPedido(Long id, String nuevoEstado) throws BusinessException;
     public PedidoDTO crearPedido(PedidoDTO pedidoDTO, String correo) throws BusinessException;
+    public List<PedidoDTO> obtenerPedidosUsuario(String correo) throws BusinessException;
 }

@@ -80,7 +80,6 @@ public final class ProductoMapper {
             dto.setAlbumId(album.getId());
             dto.setAlbumNombre(album.getNombre());
             dto.setAlbumImagenUrl(album.getImagenUrl());
-            
             // Datos del artista
             if (album.getArtista() != null) {
                 dto.setArtistaNombre(album.getArtista().getNombreArtistico());

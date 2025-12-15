@@ -25,7 +25,7 @@
                     <h1 class ="cuenta-titulo">MI CUENTA</h1>
                     <p class = "cuenta-bienvenida">Hola ${cliente.nombre}</p>
                     <button type="button" class="btn-editar" id="btn-editar">Editar datos</button>
-
+                    <a href="mis-pedidos.jsp" class="btn-editar">Mis Pedidos</a>
                     <div class ="form-cuenta">
                         <form action="PerfilServlet" method="POST" id="form-perfil">
                             <h2>INFORMACIÓN PERSONAL</h2>
@@ -57,6 +57,7 @@
         </main>
 
         <%@ include file = "/WEB-INF/fragments/footer.jspf" %>
+        <script src="js/micuenta.js"></script>
 
     </body>
 </html>

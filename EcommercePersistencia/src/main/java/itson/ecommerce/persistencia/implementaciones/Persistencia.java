@@ -211,6 +211,16 @@ public class Persistencia implements IPersistencia {
     }
 
     @Override
+    public List<PedidoDTO> obtenerPedidosUsuario(String correo) throws PersistenciaException {
+        List<Pedido> pedidosEntidad = pedidosDAO.obtenerPedidosUsuario(correo);
+        List<PedidoDTO> pedidosDTO = new ArrayList<>();
+        for (Pedido p : pedidosEntidad) {
+            pedidosDTO.add(PedidoMapper.toDTO(p));
+        }
+        return pedidosDTO;
+    }
+
+    @Override
     public PedidoDTO actualizarEstadoPedido(Long idPedido, String nuevoEstado) throws PersistenciaException {
         try {
             Pedido p = pedidosDAO.actualizarEstado(idPedido, nuevoEstado);
@@ -360,31 +370,36 @@ public class Persistencia implements IPersistencia {
         }
     }
 
-    public ClienteDTO obtenerClienteDTO(String correo) throws PersistenciaException {
-        try {
-            if (correo == null || correo.isBlank()) {
-                return null;
-            }
-            Usuario cliente = usuarioDAO.buscarPorCorreo(correo);
-            if (cliente == null) {
-                return null;
-            }
-            ClienteDTO dto = new ClienteDTO();
-            dto.setId(cliente.getId());
-            dto.setNombre(cliente.getNombre());
-            dto.setCorreoElectronico(cliente.getCorreoElectronico());
-            return dto;
-        } catch (PersistenciaException ex) {
-            throw new PersistenciaException("Error al obtener Cliente por correo.", ex);
+    @Override
+    public ClienteDTO obtenerClientePorCorreo(String correo) throws PersistenciaException {
+        Usuario u = usuarioDAO.buscarPorCorreo(correo);
+        if (u instanceof Cliente) {
+            return ClienteMapper.toDTO((Cliente) u);
         }
+        return null;
     }
 
     @Override
-    public Usuario actualizar(Usuario usuario) throws PersistenciaException {
-        try {
-            return usuarioDAO.actualizar(usuario);
-        } catch (Exception e) {
-            throw new PersistenciaException("Error al actualizar el usuario.");
+    public ClienteDTO actualizarCliente(ClienteDTO dto) throws PersistenciaException {
+        Usuario usuario = usuarioDAO.buscarPorCorreo(dto.getCorreoElectronico());
+        if (usuario == null) {
+            throw new PersistenciaException("Cliente no encontrado.");
+        }
+        if (usuario instanceof Cliente) {
+            Cliente cliente = (Cliente) usuario;
+            cliente.setNombre(dto.getNombre());
+            cliente.setTelefono(dto.getTelefono());
+            if (cliente.getDireccion() == null) {
+                cliente.setDireccion(new Direccion());
+            }
+            cliente.getDireccion().setCalle(dto.getCalle());
+            cliente.getDireccion().setCiudad(dto.getCiudad());
+            cliente.getDireccion().setEstado(dto.getEstado());
+            cliente.getDireccion().setCodigoPostal(dto.getCodigoPostal());
+            Cliente actualizado = (Cliente) usuarioDAO.actualizar(cliente);
+            return ClienteMapper.toDTO(actualizado);
+        } else {
+            throw new PersistenciaException("El usuario ingresado no es un Cliente.");
         }
     }
 
@@ -450,11 +465,30 @@ public class Persistencia implements IPersistencia {
     }
 
     @Override
-    public ClienteDTO obtenerClientePorId(Long idUsuario) throws PersistenciaException {
+    public ClienteDTO obtenerClientePorId(Long id) throws PersistenciaException {
         try {
-            return usuarioDAO.obtenerClientePorId(idUsuario);
-        } catch (Exception e) {
-            throw new PersistenciaException("Error al buscar el cliente");
+            return usuarioDAO.obtenerClientePorId(id);
+        } catch (Exception ex) {
+            throw new PersistenciaException("Error al obtener cliente por ID desde persistencia.", ex);
+        }
+    }
+
+    @Override
+    public void crearResena(NuevaResenaDTO dto) throws PersistenciaException {
+        try {
+            Usuario usuario = usuarioDAO.buscarPorId(dto.getIdCliente());
+            if (usuario == null || !(usuario instanceof Cliente)) {
+                throw new PersistenciaException("El cliente con ID " + dto.getIdCliente() + " no existe o no es válido.");
+            }
+            Cliente cliente = (Cliente) usuario;
+            Producto producto = productosDAO.obtenerPorId(dto.getIdProducto());
+            if (producto == null) {
+                throw new PersistenciaException("El producto con ID " + dto.getIdProducto() + " no existe.");
+            }
+            EstadoResena estadoInicial = EstadoResena.PENDIENTE;
+            resenasDAO.crearResena(cliente, producto, dto.getCalificacion(), dto.getComentario(), estadoInicial);
+        } catch (Exception ex) {
+            throw new PersistenciaException("Error al crear la reseña: " + ex.getMessage(), ex);
         }
     }
 }

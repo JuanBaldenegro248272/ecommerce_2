@@ -4,66 +4,79 @@
  */
 
 
-var productosGlobales = []; 
+var productosGlobales = [];
 
 document.addEventListener("DOMContentLoaded", () => {
     cargarProductos();
 });
 
 async function cargarProductos() {
-    // Referencias a contenedores (Inicio y Formatos)
     const containerStore = document.getElementById("contenedor-productos");
     const containerRec = document.getElementById("container-recommended");
-    const containerFormato = document.getElementById("contenedorProductos"); // ID de formato.jsp
+    const containerFormato = document.getElementById("contenedorProductos");
 
-    // Si no existe ningún contenedor, no hacemos nada
-    if (!containerStore && !containerRec && !containerFormato) return;
+    if (!containerStore && !containerRec && !containerFormato)
+        return;
 
     try {
         const response = await fetch('resources/productos');
-        if (!response.ok) throw new Error("Error de conexión");
+        if (!response.ok)
+            throw new Error("Error de conexión");
 
         const productos = await response.json();
-        
-        // Agrupar por Álbum
+
         const grupos = {};
         productos.forEach(p => {
-            // Usamos ID de álbum o ID de producto como fallback
-            const idAlbum = p.albumId || p.idProducto; 
-            if (!grupos[idAlbum]) grupos[idAlbum] = [];
+            const idAlbum = p.albumId || p.idProducto;
+            if (!grupos[idAlbum])
+                grupos[idAlbum] = [];
             grupos[idAlbum].push(p);
         });
 
         const listaAgrupada = Object.values(grupos);
-        
-        // 2. IMPORTANTE: Guardamos los datos en la variable global
-        productosGlobales = listaAgrupada; 
 
-        // --- LÓGICA PARA FORMATO.JSP ---
+        productosGlobales = listaAgrupada;
+
         if (containerFormato) {
             containerFormato.innerHTML = "";
-            if (listaAgrupada.length === 0) {
-                containerFormato.innerHTML = "<p>No hay productos.</p>";
+            const urlParams = new URLSearchParams(window.location.search);
+            const generoUrl = urlParams.get('genero');
+            let listaParaMostrar = listaAgrupada;
+            if (generoUrl) {
+                console.log("Filtrando por género:", generoUrl);
+                listaParaMostrar = listaAgrupada.filter(grupo => {
+                    const p = grupo[0];
+                    if (generoBuscado == "new" || generoBuscado == "nuevos") {
+                        const fechaActual = new Date();
+                        const anioActual = fechaActual.getFullYear();
+                        return p.
+                    }
+                    return grupo.some(p => {
+                        if (p.generos && Array.isArray(p.generos)) {
+                            return p.generos.some(g => g.toLowerCase().includes(generoUrl.toLowerCase()));
+                        }
+                        return (p.descripcion + " " + p.nombre).toLowerCase().includes(generoUrl.toLowerCase());
+                    });
+                });
+            }
+            if (listaParaMostrar.length === 0) {
+                containerFormato.innerHTML = `<p style="text-align:center; width:100%; margin-top:20px;">No se encontraron productos de ${generoUrl}.</p>`;
             } else {
-                listaAgrupada.forEach(grupo => {
-                    // 'false' para mostrar precio/diseño normal
+                listaParaMostrar.forEach(grupo => {
                     const tarjeta = crearTarjetaAgrupada(grupo, false);
-                    tarjeta.style.width = "100%"; 
+                    tarjeta.style.width = "100%";
                     containerFormato.appendChild(tarjeta);
                 });
             }
         }
 
-        // --- LÓGICA PARA STORE.JSP (Tu código original) ---
         if (containerStore) {
             containerStore.innerHTML = "";
             listaAgrupada.forEach(grupo => containerStore.appendChild(crearTarjetaAgrupada(grupo, false)));
         }
-        
+
         if (containerRec) {
             const popList = listaAgrupada.slice(0, 5);
-            // ... resto de tu lógica de recomendados ...
-            // (Puedes dejar tu código original de llenado de store aquí)
         }
 
     } catch (error) {
@@ -71,7 +84,6 @@ async function cargarProductos() {
     }
 }
 
-// Función reutilizable para crear tarjetas
 function crearTarjetaAgrupada(grupo, esIndex) {
     const pPrincipal = grupo[0];
     const el = document.createElement("article");
@@ -81,7 +93,6 @@ function crearTarjetaAgrupada(grupo, esIndex) {
 
     let iconosHtml = '';
     grupo.forEach(variante => {
-        // Protección contra nulos
         let fmt = variante.formato || (variante.formatoProducto ? variante.formatoProducto.nombre : '');
         let iconPath = getIconPath(fmt);
         iconosHtml += `<img src="${iconPath}" title="${fmt}" style="width: 24px; margin-right: 5px;">`;
@@ -107,27 +118,35 @@ function crearTarjetaAgrupada(grupo, esIndex) {
 }
 
 function getIconPath(formato) {
-    if (!formato) return 'icons/cdicon.png';
+    if (!formato)
+        return 'icons/cdicon.png';
     const fmt = formato.toUpperCase();
-    if (fmt.includes('VINYL') || fmt.includes('LP') || fmt.includes('VINILO')) return 'icons/vinylicon.png';
-    if (fmt.includes('CASSETTE')) return 'icons/casseteicon.png';
+    if (fmt.includes('VINYL') || fmt.includes('LP') || fmt.includes('VINILO'))
+        return 'icons/vinylicon.png';
+    if (fmt.includes('CASSETTE'))
+        return 'icons/casseteicon.png';
     return 'icons/cdicon.png';
 }
 
 async function agregarAlCarrito(idProducto) {
     try {
-        const response = await fetch(`resources/carrito/agregar?idProducto=${idProducto}`, { method: 'POST' });
+        const response = await fetch(`resources/carrito/agregar?idProducto=${idProducto}`, {method: 'POST'});
         if (response.ok) {
             const modal = document.getElementById('cartModal');
-            if (modal) modal.style.display = 'flex';
-            else alert("¡Producto agregado!");
+            if (modal)
+                modal.style.display = 'flex';
+            else
+                alert("¡Producto agregado!");
         } else {
             alert("Error al agregar");
         }
-    } catch (error) { console.error(error); }
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 function closeModal() {
     const modal = document.getElementById('cartModal');
-    if (modal) modal.style.display = 'none';
+    if (modal)
+        modal.style.display = 'none';
 }

@@ -1973,6 +1973,124 @@ nav a:hover {
     color: inherit;
 }
 
+.container-pedidos {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.tabla-pedidos {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.tabla-pedidos th, .tabla-pedidos td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.tabla-pedidos th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    color: #333;
+}
+
+.estado-badge {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+.estado-pendiente {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.estado-completado {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.estado-cancelado {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.btn-ver {
+    background-color: #333;
+    color: white;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 0.9em;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-ver:hover {
+    background-color: #555;
+}
+
+.resenas-section {
+    margin-top: 30px;
+    color: white;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.resenas-section h3 {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #555;
+    padding-bottom: 10px;
+}
+
+.form-group-resena {
+    margin-bottom: 15px;
+}
+
+.form-group-resena label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.input-resena {
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-family: sans-serif;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.select-calificacion {
+    max-width: 200px;
+}
+
+.btn-enviar-resena {
+    background-color: #28a745;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    display: block;
+    margin-top: 10px;
+}
+
+.btn-enviar-resena:hover {
+    background-color: #218838;
+}
+
 /* responsive */
 
 @media (max-width: 968px) {
@@ -2043,44 +2161,44 @@ nav a:hover {
 }
 
 .user-greeting {
-    margin-left: 60px; 
+    margin-left: 60px;
     font-family: var(--outfit);
     font-size: 16px;
-    font-weight: 600; 
+    font-weight: 600;
     text-transform: uppercase;
-    color: #ffd700; 
+    color: #ffd700;
     letter-spacing: 1px;
 }
 
 .logout-link {
-    color: #ffcccc !important; 
+    color: #ffcccc !important;
     font-weight: 500;
 }
 
 .logout-link:hover {
-    color: #ff6b6b !important; 
+    color: #ff6b6b !important;
     text-decoration: underline;
 }
 
 .account-icon-link img {
-   
-    height: 100%; 
+
+    height: 100%;
     width: auto;
     transition: transform 0.2s ease;
 }
 
 .account-icon-link:hover img {
-    transform: scale(1.1); 
+    transform: scale(1.1);
 }
 
 @media (max-width: 768px) {
     .user-greeting {
         margin-left: 20px;
         font-size: 14px;
-        display: block; 
+        display: block;
         margin-bottom: 5px;
     }
-    
+
     .logout-link {
         margin-left: 20px;
         font-size: 14px;

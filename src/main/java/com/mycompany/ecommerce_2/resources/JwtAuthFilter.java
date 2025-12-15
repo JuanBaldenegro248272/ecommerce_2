@@ -28,14 +28,14 @@ public class JwtAuthFilter implements ContainerRequestFilter {
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
         String path = requestContext.getUriInfo().getPath();
-        if (!path.contains("checkout")) {
+        if (!path.contains("checkout") && !path.contains("usuario")) {
             return;
         }
 
         String authHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
-                    .entity("Se requiere Token de autenticación").build());
+                    .entity("{\"error\": \"Se requiere Token de autenticación\"}").build());
             return;
         }
 
@@ -45,6 +45,7 @@ public class JwtAuthFilter implements ContainerRequestFilter {
             DecodedJWT jwt = SecurityService.validateToken(token);
             String correo = jwt.getSubject();
             boolean esAdmin = jwt.getClaim("admin").asBoolean();
+
             final SecurityContext currentSecurityContext = requestContext.getSecurityContext();
             requestContext.setSecurityContext(new SecurityContext() {
 
@@ -73,7 +74,7 @@ public class JwtAuthFilter implements ContainerRequestFilter {
             });
         } catch (Exception e) {
             requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
-                    .entity("Token inválido o expirado: " + e.getMessage()).build());
+                    .entity("{\"error\": \"Token inválido o expirado\"}").build());
         }
     }
 }

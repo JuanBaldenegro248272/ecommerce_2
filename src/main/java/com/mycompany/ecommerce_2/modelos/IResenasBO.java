@@ -5,6 +5,7 @@
 package com.mycompany.ecommerce_2.modelos;
 
 import com.mycompany.ecommerce_2.exceptions.BusinessException;
+import itson.ecommerce.persistencia.dtos.NuevaResenaDTO;
 import itson.ecommerce.persistencia.dtos.ResenaListaDTO;
 import java.util.List;
 
@@ -20,4 +21,6 @@ public interface IResenasBO {
     public abstract void aprobarResena(Long id) throws BusinessException;
     
     public abstract void eliminarResena(Long id) throws BusinessException;
+    
+    public abstract void publicarResena(NuevaResenaDTO nuevaResena) throws BusinessException;
 }

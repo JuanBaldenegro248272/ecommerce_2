@@ -15,6 +15,7 @@ import itson.ecommerce.persistencia.utils.ManejadorConexiones;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -93,4 +94,25 @@ public class PedidoDAO implements IPedidoDAO {
         }
     }
 
+    @Override
+    public List<Pedido> obtenerPedidosUsuario(String correo) throws PersistenciaException {
+        EntityManager em = ManejadorConexiones.getEntityManager();
+        try {
+            String jpql = "SELECT p FROM Pedido p "
+                    + "JOIN FETCH p.cliente c "
+                    + "LEFT JOIN FETCH p.direccion "
+                    + "LEFT JOIN FETCH p.pago "
+                    + "WHERE c.correoElectronico = :correo "
+                    + "ORDER BY p.fechaCompra DESC";
+            TypedQuery<Pedido> query = em.createQuery(jpql, Pedido.class);
+            query.setParameter("correo", correo);
+            return query.getResultList();
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al obtener los pedidos del usuario: " + correo, e);
+        } finally {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
+        }
+    }
 }
