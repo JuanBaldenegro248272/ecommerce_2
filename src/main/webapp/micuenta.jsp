@@ -24,7 +24,7 @@
                 <div class ="cuenta-container">
                     <h1 class ="cuenta-titulo">MI CUENTA</h1>
                     <p class = "cuenta-bienvenida">Hola ${cliente.nombre}</p>
-                    <button class="btn-editar" id="btn-editar">Editar datos</button>
+                    <button type="button" class="btn-editar" id="btn-editar">Editar datos</button>
 
                     <div class ="form-cuenta">
                         <form action="PerfilServlet" method="POST" id="form-perfil">

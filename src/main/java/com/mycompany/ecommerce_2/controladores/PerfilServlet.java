@@ -108,8 +108,7 @@ public class PerfilServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        UsuarioDTO usuarioLogueado = (session != null) ? (UsuarioDTO) session.getAttribute("usuario") : null;
-
+        UsuarioDTO usuarioLogueado = (session != null) ? (UsuarioDTO) session.getAttribute("usuarioLogueado") : null;
         if (usuarioLogueado == null) {
             response.sendRedirect("login.jsp");
             return;
@@ -119,8 +118,8 @@ public class PerfilServlet extends HttpServlet {
         String telefono = request.getParameter("telefono");
         String calle = request.getParameter("calle");
         String ciudad = request.getParameter("ciudad");
-        // String estado = request.getParameter("estado");
-        // String cp = request.getParameter("codigoPostal");
+        String estado = request.getParameter("estado");
+        String cp = request.getParameter("codigoPostal");
 
         ClienteDTO clienteActualizado = new ClienteDTO();
         clienteActualizado.setId(usuarioLogueado.getId()); 
@@ -128,11 +127,13 @@ public class PerfilServlet extends HttpServlet {
         clienteActualizado.setTelefono(telefono);
         clienteActualizado.setCalle(calle);
         clienteActualizado.setCiudad(ciudad);
+        clienteActualizado.setEstado(estado);
+        clienteActualizado.setCodigoPostal(Integer.parseInt(cp));
         
         usuarioBO.actualizarCliente(clienteActualizado);
 
         usuarioLogueado.setNombre(nombre);
-        session.setAttribute("usuario", usuarioLogueado);
+        session.setAttribute("usuarioLogueado", usuarioLogueado);
 
         response.sendRedirect("PerfilServlet"); 
     }
