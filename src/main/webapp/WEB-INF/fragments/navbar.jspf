@@ -7,22 +7,14 @@
             <a href="#"><img src="${pageContext.request.contextPath}/icons/twlogo.png" alt="twitter"></a>
             <a href="#"><img src="${pageContext.request.contextPath}/icons/fblogo.png" alt="facebook"></a>
         </div>
-        
+
         <div class="top-links">
             <a href="${pageContext.request.contextPath}/contact.jsp">contact</a>
             <a href="${pageContext.request.contextPath}/about.jsp">about</a>
 
-           
-            <c:choose>
-                <c:when test="${not empty sessionScope.usuarioLogueado}">
-                   
-                    <span class="user-greeting">HOLA, ${sessionScope.usuarioLogueado.nombre}</span>
-                    <a href="${pageContext.request.contextPath}/LogoutServlet" class="logout-link">LOG OUT</a>
-                </c:when>
-                <c:otherwise>
-                    <a href="${pageContext.request.contextPath}/login.jsp">LOG IN</a>
-                </c:otherwise>
-            </c:choose>
+            <span id="top-bar-auth">
+                <a href="${pageContext.request.contextPath}/login.jsp">LOG IN</a>
+            </span>
         </div>
     </div>
 
@@ -33,34 +25,65 @@
                 <span class="resaltado">ECO</span>store
             </span>
         </a>
-        
+
         <nav>
             <a href="${pageContext.request.contextPath}/store.jsp">STORE</a>
             <a href="${pageContext.request.contextPath}/formato.jsp">FORMATO</a>
             <a href="${pageContext.request.contextPath}/estilos.jsp">ESTILOS</a>
         </nav>
-        
+
         <div class="iconos-derecha">
             <a href='#'>
                 <img src="${pageContext.request.contextPath}/icons/searchicon.png" alt="search"/>
             </a>
-            
-            <a href="${pageContext.request.contextPath}/carrito">
+
+            <a href="${pageContext.request.contextPath}/carrito.jsp">
                 <img src="${pageContext.request.contextPath}/icons/carticon.png" alt="shopping bag"/>
             </a>
-            
-            <c:choose>
-                <c:when test="${not empty sessionScope.usuarioLogueado}">
-                    <a href='${pageContext.request.contextPath}/PerfilServlet' class="account-icon-link" title="Mi Cuenta">
-                        <img src="${pageContext.request.contextPath}/icons/accounticon.png" alt="my account"/>
-                    </a>
-                </c:when>
-                <c:otherwise>
-                    <a href='${pageContext.request.contextPath}/login.jsp' class="account-icon-link" title="Iniciar Sesión">
-                        <img src="${pageContext.request.contextPath}/icons/accounticon.png" alt="login"/>
-                    </a>
-                </c:otherwise>
-            </c:choose>
+
+            <span id="user-icon-container">
+                <a href='${pageContext.request.contextPath}/login.jsp' class="account-icon-link" title="Iniciar Sesión">
+                    <img src="${pageContext.request.contextPath}/icons/accounticon.png" alt="login"/>
+                </a>
+            </span>
         </div>
     </div>
 </header>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+        const nombre = localStorage.getItem('usuario_nombre');
+        const token = localStorage.getItem('jwt_token');
+        const contextPath = "${pageContext.request.contextPath}";
+        const authContainer = document.getElementById("top-bar-auth");
+        const iconContainer = document.getElementById("user-icon-container");
+
+        if (token && nombre) {
+            if (authContainer) {
+                authContainer.innerHTML = `
+    <span class="user-greeting" style="font-weight:bold; margin-right:10px; text-transform: uppercase;">HOLA, \${nombre}</span>
+    <a href="#" id="btn-logout" class="logout-link" style="color: red; font-size: 0.9em;">LOG OUT</a>
+`;
+            }
+            if (iconContainer) {
+                iconContainer.innerHTML = `
+    <a href="\${contextPath}/micuenta.jsp" class="account-icon-link" title="Mi Cuenta">
+        <img src="\${contextPath}/icons/accounticon.png" alt="my account"/>
+    </a>
+`;
+            }
+            const btnLogout = document.getElementById("btn-logout");
+            if (btnLogout) {
+                btnLogout.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    if (confirm("¿Estás seguro de que deseas cerrar sesión?")) {
+                        localStorage.removeItem('jwt_token');
+                        localStorage.removeItem('usuario_nombre');
+                        window.location.href = `\${contextPath}/index.jsp`;
+                    }
+                });
+            }
+        }
+    });
+</script>

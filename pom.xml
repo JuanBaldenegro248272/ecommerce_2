@@ -42,7 +42,8 @@
         </dependency>
 
         <dependency>
-            <groupId>com.mycompany</groupId> <artifactId>EcommercePersistencia</artifactId>
+            <groupId>com.mycompany</groupId> 
+            <artifactId>EcommercePersistencia</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
@@ -100,7 +101,13 @@
             <artifactId>jersey-media-json-binding</artifactId>
             <version>3.1.3</version>
         </dependency>
-
+        
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>4.4.0</version>
+        </dependency>
+        
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>EcommercePersistencia</artifactId>
@@ -141,7 +148,7 @@
             <groupId>org.glassfish.web</groupId>
             <artifactId>jakarta.servlet.jsp.jstl</artifactId>
             <version>3.0.1</version>
-    </dependency>
+        </dependency>
     </dependencies>
 
     <build>

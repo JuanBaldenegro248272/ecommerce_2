@@ -3,55 +3,40 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
  */
 
-document.addEventListener('DOMContentLoaded', () => {
-    const loginForm = document.getElementById('loginForm');
-    const errorMessageDiv = document.getElementById('error-message');
+document.getElementById('loginForm').addEventListener('submit', async function (event) {
+    event.preventDefault(); // Evita que el formulario recargue la página
+    const correo = document.querySelector('input[name="correo"]').value;
+    const contrasena = document.querySelector('input[name="contrasena"]').value;
 
-    if (loginForm) {
-        loginForm.addEventListener('submit', async (event) => {
-            event.preventDefault();
-            
-            errorMessageDiv.style.display = 'none';
-            errorMessageDiv.textContent = '';
+    const datos = {correo, contrasena};
 
-            const correo = document.getElementById('email-login').value;
-            const contrasena = document.getElementById('password-login').value;
-
-            const credenciales = {
-                correo: correo,
-                contrasena: contrasena
-            };
-
-            try {
-                const response = await fetch('resources/auth/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(credenciales)
-                });
-
-                if (response.ok) {
-                    const usuario = await response.json();
-                    console.log('Login exitoso:', usuario);
-                    
-                    window.location.href = 'index.jsp'; 
-                } else {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error || 'Error al iniciar sesión');
-                }
-
-            } catch (error) {
-                console.error('Error:', error);
-                errorMessageDiv.textContent = error.message;
-                errorMessageDiv.style.display = 'block';
-                errorMessageDiv.style.color = '#721c24';
-                errorMessageDiv.style.backgroundColor = '#f8d7da';
-                errorMessageDiv.style.padding = '10px';
-                errorMessageDiv.style.borderRadius = '5px';
-                errorMessageDiv.style.marginBottom = '15px';
-                errorMessageDiv.style.textAlign = 'center';
-            }
+    try {
+        const response = await fetch('resources/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(datos)
         });
+
+        if (response.ok) {
+            const data = await response.json();
+            localStorage.setItem('jwt_token', data.token);
+            if (data.usuario)
+                localStorage.setItem('usuario_nombre', data.usuario);
+            alert("Login exitoso. Redirigiendo...");
+            if (correo.includes("admin")) {
+                window.location.href = 'dashboard-admin.jsp';
+            } else {
+                window.location.href = 'index.jsp';
+            }
+        } else {
+            const errorData = await response.json();
+            alert("Error: " + (errorData.error || "Credenciales inválidas"));
+        }
+
+    } catch (error) {
+        console.error("Error en login:", error);
+        alert("Error de conexión con el servidor.");
     }
 });

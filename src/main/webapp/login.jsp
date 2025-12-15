@@ -20,31 +20,29 @@
                 <h2>INICIAR SESIÓN</h2>
                 <p>Bienvenido de vuelta!</p>
 
-                
-                <form class="login-form" action="LoginServlet" method="post">
+                <form id="loginForm" class="login-form">
+
                     <label for="email-login">CORREO ELECTRÓNICO</label>
                     <input 
                         type="email" 
                         id="email-login" 
-                        name="email-login"
+                        name="correo"  
                         class="login-input" 
                         required
-                    >
-
+                        >
                     <label for="password-login">CONTRASEÑA</label>
                     <input 
                         type="password" 
                         id="password-login" 
-                        name="password-login"
+                        name="contrasena" 
                         class="login-input" 
                         required
-                    >
-                    
+                        >
                     <button type="submit" class="login-button">ACCEDER</button>
                 </form>
-                <div id="error-message" style="display:none; color: red; text-align: center; margin-top: 10px;">
-                    
-                </div>
+
+                <div id="error-message" style="display:none; color: red; text-align: center; margin-top: 10px;"></div>
+
                 <p class="switch-form-link">
                     ¿No tienes cuenta? 
                     <a href="register.jsp">Regístrate aquí</a>
@@ -52,6 +50,6 @@
             </div>
         </main>
 
+        <script src="js/login.js?v=1.1"></script>
     </body>
 </html>
-

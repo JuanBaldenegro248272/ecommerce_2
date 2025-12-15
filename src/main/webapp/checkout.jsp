@@ -23,7 +23,7 @@
                 <form id="checkout-form" class="checkout-form">
                     <input type="hidden" id="idCarrito" value="${idCarrito}">
                     <input type="hidden" id="idDireccion" value="${idDireccion}">
-                    <input type="hidden" id="idPago" value="${idPago}">
+                    <input type="hidden" id="idPago" value="1">
                     <input type="hidden" id="correo" value="${correo}">
 
                     <h2>Datos de Envío</h2>
@@ -119,22 +119,19 @@
                 <div class="summary-details">
                     <div class="summary-line">
                         <span>Subtotal</span>
-                        <span>$ ${subtotal}</span> 
-                    </div>
+                        <span id="summary-subtotal">$0.00</span>  </div>
                     <div class="summary-line">
                         <span>Envío</span>
-                        <span>$ ${costoEnvio}</span>
-                    </div>
+                        <span id="summary-shipping">$0.00</span> </div>
                     <div class="summary-line">
                         <span>Impuestos</span>
-                        <span>$ ${impuestos}</span>
-                    </div>
+                        <span id="summary-tax">$0.00</span>      </div>
                 </div>
 
                 <div class="summary-total">
                     <span>TOTAL</span>
-                    <span class="total-value">$ ${totalFinal}</span>
-                </div>
+                    <span class="total-value" id="summary-total">$0.00</span> </div>
+
                 <button type="button" id="btn-checkout" class="checkout-submit-btn">
                     Realizar Pedido
                 </button>
