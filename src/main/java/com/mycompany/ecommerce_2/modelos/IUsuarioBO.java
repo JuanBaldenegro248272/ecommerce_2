@@ -5,6 +5,7 @@
 package com.mycompany.ecommerce_2.modelos;
 
 import com.mycompany.ecommerce_2.exceptions.BusinessException;
+import itson.ecommerce.persistencia.dtos.ClienteDTO;
 import itson.ecommerce.persistencia.dtos.UsuarioDTO;
 import itson.ecommerce.persistencia.exceptions.PersistenciaException;
 
@@ -16,6 +17,8 @@ public interface IUsuarioBO {
     
         public UsuarioDTO login(String correo, String contrasena) throws BusinessException, PersistenciaException;
         public UsuarioDTO actualizarUsuario(UsuarioDTO usuarioDTO) throws BusinessException, PersistenciaException;
+        public ClienteDTO obtenerDatosCliente(Long idUsuario)throws BusinessException, PersistenciaException;
+        public void actualizarCliente(ClienteDTO clienteDTO);
 
     
 }

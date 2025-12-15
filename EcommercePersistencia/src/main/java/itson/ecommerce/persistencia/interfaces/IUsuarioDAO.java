@@ -4,6 +4,7 @@
  */
 package itson.ecommerce.persistencia.interfaces;
 
+import itson.ecommerce.persistencia.dtos.ClienteDTO;
 import itson.ecommerce.persistencia.entidades.Usuario;
 import itson.ecommerce.persistencia.exceptions.PersistenciaException;
 
@@ -18,6 +19,7 @@ public interface IUsuarioDAO {
       public Usuario buscarPorCorreo(String correo) throws PersistenciaException;
       public Usuario buscarPorId(Long id) throws PersistenciaException ;
       public Usuario actualizar(Usuario usuario) throws PersistenciaException ;
+      public ClienteDTO obtenerClientePorId(Long idUsuario) throws PersistenciaException;
 
 
 }

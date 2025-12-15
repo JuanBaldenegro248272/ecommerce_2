@@ -36,6 +36,8 @@ public interface IPersistencia {
     public Usuario guardar(Usuario usuario) throws PersistenciaException;
     public Usuario buscarPorId(Long id) throws PersistenciaException ;
     public Usuario actualizar(Usuario usuario) throws PersistenciaException ;
+    public ClienteDTO obtenerClientePorId(Long idUsuario) throws PersistenciaException;
+
 
     // --- PEDIDOS ---
     public List<PedidoDTO> obtenerTodosPedidos() throws PersistenciaException;

@@ -448,4 +448,13 @@ public class Persistencia implements IPersistencia {
             throw new PersistenciaException("Error inesperado al crear pedido.", ex);
         }
     }
+
+    @Override
+    public ClienteDTO obtenerClientePorId(Long idUsuario) throws PersistenciaException {
+        try {
+            return usuarioDAO.obtenerClientePorId(idUsuario);
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al buscar el cliente");
+        }
+    }
 }

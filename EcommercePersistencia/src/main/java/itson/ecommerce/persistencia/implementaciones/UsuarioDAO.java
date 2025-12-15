@@ -4,11 +4,14 @@
  */
 package itson.ecommerce.persistencia.implementaciones;
 
+import itson.ecommerce.persistencia.dtos.ClienteDTO;
+import itson.ecommerce.persistencia.entidades.Cliente;
 import itson.ecommerce.persistencia.entidades.Usuario;
 import itson.ecommerce.persistencia.exceptions.PersistenciaException;
 import itson.ecommerce.persistencia.interfaces.IUsuarioDAO;
 import itson.ecommerce.persistencia.utils.ManejadorConexiones;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 /**
@@ -81,5 +84,42 @@ public class UsuarioDAO implements IUsuarioDAO{
             em.close();
         }
     }
-    
+ 
+
+    public ClienteDTO obtenerClientePorId(Long idUsuario) throws PersistenciaException {
+         EntityManager em = ManejadorConexiones.getEntityManager();
+        
+         try {
+        TypedQuery<Cliente> query = em.createQuery(
+            "SELECT c FROM Cliente c WHERE c.id = :idUsuario", Cliente.class);
+        query.setParameter("idUsuario", idUsuario);
+        
+        Cliente cliente = query.getSingleResult();
+        
+        ClienteDTO dto = new ClienteDTO();
+        dto.setId(cliente.getId());
+        dto.setNombre(cliente.getNombre());
+        dto.setCorreoElectronico(cliente.getCorreoElectronico()); 
+        
+        dto.setTelefono(cliente.getTelefono());
+        
+        if (cliente.getDireccion() != null) {
+            dto.setIdDireccion(cliente.getDireccion().getId());
+            dto.setCalle(cliente.getDireccion().getCalle());
+            dto.setCiudad(cliente.getDireccion().getCiudad());
+            dto.setCodigoPostal(cliente.getDireccion().getCodigoPostal());
+            dto.setColonia(cliente.getDireccion().getColonia());
+            dto.setEstado(cliente.getDireccion().getEstado());
+            
+        }
+        
+        return dto;
+        
+    } catch (Exception ex) {
+        throw new PersistenciaException("Error al obtener datos del cliente", ex);
+    } finally {
+        em.close();
+    }
+}
+
 }

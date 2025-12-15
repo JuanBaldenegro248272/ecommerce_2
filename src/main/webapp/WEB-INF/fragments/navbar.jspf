@@ -12,10 +12,10 @@
             <a href="${pageContext.request.contextPath}/contact.jsp">contact</a>
             <a href="${pageContext.request.contextPath}/about.jsp">about</a>
 
-            <%-- LÓGICA DE SESIÓN --%>
+           
             <c:choose>
                 <c:when test="${not empty sessionScope.usuarioLogueado}">
-                    <%-- Usamos clases en lugar de style inline --%>
+                   
                     <span class="user-greeting">HOLA, ${sessionScope.usuarioLogueado.nombre}</span>
                     <a href="${pageContext.request.contextPath}/LogoutServlet" class="logout-link">LOG OUT</a>
                 </c:when>

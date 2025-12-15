@@ -27,7 +27,7 @@ public class Cliente extends Usuario implements Serializable {
     @Column(name = "telefono", length = 12, nullable = false)
     private String telefono;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_direccion", nullable = false)
     private Direccion direccion;
 

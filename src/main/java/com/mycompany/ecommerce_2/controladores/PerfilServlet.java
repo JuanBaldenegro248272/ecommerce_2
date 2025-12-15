@@ -7,6 +7,7 @@ package com.mycompany.ecommerce_2.controladores;
 import com.mycompany.ecommerce_2.exceptions.BusinessException;
 import com.mycompany.ecommerce_2.modelos.IUsuarioBO;
 import com.mycompany.ecommerce_2.modelos.implementaciones.UsuarioBO;
+import itson.ecommerce.persistencia.dtos.ClienteDTO;
 import itson.ecommerce.persistencia.dtos.UsuarioDTO;
 import itson.ecommerce.persistencia.implementaciones.Persistencia;
 import java.io.IOException;
@@ -68,7 +69,9 @@ public class PerfilServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         HttpSession session = request.getSession(false);
+        
         UsuarioDTO usuarioSesion = (session != null) ? (UsuarioDTO) session.getAttribute("usuarioLogueado") : null;
 
        
@@ -78,9 +81,10 @@ public class PerfilServlet extends HttpServlet {
         }
 
         try {
-            //UsuarioDTO usuarioFresco = usuarioBO.buscarPorId(usuarioSesion.getId()); 
-            
-          
+            ClienteDTO cliente = usuarioBO.obtenerDatosCliente(usuarioSesion.getId());
+            if (cliente != null) {
+                request.setAttribute("cliente", cliente);
+            }
             request.setAttribute("datosUsuario", usuarioSesion);
 
             request.getRequestDispatcher("micuenta.jsp").forward(request, response);
@@ -104,36 +108,33 @@ public class PerfilServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        UsuarioDTO usuarioSesion = (session != null) ? (UsuarioDTO) session.getAttribute("usuarioLogueado") : null;
+        UsuarioDTO usuarioLogueado = (session != null) ? (UsuarioDTO) session.getAttribute("usuario") : null;
 
-        if (usuarioSesion == null) {
+        if (usuarioLogueado == null) {
             response.sendRedirect("login.jsp");
             return;
         }
 
-        String nuevoNombre = request.getParameter("nombre");
+        String nombre = request.getParameter("nombre");
+        String telefono = request.getParameter("telefono");
+        String calle = request.getParameter("calle");
+        String ciudad = request.getParameter("ciudad");
+        // String estado = request.getParameter("estado");
+        // String cp = request.getParameter("codigoPostal");
 
-        try {
-            
-            UsuarioDTO datosAActualizar = new UsuarioDTO();
-            datosAActualizar.setId(usuarioSesion.getId()); 
-            datosAActualizar.setNombre(nuevoNombre);
+        ClienteDTO clienteActualizado = new ClienteDTO();
+        clienteActualizado.setId(usuarioLogueado.getId()); 
+        clienteActualizado.setNombre(nombre);
+        clienteActualizado.setTelefono(telefono);
+        clienteActualizado.setCalle(calle);
+        clienteActualizado.setCiudad(ciudad);
+        
+        usuarioBO.actualizarCliente(clienteActualizado);
 
-            UsuarioDTO usuarioActualizado = usuarioBO.actualizarUsuario(datosAActualizar);
+        usuarioLogueado.setNombre(nombre);
+        session.setAttribute("usuario", usuarioLogueado);
 
-            session.setAttribute("usuarioLogueado", usuarioActualizado);
-
-            request.setAttribute("mensajeExito", "¡Perfil actualizado correctamente!");
-            doGet(request, response); 
-
-        } catch (BusinessException e) {
-            request.setAttribute("error", e.getMessage());
-            doGet(request, response);
-        } catch (Exception e) {
-            e.printStackTrace();
-            request.setAttribute("error", "Error interno al actualizar.");
-            doGet(request, response);
-        }
+        response.sendRedirect("PerfilServlet"); 
     }
 
 

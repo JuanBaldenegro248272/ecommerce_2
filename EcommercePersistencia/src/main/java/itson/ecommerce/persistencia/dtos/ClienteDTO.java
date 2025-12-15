@@ -17,6 +17,9 @@ public class ClienteDTO extends UsuarioDTO implements Serializable {
     private Long idCarrito;
     private String calle;
     private String ciudad;
+    private int codigoPostal;
+    private String colonia;
+    private String estado;
 
     public ClienteDTO() {
         super();
@@ -52,6 +55,30 @@ public class ClienteDTO extends UsuarioDTO implements Serializable {
 
     public void setCalle(String calle) {
         this.calle = calle;
+    }
+
+    public int getCodigoPostal() {
+        return codigoPostal;
+    }
+
+    public void setCodigoPostal(int codigoPostal) {
+        this.codigoPostal = codigoPostal;
+    }
+
+    public String getColonia() {
+        return colonia;
+    }
+
+    public void setColonia(String colonia) {
+        this.colonia = colonia;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public String getCiudad() {

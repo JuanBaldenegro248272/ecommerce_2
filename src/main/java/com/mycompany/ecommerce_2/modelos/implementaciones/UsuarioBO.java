@@ -6,7 +6,10 @@ package com.mycompany.ecommerce_2.modelos.implementaciones;
 
 import com.mycompany.ecommerce_2.exceptions.BusinessException;
 import com.mycompany.ecommerce_2.modelos.IUsuarioBO;
+import itson.ecommerce.persistencia.dtos.ClienteDTO;
 import itson.ecommerce.persistencia.dtos.UsuarioDTO;
+import itson.ecommerce.persistencia.entidades.Cliente;
+import itson.ecommerce.persistencia.entidades.Direccion;
 import itson.ecommerce.persistencia.entidades.Usuario;
 import itson.ecommerce.persistencia.exceptions.PersistenciaException;
 import itson.ecommerce.persistencia.interfaces.IPersistencia;
@@ -26,7 +29,7 @@ public class UsuarioBO implements IUsuarioBO {
     }
 
     public UsuarioDTO login(String correo, String contrasena) throws BusinessException, PersistenciaException {
-
+        try {
         if (correo == null || correo.isBlank()) {
             throw new BusinessException("Debe ingresar un correo.");
         }
@@ -51,9 +54,14 @@ public class UsuarioBO implements IUsuarioBO {
         }
 
         return UsuarioMapper.toDTO(usuario);
-    }
-    
+        }catch (PersistenciaException ex) {
+                throw new BusinessException("No se pudieron obtener los productos.");
+            }
+        }
     public UsuarioDTO actualizarUsuario(UsuarioDTO usuarioDTO) throws BusinessException, PersistenciaException {
+        try {
+            
+        
         if (usuarioDTO.getId() == null) {
             throw new BusinessException("El ID del usuario es requerido para actualizar.");
         }
@@ -68,5 +76,42 @@ public class UsuarioBO implements IUsuarioBO {
         Usuario usuarioActualizado = persistencia.actualizar(usuarioEntidad);
 
         return UsuarioMapper.toDTO(usuarioActualizado);
+        }catch (PersistenciaException ex) {
+            throw new BusinessException("No se pudieron obtener los productos.");
+        }
     }
+    
+    public ClienteDTO obtenerDatosCliente(Long idUsuario)throws BusinessException, PersistenciaException {
+        try {
+        return persistencia.obtenerClientePorId(idUsuario); 
+    } catch (PersistenciaException ex) {
+            throw new BusinessException("No se encontraron los datos del cliente.");
+        }
+    }
+    
+    public void actualizarCliente(ClienteDTO clienteDTO)  {
+     try {
+
+        Usuario usuario = persistencia.buscarPorId(clienteDTO.getId());
+        
+        if (usuario instanceof Cliente) {
+            Cliente cliente = (Cliente) usuario;
+         
+            cliente.setNombre(clienteDTO.getNombre());
+            cliente.setTelefono(clienteDTO.getTelefono());
+            
+            Direccion dir = cliente.getDireccion();
+            if (dir == null) {
+                dir = new Direccion();
+                cliente.setDireccion(dir);
+            }
+            dir.setCalle(clienteDTO.getCalle());
+            dir.setCiudad(clienteDTO.getCiudad());
+            persistencia.actualizar(cliente);
+        }
+    } catch (Exception e) {
+        System.err.println("Error al actualizar su usuario: " + e.getMessage());
+        e.printStackTrace();
+    }
+}
 }

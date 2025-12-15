@@ -8,13 +8,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Mi Cuenta</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href ="styles/styles.css"/> 
         <link rel ="stylesheet" href="styles/formatocss.css"/>
         <script src="js/micuenta.js"></script>
-
     </head>
     <body>
 
@@ -24,30 +23,30 @@
             <section class = "mi-cuenta">
                 <div class ="cuenta-container">
                     <h1 class ="cuenta-titulo">MI CUENTA</h1>
-                    <p class = "cuenta-bienvenida">Hola Fulanito de Tal</p>
+                    <p class = "cuenta-bienvenida">Hola ${cliente.nombre}</p>
                     <button class="btn-editar" id="btn-editar">Editar datos</button>
 
                     <div class ="form-cuenta">
-                        <form>
+                        <form action="PerfilServlet" method="POST" id="form-perfil">
                             <h2>INFORMACIÓN PERSONAL</h2>
-                            <input type="text" placeholder="Nombre completo" disabled>
-                            <input type="email" placeholder="Correo electrónico" disabled>
+                            <input type="text" name="nombre" placeholder="Nombre completo" value="${cliente.nombre}" disabled>
+                            <input type="email" name="email" placeholder="Correo electrónico" value="${cliente.correoElectronico}" disabled>
 
                             <h2> DIRECCIÓN DE ENVÍO</h2>
-                            <input type ="text" placeholder="Calle y número" disabled>
+                            <input type ="text" name="calle" placeholder="Calle y número" value="${cliente.calle}" disabled>
                             <div class="form-row">
-                                <input type="text" placeholder="Ciudad" disabled>
-                                <input type="text" placeholder="Estado" disabled>
+                                <input type="text" name="ciudad" placeholder="Ciudad" value="${cliente.ciudad}" disabled>
+                                <input type="text" name="estado" placeholder="Estado" disabled>
                             </div>
 
                             <div class="form-row">
-                                <input type="text" placeholder="Código postal" disabled>
-                                <input type="tel" placeholder="Número de teléfono" disabled>
+                                <input type="text" name="codigoPostal" placeholder="Código postal" disabled>
+                                <input type="tel" name="telefono" placeholder="Número de teléfono" value="${cliente.telefono}" disabled>
                             </div>
 
                             <div class="botones-form">
-                                <button type="button" class="btn-cancelar">Cancelar</button>
-                                <button type="submit" class="btn-guardar">Guardar cambios</button>
+                                <button type="button" class="btn-cancelar" id="btn-cancelar">Cancelar</button>
+                                <button type="submit" class="btn-guardar" id="btn-guardar" style="display: none;">Guardar cambios</button>
                             </div>
 
                         </form>
