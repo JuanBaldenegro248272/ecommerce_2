@@ -25,6 +25,9 @@ public class PedidoDTO {
     private Long idPago;
     private Long idCarrito;
 
+    public PedidoDTO() {
+    }
+
     public PedidoDTO(Long id, String estado, Calendar fechaCompra, Float total, String nombreCliente, String correoCliente, String direccion, String tipoPago, Long idCliente, Long idDireccion, Long idPago, Long idCarrito) {
         this.id = id;
         this.estado = estado;
