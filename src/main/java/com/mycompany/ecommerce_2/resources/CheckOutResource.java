@@ -32,7 +32,7 @@ import java.util.logging.Logger;
  *
  * @author jrasc
  */
-@Path("checkOut")
+@Path("checkout")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @RequestScoped
@@ -57,21 +57,20 @@ public class CheckOutResource {
     }
 
     @POST
-    @Path("/checkout")
-    public Response checkout(PedidoDTO pedidoDTO, @Context SecurityContext security) {
+    public Response checkout(PedidoDTO pedidoDTO, @Context SecurityContext security) { // <--- Usamos SecurityContext
         try {
-            String correo = null;
             Principal p = security.getUserPrincipal();
-            if (p != null) {
-                correo = p.getName();
-            }
-            if (correo == null || correo.isBlank()) {
+            if (p == null) {
                 return Response.status(Response.Status.UNAUTHORIZED).entity("No autenticado").build();
             }
+            String correo = p.getName();
             PedidoDTO pedido = pedidosBO.crearPedido(pedidoDTO, correo);
             return Response.ok(pedido).build();
         } catch (BusinessException ex) {
             return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Error interno").build();
         }
     }
 }
