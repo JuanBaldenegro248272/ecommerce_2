@@ -8,6 +8,9 @@ import itson.ecommerce.persistencia.dtos.NuevoProductoDTO;
 import itson.ecommerce.persistencia.entidades.Administrador;
 import itson.ecommerce.persistencia.entidades.Album;
 import itson.ecommerce.persistencia.entidades.Artista;
+import itson.ecommerce.persistencia.entidades.Carrito;
+import itson.ecommerce.persistencia.entidades.Cliente;
+import itson.ecommerce.persistencia.entidades.Direccion;
 import itson.ecommerce.persistencia.entidades.Genero;
 import itson.ecommerce.persistencia.entidades.GeneroAlbum;
 import itson.ecommerce.persistencia.implementaciones.AlbumDAO;
@@ -45,9 +48,29 @@ public class Main {
                 admin.setContrasena("admin123");
                 admin.setEsActiva(true);
                 usuarioDAO.guardar(admin);
-                System.out.println("Admin verificado.");
             } catch (Exception e) {
-                System.out.println("Nota: El admin ya existía o hubo un error al crearlo.");
+                System.out.println("El admin ya existía.");
+            }
+            try {
+                Cliente cliente = new Cliente();
+                cliente.setNombre("Juan Cliente");
+                cliente.setCorreoElectronico("cliente@store.com");
+                cliente.setContrasena("cliente123");
+                cliente.setTelefono("6441234567");
+                cliente.setEsActiva(true);
+                Direccion direccion = new Direccion();
+                direccion.setCalle("Calle Principal 123");
+                direccion.setColonia("Centro");
+                direccion.setCiudad("Ciudad Obregón");
+                direccion.setEstado("Sonora");
+                direccion.setCodigoPostal(85000);
+                cliente.setDireccion(direccion);
+                Carrito carrito = new Carrito();
+                carrito.setTotal(0.0f);
+                cliente.setCarrito(carrito);
+                usuarioDAO.guardar(cliente);
+            } catch (Exception e) {
+                System.out.println("El cliente ya existía.");
             }
             Genero rock = new Genero();
             rock.setNombre("Rock");
@@ -90,7 +113,6 @@ public class Main {
                 {"Lady Gaga", "The Fame", "thefame.png", 580f, pop}
             };
 
-            // 4. Recorrer catálogo creando combinaciones VARIADAS
             for (int i = 0; i < catalogo.length; i++) {
                 Object[] item = catalogo[i];
 
@@ -173,8 +195,6 @@ public class Main {
 
                 System.out.println("Insertado: " + nombreAlbum + " -> Formatos: " + formatosAInsertar);
             }
-
-            System.out.println("--- Carga de base de datos finalizada con éxito ---");
 
         } catch (Exception e) {
             e.printStackTrace();
