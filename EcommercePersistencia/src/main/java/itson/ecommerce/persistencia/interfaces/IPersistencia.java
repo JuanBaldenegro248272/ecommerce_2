@@ -23,7 +23,7 @@ public interface IPersistencia {
     public void eliminarProducto(Long id) throws PersistenciaException;
     public EditarProductoDTO obtenerProductoPorId(Long id) throws PersistenciaException;
     public void actualizarProducto(EditarProductoDTO dto) throws PersistenciaException;
-    public NuevoProductoDTO devolverProducto(Long id) throws PersistenciaException;
+    public ProductoListaDTO devolverProducto(Long id) throws PersistenciaException;
 
     // --- RESEÑAS ---
     public List<ResenaListaDTO> obtenerTodasResenas() throws PersistenciaException;

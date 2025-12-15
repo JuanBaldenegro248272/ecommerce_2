@@ -149,7 +149,7 @@ public class ProductosBO implements IProductosBO {
         }
     }
 
-    public NuevoProductoDTO devolverProducto(Long id) throws BusinessException {
+    public ProductoListaDTO devolverProducto(Long id) throws BusinessException {
         if (id == null) {
             throw new BusinessException("El id vacio");
         }

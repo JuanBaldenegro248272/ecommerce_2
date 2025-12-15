@@ -8,7 +8,6 @@ import com.mycompany.ecommerce_2.modelos.IProductosBO;
 import com.mycompany.ecommerce_2.modelos.IResenasBO;
 import com.mycompany.ecommerce_2.modelos.implementaciones.ProductosBO;
 import com.mycompany.ecommerce_2.modelos.implementaciones.ResenasBO;
-import itson.ecommerce.persistencia.dtos.NuevaResenaDTO;
 import itson.ecommerce.persistencia.dtos.NuevoProductoDTO;
 import itson.ecommerce.persistencia.dtos.ProductoListaDTO;
 import itson.ecommerce.persistencia.implementaciones.Persistencia;
@@ -16,8 +15,6 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.Path;
 import jakarta.enterprise.context.RequestScoped;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -53,10 +50,14 @@ public class ProductosResource {
     }
 
     @GET
+    @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response devolverProductoId(Long id) {
+    public Response devolverProductoId(@PathParam("id") Long id) {
         try {
-            NuevoProductoDTO producto = productosBO.devolverProducto(id);
+            ProductoListaDTO producto = productosBO.devolverProducto(id);
+            if (producto == null) {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            }
             return Response.ok(producto).build();
         } catch (Exception e) {
             e.printStackTrace();

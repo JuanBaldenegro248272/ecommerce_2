@@ -14,62 +14,105 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     try {
-        const response = await fetch(`api/productos/${idProducto}`);
+        const response = await fetch(`resources/productos/${idProducto}`);
         if (!response.ok)
             throw new Error("Error al cargar producto");
 
         const producto = await response.json();
-        document.getElementById('img-detalle').src = producto.imagenUrl;
-        document.getElementById('nombre-detalle').textContent = producto.nombre;
-        document.getElementById('artista-detalle').textContent = producto.artista;
-        document.getElementById('precio-detalle').textContent = `$${producto.precio}`;
-        document.getElementById('desc-detalle').textContent = producto.descripcion;
-        document.getElementById('btn-agregar-carrito').onclick = () => agregarAlCarrito(producto.id);
+        const img = document.getElementById('img-detalle');
+        if (img)
+            img.src = producto.albumImagenUrl ? `albumcovers/${producto.albumImagenUrl}` : 'icons/cdicon.png';
+
+        const nombre = document.getElementById('nombre-detalle');
+        if (nombre)
+            nombre.textContent = producto.albumNombre || producto.nombre;
+
+        const artista = document.getElementById('artista-detalle');
+        if (artista)
+            artista.textContent = producto.artistaNombre;
+
+        const desc = document.getElementById('desc-detalle');
+        if (desc)
+            desc.textContent = producto.descripcion;
+
+        const precio = document.getElementById('precio-detalle');
+        if (precio)
+            precio.textContent = `$${producto.precio}`;
+
+        const btnAgregar = document.getElementById('btn-agregar-carrito');
+        if (btnAgregar) {
+            btnAgregar.onclick = () => agregarAlCarritoDetalle(producto.idProducto);
+        }
+        cargarRecomendados(idProducto);
 
     } catch (error) {
-        console.error(error);
+        console.error("Error:", error);
     }
 });
 
-async function enviarResena() {
-    const params = new URLSearchParams(window.location.search);
-    const idProducto = params.get('id');
-    const idUsuarioLogueado = localStorage.getItem('idUsuario');
-    if (!idUsuarioLogueado) {
-        alert("Debes iniciar sesión para dejar una reseña.");
-        window.location.href = "login.jsp";
-        return;
-    }
-
-    const comentario = document.getElementById('txt-comentario').value;
-    const calificacion = document.getElementById('sel-calificacion').value;
-    const data = {
-        idCliente: parseInt(idUsuarioLogueado),
-        idProducto: parseInt(idProducto),
-        calificacion: parseInt(calificacion),
-        comentario: comentario
-    };
-
+async function cargarRecomendados(idActual) {
     try {
-        const resp = await fetch('api/resenas', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
+        const response = await fetch('resources/productos');
+        const productos = await response.json();
+
+        let otrosProductos = productos.filter(p => p.idProducto !== idActual);
+        const albumesVistos = new Set();
+        const recomendadosUnicos = otrosProductos.filter(p => {
+            const clave = p.albumId || p.albumNombre;
+            if (albumesVistos.has(clave)) {
+                return false; 
+            }
+            albumesVistos.add(clave);
+            return true;
+        }).slice(0, 4);
+        const contenedor = document.getElementById('contenedor-recomendados');
+        if (!contenedor)
+            return;
+
+        contenedor.innerHTML = "";
+
+        recomendadosUnicos.forEach(p => {
+            const card = document.createElement('div');
+            card.className = 'album-card-simple'; // Nueva clase para controlar estilo individual
+
+            const imgUrl = p.albumImagenUrl ? `albumcovers/${p.albumImagenUrl}` : 'icons/cdicon.png';
+
+            card.innerHTML = `
+                <a href="details.jsp?id=${p.idProducto}">
+                    <div class="card-image-wrapper">
+                        <img src="${imgUrl}" alt="${p.albumNombre}">
+                    </div>
+                    <h4>${p.albumNombre}</h4>
+                    <p>${p.artistaNombre}</p>
+                    <span class="price">$${p.precio}</span>
+                </a>
+            `;
+            contenedor.appendChild(card);
         });
 
-        if (resp.ok) {
-            alert("Reseña en espera de aprobación para ser publicada");
-            location.reload();
-        } else {
-            const errorData = await resp.json();
-            alert("Error: " + (errorData.error || "No se pudo enviar la reseña"));
-        }
     } catch (error) {
-        console.error("Error de red:", error);
-        alert("Hubo un problema de conexión al enviar la reseña.");
+        console.error("Error cargando recomendados:", error);
     }
 }
 
+async function agregarAlCarritoDetalle(idProducto) {
+    const inputCantidad = document.getElementById('cantidad');
+    const cantidad = inputCantidad ? parseInt(inputCantidad.value) : 1;
 
+    try {
+        for (let i = 0; i < cantidad; i++) {
+            await fetch(`resources/carrito/agregar?idProducto=${idProducto}`, {method: 'POST'});
+        }
+
+        const modal = document.getElementById('cartModal');
+        if (modal) {
+            modal.style.display = 'flex';
+        } else {
+            alert(`¡Se añadieron ${cantidad} productos al carrito!`);
+        }
+
+    } catch (error) {
+        console.error(error);
+        alert("Error al conectar con el carrito");
+    }
+}

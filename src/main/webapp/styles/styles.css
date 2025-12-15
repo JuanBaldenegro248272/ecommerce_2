@@ -2091,6 +2091,115 @@ nav a:hover {
     background-color: #218838;
 }
 
+.option-layout {
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    width: 100%;
+}
+
+.option-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+    align-items: center;
+}
+
+.product-media img {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 5px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.add-cart {
+    background-color: #111;
+    color: #fff;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 18px 0;
+    width: 100%;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 25px;
+    border-radius: 4px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.add-cart:hover {
+    background-color: #333;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.add-cart:active {
+    transform: translateY(0);
+}
+
+.resenas-section, .category {
+    max-width: 1100px;
+    margin: 50px auto;
+    padding: 0 20px;
+}
+
+#contenedor-recomendados {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.album-card-simple {
+    width: 220px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.album-card-simple:hover {
+    transform: scale(1.05);
+}
+
+.album-card-simple a {
+    text-decoration: none;
+    color: #333;
+}
+
+.album-card-simple img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.album-card-simple h4 {
+    margin: 10px 0 5px 0;
+    font-size: 1rem;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.album-card-simple p {
+    margin: 0 0 5px 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.album-card-simple .price {
+    font-weight: bold;
+    color: #000;
+}
 /* responsive */
 
 @media (max-width: 968px) {

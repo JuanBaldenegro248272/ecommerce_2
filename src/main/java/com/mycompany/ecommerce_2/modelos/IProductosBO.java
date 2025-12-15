@@ -28,6 +28,6 @@ public interface IProductosBO {
 
     public abstract void actualizarProducto(EditarProductoDTO dto) throws BusinessException;
 
-    public NuevoProductoDTO devolverProducto(Long id) throws BusinessException;
+    public ProductoListaDTO devolverProducto(Long id) throws BusinessException;
 
 }

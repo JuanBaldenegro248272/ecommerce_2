@@ -1,7 +1,3 @@
-/* 
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
- */
 
 
 var productosGlobales = [];
@@ -11,11 +7,14 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function cargarProductos() {
+    // Referencias a contenedores (store.jsp y formatos)
     const containerStore = document.getElementById("contenedor-productos");
-    const containerRec = document.getElementById("container-recommended");
     const containerFormato = document.getElementById("contenedorProductos");
-
-    if (!containerStore && !containerRec && !containerFormato)
+    
+    const containerRec = document.getElementById("container-recommended");
+    const containerRock = document.getElementById("container-rock");
+    const containerPop = document.getElementById("container-pop");
+    if (!containerStore && !containerRec && !containerFormato && !containerRock && !containerPop)
         return;
 
     try {
@@ -34,7 +33,6 @@ async function cargarProductos() {
         });
 
         const listaAgrupada = Object.values(grupos);
-
         productosGlobales = listaAgrupada;
 
         if (containerFormato) {
@@ -42,18 +40,23 @@ async function cargarProductos() {
             const urlParams = new URLSearchParams(window.location.search);
             const generoUrl = urlParams.get('genero');
             let listaParaMostrar = listaAgrupada;
+            
             if (generoUrl) {
                 console.log("Filtrando por género:", generoUrl);
                 listaParaMostrar = listaAgrupada.filter(grupo => {
-                    const p = grupo[0];
                     return grupo.some(p => {
                         if (p.generos && Array.isArray(p.generos)) {
-                            return p.generos.some(g => g.toLowerCase().includes(generoUrl.toLowerCase()));
+                            // Ajuste para leer género sea string o objeto
+                            return p.generos.some(g => {
+                                const nombreG = typeof g === 'string' ? g : g.nombre;
+                                return nombreG.toLowerCase().includes(generoUrl.toLowerCase());
+                            });
                         }
                         return (p.descripcion + " " + p.nombre).toLowerCase().includes(generoUrl.toLowerCase());
                     });
                 });
             }
+            
             if (listaParaMostrar.length === 0) {
                 containerFormato.innerHTML = `<p style="text-align:center; width:100%; margin-top:20px;">No se encontraron productos de ${generoUrl}.</p>`;
             } else {
@@ -69,9 +72,40 @@ async function cargarProductos() {
             containerStore.innerHTML = "";
             listaAgrupada.forEach(grupo => containerStore.appendChild(crearTarjetaAgrupada(grupo, false)));
         }
-
+        
         if (containerRec) {
+            containerRec.innerHTML = "";
             const popList = listaAgrupada.slice(0, 5);
+            popList.forEach(grupo => {
+                containerRec.appendChild(crearTarjetaAgrupada(grupo, true));
+            });
+        }
+
+        if (containerRock) {
+            containerRock.innerHTML = "";
+            const rockList = listaAgrupada.filter(grupo => 
+                grupo.some(p => p.generos && p.generos.some(g => {
+                    const val = typeof g === 'string' ? g : g.nombre;
+                    return val.toLowerCase().includes('rock') || val.toLowerCase().includes('alternativo');
+                }))
+            ).slice(0, 5);
+            
+            rockList.forEach(grupo => {
+                containerRock.appendChild(crearTarjetaAgrupada(grupo, true));
+            });
+        }
+        if (containerPop) {
+            containerPop.innerHTML = "";
+            const popGenreList = listaAgrupada.filter(grupo => 
+                grupo.some(p => p.generos && p.generos.some(g => {
+                    const val = typeof g === 'string' ? g : g.nombre;
+                    return val.toLowerCase().includes('pop');
+                }))
+            ).slice(0, 5);
+            
+            popGenreList.forEach(grupo => {
+                containerPop.appendChild(crearTarjetaAgrupada(grupo, true));
+            });
         }
 
     } catch (error) {
@@ -93,22 +127,26 @@ function crearTarjetaAgrupada(grupo, esIndex) {
         iconosHtml += `<img src="${iconPath}" title="${fmt}" style="width: 24px; margin-right: 5px;">`;
     });
 
-    const linkDetalle = `details.html?id=${pPrincipal.idProducto}`;
+    const linkDetalle = `details.jsp?id=${pPrincipal.idProducto}`;
+
+    const priceHtml = !esIndex
+            ? `<span class="card-price" style="font-weight:bold;">$${pPrincipal.precio}</span>`
+            : '';
 
     el.innerHTML = `
-        <a href="${linkDetalle}" class="album-link" style="text-decoration:none; color:inherit;">
-            <img src="${imgUrl}" onerror="this.src='icons/cdicon.png'" style="width: 100%; height: auto;">
-            <h3>${pPrincipal.albumNombre || pPrincipal.nombre}</h3>
-            <p>${pPrincipal.artistaNombre || 'Artista'}</p>
-            <div class="card-footer" style="display:flex; justify-content:space-between; align-items:center; margin-top:5px;">
-                <div style="display:flex;">${iconosHtml}</div>
-                ${!esIndex ? `<span class="card-price" style="font-weight:bold;">$${pPrincipal.precio}</span>` : ''}
-            </div>
-        </a>
-        <button class="btn-add" onclick="agregarAlCarrito(${pPrincipal.idProducto})" style="width:100%; margin-top:10px;">
-            ADD TO CART
-        </button>
-    `;
+    <a href="${linkDetalle}" class="album-link" style="text-decoration:none; color:inherit;">
+        <img src="${imgUrl}" onerror="this.src='icons/cdicon.png'" style="width: 100%; height: auto;">
+        <h3>${pPrincipal.albumNombre || pPrincipal.nombre}</h3>
+        <p>${pPrincipal.artistaNombre || 'Artista'}</p>
+        <div class="card-footer" style="display:flex; justify-content:space-between; align-items:center; margin-top:5px;">
+            <div style="display:flex;">${iconosHtml}</div>
+            ${priceHtml}
+        </div>
+    </a>
+    <button class="btn-add" onclick="agregarAlCarrito(${pPrincipal.idProducto})" style="width:100%; margin-top:10px;">
+        ADD TO CART
+    </button>
+`;
     return el;
 }
 

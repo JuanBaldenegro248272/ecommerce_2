@@ -161,9 +161,9 @@ public class Persistencia implements IPersistencia {
         }
     }
 
-    public NuevoProductoDTO devolverProducto(Long id) throws PersistenciaException {
+    public ProductoListaDTO devolverProducto(Long id) throws PersistenciaException {
         try {
-            return ProductoMapper.toDto(productosDAO.obtenerPorId(id));
+            return ProductoMapper.toListaDTO(productosDAO.obtenerPorId(id));
         } catch (Exception ex) {
             throw new PersistenciaException("Error al obtener el producto", ex);
         }
