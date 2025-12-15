@@ -2041,3 +2041,48 @@ nav a:hover {
         gap: 0;
     }
 }
+
+.user-greeting {
+    margin-left: 60px; 
+    font-family: var(--outfit);
+    font-size: 16px;
+    font-weight: 600; 
+    text-transform: uppercase;
+    color: #ffd700; 
+    letter-spacing: 1px;
+}
+
+.logout-link {
+    color: #ffcccc !important; 
+    font-weight: 500;
+}
+
+.logout-link:hover {
+    color: #ff6b6b !important; 
+    text-decoration: underline;
+}
+
+.account-icon-link img {
+   
+    height: 100%; 
+    width: auto;
+    transition: transform 0.2s ease;
+}
+
+.account-icon-link:hover img {
+    transform: scale(1.1); 
+}
+
+@media (max-width: 768px) {
+    .user-greeting {
+        margin-left: 20px;
+        font-size: 14px;
+        display: block; 
+        margin-bottom: 5px;
+    }
+    
+    .logout-link {
+        margin-left: 20px;
+        font-size: 14px;
+    }
+}

@@ -13,6 +13,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href ="styles/styles.css"/> 
         <link rel ="stylesheet" href="styles/formatocss.css"/>
+        <script src="js/micuenta.js"></script>
+
     </head>
     <body>
 
@@ -23,7 +25,7 @@
                 <div class ="cuenta-container">
                     <h1 class ="cuenta-titulo">MI CUENTA</h1>
                     <p class = "cuenta-bienvenida">Hola Fulanito de Tal</p>
-                    <button class ="btn-editar">Editar datos</button>
+                    <button class="btn-editar" id="btn-editar">Editar datos</button>
 
                     <div class ="form-cuenta">
                         <form>

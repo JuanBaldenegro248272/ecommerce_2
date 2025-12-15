@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+
 <header>
     <div class="top-bar">
         <div class="social-icons">
@@ -5,12 +7,25 @@
             <a href="#"><img src="${pageContext.request.contextPath}/icons/twlogo.png" alt="twitter"></a>
             <a href="#"><img src="${pageContext.request.contextPath}/icons/fblogo.png" alt="facebook"></a>
         </div>
+        
         <div class="top-links">
             <a href="${pageContext.request.contextPath}/contact.jsp">contact</a>
             <a href="${pageContext.request.contextPath}/about.jsp">about</a>
-            <a href="${pageContext.request.contextPath}/login.jsp" id="myAccountLink">log in</a>
+
+            <%-- LÓGICA DE SESIÓN --%>
+            <c:choose>
+                <c:when test="${not empty sessionScope.usuarioLogueado}">
+                    <%-- Usamos clases en lugar de style inline --%>
+                    <span class="user-greeting">HOLA, ${sessionScope.usuarioLogueado.nombre}</span>
+                    <a href="${pageContext.request.contextPath}/LogoutServlet" class="logout-link">LOG OUT</a>
+                </c:when>
+                <c:otherwise>
+                    <a href="${pageContext.request.contextPath}/login.jsp">LOG IN</a>
+                </c:otherwise>
+            </c:choose>
         </div>
     </div>
+
     <div class="header-top">
         <a href="${pageContext.request.contextPath}/index.jsp" class="logo">
             <img src="${pageContext.request.contextPath}/icons/logoeco.png" alt="logo ECOstore"/>
@@ -18,11 +33,13 @@
                 <span class="resaltado">ECO</span>store
             </span>
         </a>
+        
         <nav>
             <a href="${pageContext.request.contextPath}/store.jsp">STORE</a>
             <a href="${pageContext.request.contextPath}/formato.jsp">FORMATO</a>
             <a href="${pageContext.request.contextPath}/estilos.jsp">ESTILOS</a>
         </nav>
+        
         <div class="iconos-derecha">
             <a href='#'>
                 <img src="${pageContext.request.contextPath}/icons/searchicon.png" alt="search"/>
@@ -32,9 +49,18 @@
                 <img src="${pageContext.request.contextPath}/icons/carticon.png" alt="shopping bag"/>
             </a>
             
-            <a href='${pageContext.request.contextPath}/micuenta.jsp'>
-                <img src="${pageContext.request.contextPath}/icons/accounticon.png" alt="my account"/>
-            </a>
+            <c:choose>
+                <c:when test="${not empty sessionScope.usuarioLogueado}">
+                    <a href='${pageContext.request.contextPath}/PerfilServlet' class="account-icon-link" title="Mi Cuenta">
+                        <img src="${pageContext.request.contextPath}/icons/accounticon.png" alt="my account"/>
+                    </a>
+                </c:when>
+                <c:otherwise>
+                    <a href='${pageContext.request.contextPath}/login.jsp' class="account-icon-link" title="Iniciar Sesión">
+                        <img src="${pageContext.request.contextPath}/icons/accounticon.png" alt="login"/>
+                    </a>
+                </c:otherwise>
+            </c:choose>
         </div>
     </div>
 </header>
