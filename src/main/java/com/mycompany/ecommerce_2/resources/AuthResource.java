@@ -4,34 +4,27 @@
  */
 package com.mycompany.ecommerce_2.resources;
 
-import com.mycompany.ecommerce_2.exceptions.BusinessException;
-import com.mycompany.ecommerce_2.modelos.IUsuarioBO;
 import com.mycompany.ecommerce_2.modelos.implementaciones.UsuarioBO;
 import itson.ecommerce.persistencia.dtos.CredencialesDTO;
 import itson.ecommerce.persistencia.dtos.UsuarioDTO;
 import itson.ecommerce.persistencia.implementaciones.Persistencia;
-import itson.ecommerce.persistencia.interfaces.IPersistencia;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.util.HashMap;
+import java.util.Map;
+import service.SecurityService;
 
 @Path("auth")
 public class AuthResource {
 
-    @Context
-    private HttpServletRequest request;
-
-    private IUsuarioBO usuarioBO;
+    private final UsuarioBO usuarioBO;
 
     public AuthResource() {
-        IPersistencia persistencia = new Persistencia();
-        this.usuarioBO = new UsuarioBO(persistencia);
+        this.usuarioBO = new UsuarioBO(new Persistencia());
     }
 
     @POST
@@ -40,29 +33,26 @@ public class AuthResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(CredencialesDTO credenciales) {
         try {
-            if (credenciales == null || credenciales.getCorreo() == null || credenciales.getContrasena() == null) {
-                return Response.status(Response.Status.BAD_REQUEST)
-                        .entity("{\"error\": \"Datos incompletos\"}")
-                        .build();
-            }
-
             UsuarioDTO usuario = usuarioBO.login(credenciales.getCorreo(), credenciales.getContrasena());
-            //punto de quiebre
-            HttpSession session = request.getSession(true); 
-            session.setAttribute("usuarioLogueado", usuario);
 
-            return Response.ok(usuario).build();
+            if (usuario != null) {
+                boolean esAdmin = "ADMINISTRADOR".equalsIgnoreCase(usuario.getRol());
 
-        } catch (BusinessException e) {
-            return Response.status(Response.Status.UNAUTHORIZED) 
-                    .entity("{\"error\": \"" + e.getMessage() + "\"}")
-                    .build();
+                String token = SecurityService.generateToken(usuario.getCorreoElectronico(), esAdmin);
+                Map<String, String> response = new HashMap<>();
+                response.put("token", token);
+                response.put("mensaje", "Autenticación exitosa");
+                response.put("usuario", usuario.getNombre());
+
+                return Response.ok(response).build();
+            } else {
+                return Response.status(Response.Status.UNAUTHORIZED)
+                        .entity("{\"error\":\"Credenciales incorrectas\"}").build();
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR) 
-                    .entity("{\"error\": \"Error interno del servidor\"}")
-                    .build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("{\"error\":\"Error interno en el servidor\"}").build();
         }
     }
-    
 }
