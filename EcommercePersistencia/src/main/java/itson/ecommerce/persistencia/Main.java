@@ -10,9 +10,14 @@ import itson.ecommerce.persistencia.entidades.Album;
 import itson.ecommerce.persistencia.entidades.Artista;
 import itson.ecommerce.persistencia.entidades.Carrito;
 import itson.ecommerce.persistencia.entidades.Cliente;
+import itson.ecommerce.persistencia.entidades.DetallePedido;
 import itson.ecommerce.persistencia.entidades.Direccion;
+import itson.ecommerce.persistencia.entidades.EstadoPedido;
 import itson.ecommerce.persistencia.entidades.Genero;
 import itson.ecommerce.persistencia.entidades.GeneroAlbum;
+import itson.ecommerce.persistencia.entidades.PagoTarjeta;
+import itson.ecommerce.persistencia.entidades.Pedido;
+import itson.ecommerce.persistencia.entidades.Producto;
 import itson.ecommerce.persistencia.implementaciones.AlbumDAO;
 import itson.ecommerce.persistencia.implementaciones.ArtistaDAO;
 import itson.ecommerce.persistencia.implementaciones.GenerosDAO;
@@ -115,7 +120,6 @@ public class Main {
 
             for (int i = 0; i < catalogo.length; i++) {
                 Object[] item = catalogo[i];
-
                 String nombreArtista = (String) item[0];
                 String nombreAlbum = (String) item[1];
                 String imagen = (String) item[2];
@@ -150,7 +154,6 @@ public class Main {
 
                 List<String> formatosAInsertar = new ArrayList<>();
                 int variedad = i % 5;
-
                 switch (variedad) {
                     case 0:
                         formatosAInsertar.add("VINYL");
@@ -192,12 +195,62 @@ public class Main {
                     }
                     productosDAO.crear(prod);
                 }
-
-                System.out.println("Insertado: " + nombreAlbum + " -> Formatos: " + formatosAInsertar);
+                System.out.println("Insertado: " + nombreAlbum);
             }
 
+            System.out.println("\n--- Creando Pedido de Prueba para Historial ---");
+            javax.persistence.EntityManager em = itson.ecommerce.persistencia.utils.ManejadorConexiones.getEntityManager();
+
+            try {
+                em.getTransaction().begin();
+                Cliente clientePrueba = em.createQuery("SELECT c FROM Cliente c WHERE c.correoElectronico = :email", Cliente.class)
+                        .setParameter("email", "cliente@store.com")
+                        .getResultStream().findFirst().orElse(null);
+                Producto productoPrueba = em.createQuery("SELECT p FROM Producto p WHERE p.descripcion LIKE :desc", Producto.class)
+                        .setParameter("desc", "%Rumours%")
+                        .getResultStream().findFirst().orElse(null);
+
+                if (clientePrueba != null && productoPrueba != null) {
+                    PagoTarjeta pago = new PagoTarjeta();
+                    pago.setFecha(Calendar.getInstance());
+                    pago.setNombreTitular("Juan");
+                    pago.setApellidoTitular("Cliente");
+
+                    em.persist(pago);
+                    Pedido pedido = new Pedido();
+                    pedido.setCliente(clientePrueba);
+                    pedido.setDireccion(clientePrueba.getDireccion());
+                    pedido.setFechaCompra(Calendar.getInstance());
+                    pedido.setEstado(EstadoPedido.ENTREGADO);
+                    pedido.setPago(pago);
+                    pedido.setTotal(productoPrueba.getPrecio());
+
+                    em.persist(pedido);
+
+                    DetallePedido detalle = new DetallePedido();
+                    detalle.setPedido(pedido);
+                    detalle.setProducto(productoPrueba);
+                    detalle.setCantidad(1);
+                    detalle.setPrecioUnitario(productoPrueba.getPrecio());
+
+                    em.persist(detalle);
+
+                    em.getTransaction().commit();
+                    System.out.println("Pedido de prueba creado: ID " + pedido.getId());
+                } else {
+                    System.out.println("No se pudo crear pedido: Cliente o Producto no encontrado.");
+                }
+            } catch (Exception ex) {
+                if (em.getTransaction().isActive()) {
+                    em.getTransaction().rollback();
+                }
+                ex.printStackTrace();
+            } finally {
+                em.close();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 }

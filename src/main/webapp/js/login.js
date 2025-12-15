@@ -24,9 +24,12 @@ document.getElementById('loginForm').addEventListener('submit', async function (
             localStorage.setItem('jwt_token', data.token);
             if (data.usuario)
                 localStorage.setItem('usuario_nombre', data.usuario);
-            alert("Login exitoso. Redirigiendo...");
+            alert("Login exitoso");
             if (correo.includes("admin")) {
                 window.location.href = 'dashboard-admin.jsp';
+            }
+            if (data.idUsuario) {
+                localStorage.setItem('idUsuario', data.idUsuario);
             } else {
                 window.location.href = 'index.jsp';
             }

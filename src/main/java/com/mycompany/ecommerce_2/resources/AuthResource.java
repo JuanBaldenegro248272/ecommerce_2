@@ -43,6 +43,7 @@ public class AuthResource {
                 response.put("token", token);
                 response.put("mensaje", "Autenticación exitosa");
                 response.put("usuario", usuario.getNombre());
+                response.put("idUsuario", String.valueOf(usuario.getId()));
 
                 return Response.ok(response).build();
             } else {

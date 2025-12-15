@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 async function enviarResena() {
     const params = new URLSearchParams(window.location.search);
     const idProducto = params.get('id');
-    const idUsuarioLogueado = sessionStorage.getItem('idUsuario');
+    const idUsuarioLogueado = localStorage.getItem('idUsuario');
     if (!idUsuarioLogueado) {
         alert("Debes iniciar sesión para dejar una reseña.");
         window.location.href = "login.jsp";

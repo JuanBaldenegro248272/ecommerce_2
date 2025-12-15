@@ -46,11 +46,6 @@ async function cargarProductos() {
                 console.log("Filtrando por género:", generoUrl);
                 listaParaMostrar = listaAgrupada.filter(grupo => {
                     const p = grupo[0];
-                    if (generoBuscado == "new" || generoBuscado == "nuevos") {
-                        const fechaActual = new Date();
-                        const anioActual = fechaActual.getFullYear();
-                        return p.
-                    }
                     return grupo.some(p => {
                         if (p.generos && Array.isArray(p.generos)) {
                             return p.generos.some(g => g.toLowerCase().includes(generoUrl.toLowerCase()));
