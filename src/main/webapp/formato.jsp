@@ -9,26 +9,42 @@
 <html>
 
     <head>
-        <title>ECOstore</title>
+        <title>ECOstore | Formatos</title>
         <meta charset="UTF-8">
         <link rel="stylesheet" href="styles/formatocss.css">
         <link rel="stylesheet" href="styles/styles.css">
+        <style>
+            .formats li {
+                cursor: pointer;
+            }
+            .formats li:hover {
+                color: #555;
+                font-weight: bold;
+            }
+        </style>
     </head>
+
+    <body>
 
         <%@ include file = "/WEB-INF/fragments/navbar.jspf" %>
 
         <main class="store-layout">
             <aside class="sidebar">
                 <div class="search-box">
-                    <input type="text" placeholder="Buscar" />
-                    <button><img src="icons/searchicon.png"></button>
+                    <input type="text" id="inputBusqueda" placeholder="Buscar álbum o artista..." onkeyup="buscarProductos()" />
+                    <button onclick="buscarProductos()"><img src="icons/searchicon.png"></button>
                 </div>
 
                 <h3>Organizar por:</h3>
+
+                <div style="margin-bottom: 10px; cursor: pointer;" onclick="filtrarProductos('todos')">
+                    <strong>Ver Todo</strong>
+                </div>
+
                 <h3>Formato</h3>
 
                 <ul class="formats">
-                    <li>
+                    <li onclick="filtrarProductos('Vinilo')">
                         <div class="format">
                             <img src="icons/vinylicon.png"> Vinyl
                         </div>
@@ -36,12 +52,14 @@
                             <li>LP</li>
                         </ul>
                     </li>
-                    <li>
+
+                    <li onclick="filtrarProductos('CD')">
                         <div class="format">
-                            <img src="icons/cdicon.png"> Disk
+                            <img src="icons/cdicon.png"> Disk (CD)
                         </div>
                     </li>
-                    <li>
+
+                    <li onclick="filtrarProductos('Cassette')">
                         <div class="format">
                             <img src="icons/casseteicon.png"> Cassette
                         </div>
@@ -61,222 +79,29 @@
             </aside>
 
             <section class="store-content">
-                <div class="grid-albums">
-                    <article class="album-card">
-                        <a class="album-media">
-                            <img src="albumcovers/rumours.png">
-                        </a>
-                        <div class="album-meta">
-                            <h4 class="album-title">Rumours</h4>
-                            <p>Fleetwood Mac</p>
-                            <p class="album-format">
-                                <img src="icons/vinylicon.png" class="icon-solid"> LP
-                            </p>
-                        </div>
-                        <div class="album-actions">
-                            <button class="btn btn-outline">AÑADIR AL CARRITO</button>
-                        </div>
-                    </article>
-
-                    <article class="album-card">
-                        <a class="album-media">
-                            <img src="albumcovers/nevermind.png">
-                        </a>
-                        <div class="album-meta">
-                            <h4 class="album-title">Nevermind</h4>
-                            <p>Nirvana</p>
-                            <p class="album-format">
-                                <img src="icons/vinylicon.png" class="icon-solid"> LP
-                            </p>
-                            <p class="album-format">
-                                <img src="icons/vinylicon.png" class="icon-solid"> Colour
-                            </p>
-                        </div>
-                        <div class="album-actions">
-                            <a class="btn btn-solid">SELECCIONAR OPCION</a>
-                        </div>
-                    </article>
-
-                    <article class="album-card">
-                        <a class="album-media">
-                            <img src="albumcovers/back2black.png">
-                        </a>
-                        <div class="album-meta">
-                            <h4 class="album-title">Back to Black</h4>
-                            <p>Amy Winehouse</p>
-                            <p class="album-format">
-                                <img src="icons/vinylicon.png" class="icon-solid"> LP
-                            </p>
-                        </div>
-                        <div class="album-actions">
-                            <button class="btn btn-outline">AÑADIR AL CARRITO</button>
-                        </div>
-                    </article>
-
-                    <article class="album-card">
-                        <a href="product-short-n-sweet.html" class="album-media">
-                            <img src="albumcovers/shortnsweet.png">
-                        </a>
-                        <div class="album-meta">
-                            <h4 class="album-title">Short n’ Sweet</h4>
-                            <p>Sabrina Carpenter</p>
-                            <p class="album-format">
-                                <img src="icons/vinylicon.png" class="icon-solid"> LP
-                            </p>
-                            <p class="album-format">
-                                <img src="icons/vinylicon.png" class="icon-solid"> Colour
-                            </p>
-                        </div>
-                        <div class="album-actions">
-                            <a href="product-short-n-sweet.html" class="btn btn-solid">SELECCIONAR OPCION</a>
-                        </div>
-                    </article>
-
-                    <article class="album-card">
-                        <a class="album-media">
-                            <img src="albumcovers/am.png">
-                        </a>
-                        <div class="album-meta">
-                            <h4 class="album-title">AM</h4>
-                            <p>Arctic Monkeys</p>
-                            <p class="album-format">
-                                <img src="icons/vinylicon.png" class="icon-solid"> LP
-                            </p>
-                        </div>
-                        <div class="album-actions">
-                            <button class="btn btn-outline">AÑADIR AL CARRITO</button>
-                        </div>
-                    </article>
-
-                    <article class="album-card">
-                        <a class="album-media">
-                            <img src="albumcovers/turnbright.png">
-                        </a>
-                        <div class="album-meta">
-                            <h4 class="album-title">Turn on the Bright Lights</h4>
-                            <p>Interpool</p>
-                            <p class="album-format">
-                                <img src="icons/vinylicon.png" class="icon-solid"> LP
-                            </p>
-                        </div>
-                        <div class="album-actions">
-                            <a class="btn btn-solid">SELECCIONAR OPCION</a>
-                        </div>
-                    </article>
-
-                    <article class="album-card">
-                        <a class="album-media">
-                            <img src="albumcovers/wipedout.png">
-                        </a>
-                        <div class="album-meta">
-                            <h4 class="album-title">Wiped Out!</h4>
-                            <p>The Neightbourhood</p>
-                            <p class="album-format">
-                                <img src="icons/vinylicon.png" class="icon-solid"> LP
-                            </p>
-                        </div>
-                        <div class="album-actions">
-                            <button class="btn btn-outline">AÑADIR AL CARRITO</button>
-                        </div>
-                    </article>
-
-                    <article class="album-card">
-                        <a class="album-media">
-                            <img src="albumcovers/thebends.png">
-                        </a>
-                        <div class="album-meta">
-                            <h4 class="album-title">The Bends</h4>
-                            <p>Radiohead</p>
-                            <p class="album-format">
-                                <img src="icons/vinylicon.png" class="icon-solid"> LP
-                            </p>
-                            <p class="album-format">
-                                <img src="icons/vinylicon.png" class="icon-solid"> Colour
-                            </p>
-                        </div>
-                        <div class="album-actions">
-                            <a class="btn btn-solid">SELECCIONAR OPCION</a>
-                        </div>
-                    </article>
-
-                    <article class="album-card">
-                        <a class="album-media">
-                            <img src="albumcovers/guts.png">
-                        </a>
-                        <div class="album-meta">
-                            <h4 class="album-title">Guts</h4>
-                            <p>Olivia Rodrigo</p>
-                            <p class="album-format">
-                                <img src="icons/vinylicon.png" class="icon-solid"> LP
-                            </p>
-                            <p class="album-format">
-                                <img src="icons/vinylicon.png" class="icon-solid"> Colour
-                            </p>
-                        </div>
-                        <div class="album-actions">
-                            <button class="btn btn-outline">AÑADIR AL CARRITO</button>
-                        </div>
-                    </article>
-
-                    <article class="album-card">
-                        <a class="album-media">
-                            <img src="albumcovers/soclose.png">
-                        </a>
-                        <div class="album-meta">
-                            <h4 class="album-title">So Close to What</h4>
-                            <p>Taylor Hale</p>
-                            <p class="album-format">
-                                <img src="icons/vinylicon.png" class="icon-solid"> LP
-                            </p>
-                            <p class="album-format">
-                                <img src="icons/vinylicon.png" class="icon-solid"> Colour
-                            </p>
-                        </div>
-                        <div class="album-actions">
-                            <a class="btn btn-solid">SELECCIONAR OPCION</a>
-                        </div>
-                    </article>
-
-                    <article class="album-card">
-                        <a class="album-media">
-                            <img src="albumcovers/mansbf.png">
-                        </a>
-                        <div class="album-meta">
-                            <h4 class="album-title">Man's Best Friend</h4>
-                            <p>Sabrina Carpenter</p>
-                            <p class="album-format">
-                                <img src="icons/vinylicon.png" class="icon-solid"> LP
-                            </p>
-                        </div>
-                        <div class="album-actions">
-                            <button class="btn btn-outline">AÑADIR AL CARRITO</button>
-                        </div>
-                    </article>
-
-                    <article class="album-card">
-                        <a class="album-media">
-                            <img src="albumcovers/brat.png">
-                        </a>
-                        <div class="album-meta">
-                            <h4 class="album-title">Brat</h4>
-                            <p>Charli XCX</p>
-                            <p class="album-format">
-                                <img src="icons/vinylicon.png" class="icon-solid"> LP
-                            </p>
-                            <p class="album-format">
-                                <img src="icons/vinylicon.png" class="icon-solid"> Colour
-                            </p>
-                        </div>
-                        <div class="album-actions">
-                            <a class="btn btn-solid">SELECCIONAR OPCION</a>
-                        </div>
-                    </article>
+                <div id="contenedorProductos" class="grid-albums">
+                    <p style="text-align: center; width: 100%;">Cargando productos...</p>
                 </div>
             </section>
         </main>
-        
+
         <%@ include file = "/WEB-INF/fragments/footer.jspf" %>
-        
+
+        <div id="cartModal" class="modal" style="display:none; position:fixed; z-index: 1000; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center;">
+            <div style="background:white; padding:20px; border-radius:5px; text-align:center; min-width: 300px;">
+                <h3 style="margin-top:0;">¡Producto agregado!</h3>
+                <p>El artículo se añadió a tu carrito.</p>
+                <div style="margin-top:15px;">
+                    <button onclick="closeModal()" style="padding: 8px 15px; margin-right: 10px; cursor: pointer;">Seguir comprando</button>
+                    <a href="carrito.jsp"><button style="padding: 8px 15px; background: #000; color: white; border: none; cursor: pointer;">Ir al carrito</button></a>
+                </div>
+            </div>
+        </div>
+
+        <script src="js/store.js"></script>
+
+        <script src="js/formato.js"></script>
+
     </body>
 
 </html>
